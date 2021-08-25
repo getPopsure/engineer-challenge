@@ -1,0 +1,18 @@
+{
+  "name": "backend",
+  "version": "0.1.0",
+  "description": "A simple admin panel backend",
+  "main": "src/index.ts",
+  "license": "no license",
+  "private": true,
+  "dependencies": {
+    "apollo-server": "^3.2.0",
+    "graphql": "^15.5.1",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "dev": "nodemon"
+  }
+}
