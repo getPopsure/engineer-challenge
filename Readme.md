@@ -18,7 +18,7 @@ We've generated some boilerplate for you to get started.
 
 ## Tasks
 
-1. On the [backend](./backend), change the GraphQL schema to reflect the [Data structure](##Datastructure)
+1. On the [backend](./backend), change the GraphQL schema to reflect the [Data structure](##Data-structure)
 2. On the [frontend](./frontend), fetch the data returned by the GraphQL endpoint with the help of the [Apollo client](https://www.apollographql.com)
 3. On the [frontend](./frontend), display all the data returned by the endpoint in a table with the help of [tailwindcss](https://tailwindcss.com)
    - At least several fields should be editable in place
