@@ -36,16 +36,16 @@ Each policy should have at least the following fields:
 
 ### Policy
 
-| fields         | type                              | comment                                       |
-| -------------- | --------------------------------- | --------------------------------------------- |
-| customer       | [Customer](###Customer)           | Object holding the customer's informations    |
-| provider       | string                            | Name of the provider (Allianz, AXA…)          |
-| insurance type | [InsuranceType](###InsuranceType) | Type of the insurance (Liability, Household…) |
-| status         | [PolicyStatus](###PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
-| policyNumber   | string                            | Used to identify the policy                   |
-| startDate      | date                              | Date when the policy should start             |
-| endDate        | date                              | Date when the policy ends                     |
-| createdAt      | date                              | Date when the record was created              |
+| fields         | type                            | comment                                       |
+| -------------- | ------------------------------- | --------------------------------------------- |
+| customer       | [Customer](#Customer)           | Object holding the customer's informations    |
+| provider       | string                          | Name of the provider (Allianz, AXA…)          |
+| insurance type | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
+| status         | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
+| policyNumber   | string                          | Used to identify the policy                   |
+| startDate      | date                            | Date when the policy should start             |
+| endDate        | date                            | Date when the policy ends                     |
+| createdAt      | date                            | Date when the record was created              |
 
 ### Customer
 
