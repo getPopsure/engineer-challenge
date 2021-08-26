@@ -1,6 +1,12 @@
 # Frontend
 
-This is the frontend part of the [Junior Fullstack Engineer code challenge](../Readme.md). This project was created with Create React App, you can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This is the frontend part of the [Junior Fullstack Engineer code challenge](../Readme.md).
+
+This project has been set up with:
+
+- [Create react app](https://create-react-app.dev)
+- [Tailwindcss](https://tailwindcss.com)
+- [TypeScript](https://www.typescriptlang.org)
 
 ## Getting started
 
