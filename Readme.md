@@ -45,7 +45,7 @@ Each policy should have at least the following fields:
 | policyNumber   | string                            | Used to identify the policy                   |
 | startDate      | date                              | Date when the policy should start             |
 | endDate        | date                              | Date when the policy ends                     |
-| createdAd      | date                              | Date when the record was created              |
+| createdAt      | date                              | Date when the record was created              |
 
 ### Customer
 
