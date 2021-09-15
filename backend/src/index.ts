@@ -1,49 +1,100 @@
 import { ApolloServer, gql } from "apollo-server";
+import { GraphQLScalarType } from 'graphql';
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
 const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+  scalar Date
 
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
+  enum InsuranceType {
+    LIABILITY
+    HOUSEHOLD
+    HEALTH
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  enum PolicyStatus {
+    ACTIVE
+    PENDING
+    CANCELLED
+    DROPPEDOUT
+  }
+
+  type Policy {
+    customer: Customer!
+    provider: String!
+    insuranceType: InsuranceType!
+    status: PolicyStatus!
+    policyNumber: String!
+    startDate: Date
+    endDate: Date
+    createdAt: Date 
+  }
+
+  type Customer {
+    firstName: String!
+    lastName: String!
+    dateOfBirth: Date!
+  }
+
   type Query {
-    books: [Book]
+    policies: [Policy]
   }
 `;
 
-const books = [
+//Hard code customers and policies data
+const customers = [
   {
-    title: "The Awakening",
-    author: "Kate Chopin",
+    firstName: "Sam",
+    lastName: "Smith",
+    dateOfBirth: new Date("07,01,1995")
   },
   {
-    title: "City of Glass",
-    author: "Paul Auster",
+    firstName: "Julia",
+    lastName: "James",
+    dateOfBirth: new Date("12,24,1990")
+  }
+];
+
+const policies = [
+  {
+    customer: customers[0]!,
+    provider: "Allianz",
+    insuranceType: "LIABILITY",
+    status: "ACTIVE",
+    policyNumber: "123456",
+    startDate: new Date("07-01-2020"),
+    endDate: new Date("07-01-2023"),
+    createdAt: new Date("07-01-2020") 
+  },
+  {
+    customer: customers[1]!,
+    provider: "AXA",
+    insuranceType: "HOUSEHOLD",
+    status: "PENDING",
+    policyNumber: "789101",
+    createdAt: new Date("10,01,2020") 
   },
 ];
 
-// Resolvers define the technique for fetching the types defined in the
-// schema. This resolver retrieves books from the "books" array above.
+//Define custom Date scalar type for GraphQL
+const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Date custom scalar type',
+  serialize(value) {
+    return value.getTime(); // Convert outgoing Date to integer for JSON
+  },
+  parseValue(value) {
+    return new Date(value); // Convert incoming integer to Date
+  },
+});
+
 const resolvers = {
   Query: {
-    books: () => books,
+    policies: () => policies,
   },
+  Date: dateScalar
 };
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
 const server = new ApolloServer({ typeDefs, resolvers });
 
-// The `listen` method launches a web server.
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
