@@ -1,4 +1,4 @@
-# Feather - Junior Fullstack Engineer code challenge
+# Feather - Fullstack Engineer code challenge
 
 In this code challenge you'll need to create a simple admin panel from scratch. It would need to have a single table view to list insurance policies showcasing all the various field they may have.
 
