@@ -1,0 +1,4 @@
+type Customer {
+    firstName: String
+    lastName: String
+  }
