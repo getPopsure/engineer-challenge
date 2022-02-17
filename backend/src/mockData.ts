@@ -6,7 +6,7 @@ export const policies = [
       dateOfBirth: new Date(2020, 12, 12),
     },
     provider: "Allianz",
-    insuranceType: "LIABILITTY",
+    insuranceType: "LIABILITY",
     status: "ACTIVE",
     policyNumber: "12334",
     startDate: new Date(),
