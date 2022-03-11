@@ -1,17 +1,75 @@
+import "./index.css";
+
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { Routes, Route, Outlet, useLocation, useNavigate } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+} from "@apollo/client";
+
+import App from "./App";
+
+const link = new HttpLink({
+  uri: "/api/graphql",
+  credentials: "include",
+});
+
+const client = new ApolloClient({
+  link,
+  cache: new InMemoryCache(),
+});
+
+function PolicyTable() {
+  return (
+    <>
+      <h2>Table</h2>
+      <table>
+        <th>Col 1</th>
+        <th>Col 2</th>
+      </table>
+    </>
+  );
+}
+
+function Policy() {
+  return <h1>Policy page</h1>;
+}
+
+function User() {
+  return <h1>User page</h1>;
+}
+
+const Login = React.lazy(() => import("./Login"));
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <React.Suspense fallback={<>...</>}>
+                <Login />
+              </React.Suspense>
+            }
+          />
+          <Route element={<App />}>
+            <Route path="/policies" element={<PolicyTable />} />
+            <Route path="/policy/:id" element={<Policy />} />
+            <Route path="/user/:id" element={<User />} />
+            <Route path="*" element={<PolicyTable />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
