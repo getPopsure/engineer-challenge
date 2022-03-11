@@ -3,7 +3,7 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import { Routes, Route, Outlet, useLocation, useNavigate } from "react-router";
+import { Routes, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import {
   ApolloClient,
@@ -29,8 +29,12 @@ function PolicyTable() {
     <>
       <h2>Table</h2>
       <table>
-        <th>Col 1</th>
-        <th>Col 2</th>
+        <thead>
+          <tr>
+            <th>Col 1</th>
+            <th>Col 2</th>
+          </tr>
+        </thead>
       </table>
     </>
   );

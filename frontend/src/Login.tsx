@@ -1,16 +1,23 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useSignInHandler } from "./useAuthorizationHandler";
 
-export default React.memo(function Login() {
+function useAuthenticationForm(): [
+  string,
+  (e: React.ChangeEvent<HTMLInputElement>) => void,
+  string,
+  (e: React.ChangeEvent<HTMLInputElement>) => void,
+  boolean,
+  string | null,
+  (e: React.FormEvent<HTMLFormElement>) => Promise<void>
+] {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState<string | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [signIn, isLoading] = useSignInHandler(setErrorMessage);
 
   const handleEmailChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setError("");
+      setErrorMessage("");
       setEmail(e.target.value);
     },
     []
@@ -18,7 +25,7 @@ export default React.memo(function Login() {
 
   const handlePasswordChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setError("");
+      setErrorMessage("");
       setPassword(e.target.value);
     },
     []
@@ -29,34 +36,36 @@ export default React.memo(function Login() {
       e.preventDefault();
 
       try {
-        setIsLoading(true);
-
-        const response = await fetch("/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            login: email,
-            password: password,
-          }),
-        });
-
-        if (!response.ok) {
-          const { message } = await response.json();
-
-          setIsLoading(false);
-          setError(message);
-        } else {
-          navigate("/policies", { replace: true });
-        }
-      } catch (e) {
-        console.error(e);
-        setError("Unknown error. Please, try again later!");
+        await signIn(email, password);
+      } catch (err) {
+        console.log(err);
+        setErrorMessage((err as Error).message);
       }
     },
-    [email, password, navigate]
+    [signIn, email, password]
   );
+
+  return [
+    email,
+    handleEmailChange,
+    password,
+    handlePasswordChange,
+    isLoading,
+    errorMessage,
+    handleFormSubmition,
+  ];
+}
+
+export default React.memo(function Login() {
+  const [
+    email,
+    handleEmailChange,
+    password,
+    handlePasswordChange,
+    isLoading,
+    errorMessage,
+    handleFormSubmition,
+  ] = useAuthenticationForm();
 
   return (
     <main className="h-screen grid grid-cols-3">
@@ -68,10 +77,10 @@ export default React.memo(function Login() {
 
           <div>
             <h3>
-              Login is <pre className="inline-block">admin</pre>
+              Login is <pre className="inline-block">admin@example.com</pre>
             </h3>
             <h3>
-              Password is also <pre className="inline-block">admin</pre>
+              Password is <pre className="inline-block">hello</pre>
             </h3>
           </div>
 
@@ -121,7 +130,9 @@ export default React.memo(function Login() {
             disabled={isLoading}
           />
 
-          {error && <span className="text-center text-red-600">{error}</span>}
+          {errorMessage && (
+            <span className="text-center text-red-600">{errorMessage}</span>
+          )}
         </form>
       </div>
     </main>
