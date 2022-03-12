@@ -3,7 +3,7 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import {
   ApolloClient,
@@ -21,24 +21,17 @@ const link = new HttpLink({
 
 const client = new ApolloClient({
   link,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Policy: {
+        keyFields: ["policyId"],
+      },
+      Customer: {
+        keyFields: ["customerId"],
+      },
+    },
+  }),
 });
-
-function PolicyTable() {
-  return (
-    <>
-      <h2>Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Col 1</th>
-            <th>Col 2</th>
-          </tr>
-        </thead>
-      </table>
-    </>
-  );
-}
 
 function Policy() {
   return <h1>Policy page</h1>;
@@ -49,26 +42,30 @@ function User() {
 }
 
 const Login = React.lazy(() => import("./Login"));
+const PolicyTable = React.lazy(() => import("./PolicyTable"));
+
+function Suspencer({ element }: { element: JSX.Element }) {
+  return <React.Suspense fallback={<>...</>}>{element}</React.Suspense>;
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/login"
-            element={
-              <React.Suspense fallback={<>...</>}>
-                <Login />
-              </React.Suspense>
-            }
-          />
+          <Route path="/login" element={<Suspencer element={<Login />} />} />
           <Route element={<App />}>
-            <Route path="/policies" element={<PolicyTable />} />
-            <Route path="/policy/:id" element={<Policy />} />
+            <Route
+              path="/policies"
+              element={<Suspencer element={<PolicyTable />} />}
+            />
+            <Route
+              path="/policy/:id"
+              element={<Suspencer element={<Policy />} />}
+            />
             <Route path="/user/:id" element={<User />} />
-            <Route path="*" element={<PolicyTable />} />
           </Route>
+          <Route path="*" element={<Navigate to={"/policies"} />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
