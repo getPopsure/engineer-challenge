@@ -12,8 +12,6 @@ import {
   HttpLink,
 } from "@apollo/client";
 
-import App from "./App";
-
 const link = new HttpLink({
   uri: "/api/graphql",
   credentials: "include",
@@ -42,7 +40,8 @@ function User() {
 }
 
 const Login = React.lazy(() => import("./Login"));
-const PolicyTable = React.lazy(() => import("./PolicyTable"));
+const App = React.lazy(() => import("./App"));
+const PolicyTablePage = React.lazy(() => import("./PolicyTablePage"));
 
 function Suspencer({ element }: { element: JSX.Element }) {
   return <React.Suspense fallback={<>...</>}>{element}</React.Suspense>;
@@ -54,10 +53,10 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Suspencer element={<Login />} />} />
-          <Route element={<App />}>
+          <Route element={<Suspencer element={<App />} />}>
             <Route
               path="/policies"
-              element={<Suspencer element={<PolicyTable />} />}
+              element={<Suspencer element={<PolicyTablePage />} />}
             />
             <Route
               path="/policy/:id"

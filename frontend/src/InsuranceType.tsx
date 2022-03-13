@@ -15,21 +15,21 @@ export default React.memo(function InsuranceType(props: InsuranceTypeProps) {
     case InsuranceTypes.LIABILITY:
       // I have a good taste for colors
       return (
-        <div className="py-2 px-1 text-yellow-700 border rounded text-center">
+        <span className="py-2 px-1 text-yellow-700 border rounded text-center">
           Liability 💼
-        </div>
+        </span>
       );
     case InsuranceTypes.HOUSEHOLD:
       return (
-        <div className="py-2 px-1 text-yellow-300 border rounded text-center">
+        <span className="py-2 px-1 text-yellow-300 border rounded text-center">
           Household 🏠
-        </div>
+        </span>
       );
     case InsuranceTypes.HEALTH:
       return (
-        <div className="py-2 px-1 text-green-300 border rounded text-center">
+        <span className="py-2 px-1 text-green-300 border rounded text-center">
           Health 🚑
-        </div>
+        </span>
       );
   }
 });

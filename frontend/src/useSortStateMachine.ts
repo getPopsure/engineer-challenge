@@ -1,6 +1,6 @@
 import React from "react";
 
-type SortMachineState = {
+export type SortMachineState = {
   column: string | null;
   direction: "ASCENDING" | "DESCENDING";
 };

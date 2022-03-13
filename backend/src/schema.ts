@@ -61,10 +61,16 @@ export const typeDefs = gql`
     pageInfo: PageInfo
   }
 
+  input PoliciesFilter {
+    textFilter: String!
+    insuranceTypeFilter: [InsuranceType]!
+  }
+
   type Query {
     paginatedPolicies(
       sortBy: PoliciesSorting
       pagination: Pagination
+      filter: PoliciesFilter
     ): PoliciesPaginatedResult
     customers: [Customer!]!
   }
@@ -79,6 +85,9 @@ export const typeDefs = gql`
   }
 `;
 
+export type InsuranceType = "LIABILITY" | "HOUSEHOLD" | "HEALTH";
+export type PolicyStatus = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT";
+
 export type Policy = {
   policyId: string;
   provider: string;
@@ -87,8 +96,8 @@ export type Policy = {
   endDate: string;
   createdAt: string;
   customerId: string;
-  insuranceType: "LIABILITY" | "HOUSEHOLD" | "HEALTH";
-  status: "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT";
+  insuranceType: InsuranceType;
+  status: PolicyStatus;
 };
 
 export type Customer = {
@@ -106,6 +115,10 @@ export type PoliciesArgs = {
   pagination?: {
     page: number;
     perPage: number;
+  };
+  filter?: {
+    textFilter: string;
+    insuranceTypeFilter: InsuranceType[];
   };
 };
 

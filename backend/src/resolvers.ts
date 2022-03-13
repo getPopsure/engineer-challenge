@@ -9,18 +9,31 @@ import {
 
 function stringLexigoraphicalComparator<T>(
   selector: (value: T) => string,
-  sortBy: PoliciesArgs["sortBy"]
+  direction: number
 ) {
   return (a: T, b: T) => {
-    const multiplier = sortBy?.direction === "ASCENDING" ? 1 : -1;
-
     return (
       selector(a)
         .toLowerCase()
         .localeCompare(selector(b).toLowerCase(), undefined, {
           numeric: true,
-        }) * multiplier
+        }) * direction
     );
+  };
+}
+
+function policyFilter(filter?: PoliciesArgs["filter"]) {
+  return (p: PolicyWithCustomer) => {
+    if (filter) {
+      return (
+        filter.insuranceTypeFilter.includes(p.insuranceType) &&
+        [p.provider, p.policyNumber, p.name].some((field) =>
+          field.includes(filter.textFilter)
+        )
+      );
+    }
+
+    return true;
   };
 }
 
@@ -35,37 +48,39 @@ export function getPoliciesQuery(
       page: 0,
       perPage: 10,
     },
+    filter = {
+      textFilter: "",
+      insuranceTypeFilter: ["HEALTH", "HOUSEHOLD", "LIABILITY"],
+    },
   }: PoliciesArgs,
   context: GraphqlContext
 ): PoliciesPaginatedResult {
-  const sortedPolicies: Policy[] | PolicyWithCustomer[] =
-    sortBy?.column === "name"
-      ? context.state.policies
-          .map<PolicyWithCustomer>((p) => {
-            // Unfortunately I have to manually prefetch customers
-            // to make sort and filter by customer name working
-            const customer = customerByIdResolver(p, {}, context);
-            const name = `${customer.firstName} ${customer.lastName}`;
+  const sortedPolicies: PolicyWithCustomer[] = context.state.policies
+    .map<PolicyWithCustomer>((p) => {
+      // Unfortunately I have to manually prefetch customers
+      // to make sort and filter by customer name working
+      const customer = customerByIdResolver(p, {}, context);
+      const name = `${customer.firstName} ${customer.lastName}`;
 
-            return {
-              ...p,
-              customer,
-              name,
-            };
-          })
-          .sort(stringLexigoraphicalComparator((p) => p.name, sortBy))
-      : [...context.state.policies].sort(
-          stringLexigoraphicalComparator(
-            (p) => p[sortBy.column as keyof Policy],
-            sortBy
-          )
-        );
+      return {
+        ...p,
+        customer,
+        name,
+      };
+    })
+    .sort(
+      stringLexigoraphicalComparator(
+        (p) => p[sortBy.column],
+        sortBy.direction === "ASCENDING" ? 1 : -1
+      )
+    );
 
-  const totalPages = Math.floor(sortedPolicies.length / pagination.perPage);
+  const filteredPolicies = sortedPolicies.filter(policyFilter(filter));
+  const totalPages = Math.floor(filteredPolicies.length / pagination.perPage);
   const start = pagination.page * pagination.perPage;
 
   return {
-    policies: sortedPolicies.slice(start, start + pagination.perPage),
+    policies: filteredPolicies.slice(start, start + pagination.perPage),
     pageInfo: {
       hasNextPage: pagination.page < totalPages,
       hasPreviousPage: pagination.page > 0,
