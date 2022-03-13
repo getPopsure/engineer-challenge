@@ -17,7 +17,6 @@ type Policy = {
   createdAt: string;
   status: InsuranceStatuses;
   insuranceType: InsuranceTypes;
-
   customer: {
     firstName: string;
     lastName: string;
@@ -26,19 +25,27 @@ type Policy = {
 };
 
 const POLICY_TABLE_QUERY = gql`
-  query policiesTable($column: String, $direction: SortingDirection) {
-    getPolicies(sortBy: { column: $column, direction: $direction }) {
-      policyId
-      provider
-      policyNumber
-      startDate
-      endDate
-      insuranceType
-      status
-      customer {
-        customerId
-        firstName
-        lastName
+  query policiesTable($sortBy: PoliciesSorting, $pagination: Pagination) {
+    paginatedPolicies(sortBy: $sortBy, pagination: $pagination) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        totalPages
+        currentPage
+      }
+      policies {
+        policyId
+        provider
+        policyNumber
+        startDate
+        endDate
+        insuranceType
+        status
+        customer {
+          customerId
+          firstName
+          lastName
+        }
       }
     }
   }
@@ -81,15 +88,29 @@ function formatDatePeriod([fromString, toString]: string[]) {
   return `${formatter.format(fromDate)} - ${formatter.format(toDate)}`;
 }
 
-export default React.memo(function PolicyTable() {
+export type PolicyTableProps = {
+  paginationLimit?: number;
+};
+
+export default React.memo(function PolicyTable({
+  paginationLimit = 33,
+}: PolicyTableProps) {
   const [sortState, toggleColumnSort, getSortingIndicator] =
     useSortStateMachine();
-  const { loading, error, data } = useQuery(POLICY_TABLE_QUERY, {
+
+  const { fetchMore, loading, error, data } = useQuery(POLICY_TABLE_QUERY, {
     variables: {
-      column: sortState.column,
-      direction: sortState.direction,
+      sortBy: {
+        column: sortState.column,
+        direction: sortState.direction,
+      },
+      pagination: {
+        page: 0,
+        perPage: paginationLimit,
+      },
     },
   });
+
   const [mutatePolicy] = useMutation(POLICY_MUTATION, {
     onCompleted: (data) => {
       // TODO: add toast message about successful operation
@@ -128,6 +149,37 @@ export default React.memo(function PolicyTable() {
     },
     [mutatePolicy]
   );
+
+  const policies = data?.paginatedPolicies?.policies;
+  const pageInfo = data?.paginatedPolicies?.pageInfo;
+
+  const fetchNextPage = React.useCallback(async () => {
+    await fetchMore({
+      variables: {
+        pagination: {
+          page: pageInfo?.currentPage + 1,
+          perPage: paginationLimit,
+        },
+      },
+      updateQuery: (_, { fetchMoreResult }) => {
+        return fetchMoreResult;
+      },
+    });
+  }, [fetchMore, pageInfo?.currentPage, paginationLimit]);
+
+  const fetchPreviousPage = React.useCallback(async () => {
+    await fetchMore({
+      variables: {
+        pagination: {
+          page: pageInfo?.currentPage - 1,
+          perPage: paginationLimit,
+        },
+      },
+      updateQuery: (_, { fetchMoreResult }) => {
+        return fetchMoreResult;
+      },
+    });
+  }, [fetchMore, pageInfo?.currentPage, paginationLimit]);
 
   if (error) {
     return <h2>{error}</h2>;
@@ -225,7 +277,7 @@ export default React.memo(function PolicyTable() {
             </thead>
 
             <tbody>
-              {(!data.getPolicies || data.getPolicies.length === 0) && (
+              {policies.length === 0 && (
                 <tr className="border-b">
                   <td colSpan={7}>
                     <div className="py-2 text-center text-large font-semibold">
@@ -234,8 +286,8 @@ export default React.memo(function PolicyTable() {
                   </td>
                 </tr>
               )}
-              {data.getPolicies?.length > 0 &&
-                data.getPolicies.map((policy: Policy) => (
+              {policies.length > 0 &&
+                policies.map((policy: Policy) => (
                   <tr
                     key={policy.policyId}
                     className="border-b odd:bg-white even:bg-gray-200"
@@ -283,6 +335,29 @@ export default React.memo(function PolicyTable() {
                 ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="py-5 flex justify-between">
+          {pageInfo?.hasPreviousPage ? (
+            <button
+              className="py-2 px-4 mr-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+              onClick={fetchPreviousPage}
+            >
+              ← &nbsp; Previous
+            </button>
+          ) : (
+            <div />
+          )}
+          {pageInfo?.hasNextPage ? (
+            <button
+              className="py-2 px-4 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+              onClick={fetchNextPage}
+            >
+              Next &nbsp; →
+            </button>
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     </div>

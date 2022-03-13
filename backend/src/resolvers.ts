@@ -1,17 +1,18 @@
 import { UserInputError, ValidationError } from "apollo-server-core";
-import { Customer, GraphqlContext, Policy, PolicySortingArgs } from "./schema";
-
-type PolicyWithCustomer = Policy & {
-  customer: Customer;
-  name: string;
-};
+import {
+  GraphqlContext,
+  Policy,
+  PoliciesArgs,
+  PoliciesPaginatedResult,
+  PolicyWithCustomer,
+} from "./schema";
 
 function stringLexigoraphicalComparator<T>(
   selector: (value: T) => string,
-  sortBy: PolicySortingArgs["sortBy"]
+  sortBy: PoliciesArgs["sortBy"]
 ) {
   return (a: T, b: T) => {
-    const multiplier = sortBy.direction === "ASCENDING" ? 1 : -1;
+    const multiplier = sortBy?.direction === "ASCENDING" ? 1 : -1;
 
     return (
       selector(a)
@@ -25,32 +26,53 @@ function stringLexigoraphicalComparator<T>(
 
 export function getPoliciesQuery(
   _: unknown,
-  { sortBy }: PolicySortingArgs,
+  {
+    sortBy = {
+      column: "createdAt",
+      direction: "DESCENDING",
+    },
+    pagination = {
+      page: 0,
+      perPage: 10,
+    },
+  }: PoliciesArgs,
   context: GraphqlContext
-) {
-  if (sortBy.column === "name") {
-    return context.state.policies
-      .map<PolicyWithCustomer>((p) => {
-        // Unfortunately I have to manually prefetch customers
-        // to be able to sort and filter by customer name
-        const customer = customerByIdResolver(p, {}, context);
-        const name = `${customer.firstName} ${customer.lastName}`;
+): PoliciesPaginatedResult {
+  const sortedPolicies: Policy[] | PolicyWithCustomer[] =
+    sortBy?.column === "name"
+      ? context.state.policies
+          .map<PolicyWithCustomer>((p) => {
+            // Unfortunately I have to manually prefetch customers
+            // to make sort and filter by customer name working
+            const customer = customerByIdResolver(p, {}, context);
+            const name = `${customer.firstName} ${customer.lastName}`;
 
-        return {
-          ...p,
-          customer,
-          name,
-        };
-      })
-      .sort(stringLexigoraphicalComparator((p) => p.name, sortBy));
-  }
+            return {
+              ...p,
+              customer,
+              name,
+            };
+          })
+          .sort(stringLexigoraphicalComparator((p) => p.name, sortBy))
+      : [...context.state.policies].sort(
+          stringLexigoraphicalComparator(
+            (p) => p[sortBy.column as keyof Policy],
+            sortBy
+          )
+        );
 
-  return [...context.state.policies].sort(
-    stringLexigoraphicalComparator(
-      (p) => p[sortBy.column as keyof Policy],
-      sortBy
-    )
-  );
+  const totalPages = Math.floor(sortedPolicies.length / pagination.perPage);
+  const start = pagination.page * pagination.perPage;
+
+  return {
+    policies: sortedPolicies.slice(start, start + pagination.perPage),
+    pageInfo: {
+      hasNextPage: pagination.page < totalPages,
+      hasPreviousPage: pagination.page > 0,
+      totalPages,
+      currentPage: pagination.page,
+    },
+  };
 }
 
 export function mutationUpdatePolicy(
@@ -77,8 +99,6 @@ export function mutationUpdatePolicy(
     ...args,
   };
 
-  // will be persistent until server restarts
-  // I think this is good enough to demonstrate that mutation is working
   updateState({
     ...state,
     policies: [

@@ -39,13 +39,33 @@ export const typeDefs = gql`
     DESCENDING
   }
 
-  input PolicySorting {
-    column: String = "createdAt"
-    direction: SortingDirection = DESCENDING
+  input PoliciesSorting {
+    column: String!
+    direction: SortingDirection!
+  }
+
+  input Pagination {
+    page: Int!
+    perPage: Int!
+  }
+
+  type PageInfo {
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    totalPages: Int!
+    currentPage: Int!
+  }
+
+  type PoliciesPaginatedResult {
+    policies: [Policy]!
+    pageInfo: PageInfo
   }
 
   type Query {
-    getPolicies(sortBy: PolicySorting): [Policy!]!
+    paginatedPolicies(
+      sortBy: PoliciesSorting
+      pagination: Pagination
+    ): PoliciesPaginatedResult
     customers: [Customer!]!
   }
 
@@ -78,11 +98,32 @@ export type Customer = {
   dateOfBirth: string;
 };
 
-export type PolicySortingArgs = {
-  sortBy: {
+export type PoliciesArgs = {
+  sortBy?: {
     column: keyof Policy | "name";
     direction: "ASCENDING" | "DESCENDING";
   };
+  pagination?: {
+    page: number;
+    perPage: number;
+  };
+};
+
+export type PageInfo = {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  totalPages: number;
+  currentPage: number;
+};
+
+export type PolicyWithCustomer = Policy & {
+  customer: Customer;
+  name: string;
+};
+
+export type PoliciesPaginatedResult = {
+  policies: Policy[] | PolicyWithCustomer[];
+  pageInfo?: PageInfo;
 };
 
 export type State = {
