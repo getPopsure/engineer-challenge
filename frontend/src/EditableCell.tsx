@@ -149,6 +149,7 @@ export type EditableCellProps<T = string> = {
   ) => Promise<void>;
 };
 
+// TODO: add memoization for this component
 export function EditableCell<T>({
   entityId,
   field,

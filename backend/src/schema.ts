@@ -34,8 +34,18 @@ export const typeDefs = gql`
     DROPPED_OUT
   }
 
+  enum SortingDirection {
+    ASCENDING
+    DESCENDING
+  }
+
+  input PolicySorting {
+    column: String = "createdAt"
+    direction: SortingDirection = DESCENDING
+  }
+
   type Query {
-    policies: [Policy!]!
+    getPolicies(sortBy: PolicySorting): [Policy!]!
     customers: [Customer!]!
   }
 
@@ -49,19 +59,6 @@ export const typeDefs = gql`
   }
 `;
 
-export enum InsuranceTypes {
-  LIABILITY = "LIABILITY",
-  HOUSEHOLD = "HOUSEHOLD",
-  HEALTH = "HEALTH",
-}
-
-export enum StatusTypes {
-  ACTIVE = "ACTIVE",
-  PENDING = "PENDING",
-  CANCELLED = "CANCELLED",
-  DROPPED_OUT = "DROPPED_OUT",
-}
-
 export type Policy = {
   policyId: string;
   provider: string;
@@ -70,8 +67,8 @@ export type Policy = {
   endDate: string;
   createdAt: string;
   customerId: string;
-  insuranceType: InsuranceTypes;
-  status: StatusTypes;
+  insuranceType: "LIABILITY" | "HOUSEHOLD" | "HEALTH";
+  status: "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT";
 };
 
 export type Customer = {
@@ -81,7 +78,19 @@ export type Customer = {
   dateOfBirth: string;
 };
 
+export type PolicySortingArgs = {
+  sortBy: {
+    column: keyof Policy | "name";
+    direction: "ASCENDING" | "DESCENDING";
+  };
+};
+
 export type State = {
   policies: Policy[];
   customers: Customer[];
+};
+
+export type GraphqlContext = {
+  state: State;
+  updateState(value: State): State;
 };
