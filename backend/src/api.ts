@@ -1,4 +1,4 @@
-import { Router, json } from "express";
+import express, { Router, json } from "express";
 import cookieParser from "cookie-parser";
 import { scryptSync, timingSafeEqual } from "crypto";
 
@@ -53,3 +53,7 @@ apiRouter.get("/check-auth", (_, res) => res.status(200).json());
 apiRouter.post("/signout", (_, res) =>
   res.clearCookie(cookieKey).status(200).json()
 );
+
+export function createApp() {
+  return express().use("/api", apiRouter);
+}

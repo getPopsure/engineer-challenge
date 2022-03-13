@@ -5,6 +5,8 @@ import {
   PoliciesArgs,
   PoliciesPaginatedResult,
   PolicyWithCustomer,
+  CustomerArgs,
+  PolicyArgs,
 } from "./schema";
 
 function stringLexigoraphicalComparator<T>(
@@ -59,7 +61,7 @@ export function getPoliciesQuery(
     .map<PolicyWithCustomer>((p) => {
       // Unfortunately I have to manually prefetch customers
       // to make sort and filter by customer name working
-      const customer = customerByIdResolver(p, {}, context);
+      const customer = customerByIdResolver(p, undefined, context);
       const name = `${customer.firstName} ${customer.lastName}`;
 
       return {
@@ -126,19 +128,30 @@ export function mutationUpdatePolicy(
   return newPolicy;
 }
 
-export function customerByIdResolver(
-  parent: Policy,
+export function policyByIdResolver(
   _: unknown,
+  args: PolicyArgs,
   { state }: GraphqlContext
 ) {
-  const customer = state.customers.find(
-    (c) => c.customerId === parent.customerId
-  );
+  const policy = state.policies.find((p) => p.policyId === args.id);
+
+  if (!policy) {
+    throw new Error(`Invalid policy with id ${args.id}!`);
+  }
+
+  return policy;
+}
+
+export function customerByIdResolver(
+  parent: Policy | undefined,
+  args: CustomerArgs | undefined,
+  { state }: GraphqlContext
+) {
+  const customerId = parent?.customerId ?? args?.id;
+  const customer = state.customers.find((c) => c.customerId === customerId);
 
   if (!customer) {
-    throw new Error(
-      `Invalid relation! Customer with id ${parent.customerId} does not exist!`
-    );
+    throw new Error(`Invalid customer with id ${customerId}!`);
   }
 
   return customer;

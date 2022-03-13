@@ -72,7 +72,8 @@ export const typeDefs = gql`
       pagination: Pagination
       filter: PoliciesFilter
     ): PoliciesPaginatedResult
-    customers: [Customer!]!
+    policy(id: String!): Policy!
+    customer(id: String!): Customer!
   }
 
   type Mutation {
@@ -100,11 +101,19 @@ export type Policy = {
   status: PolicyStatus;
 };
 
+export type PolicyArgs = {
+  id: string;
+};
+
 export type Customer = {
   customerId: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
+};
+
+export type CustomerArgs = {
+  id: string;
 };
 
 export type PoliciesArgs = {

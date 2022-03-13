@@ -17,9 +17,9 @@ export type Policy = {
   status: InsuranceStatuses;
   insuranceType: InsuranceTypes;
   customer: {
+    customerId: string;
     firstName: string;
     lastName: string;
-    dateOfBirth: string;
   };
 };
 
@@ -108,8 +108,10 @@ export default React.memo(function PolicyTableRow({
 
   return (
     <tr className="border-b odd:bg-white even:bg-gray-200">
-      <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-        {policy.customer.firstName} {policy.customer.lastName}
+      <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap underline">
+        <Link to={`/customer/${policy.customer.customerId}`}>
+          {policy.customer.firstName} {policy.customer.lastName}
+        </Link>
       </td>
       <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
         <EditableCell

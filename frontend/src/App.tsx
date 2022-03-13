@@ -14,6 +14,8 @@ function useLocationToPageTitleMapper() {
     return "Insurance policies list";
   } else if (location.pathname.startsWith("/policy")) {
     return `Policy "${id}"`;
+  } else if (location.pathname.startsWith("/customer")) {
+    return `Customer "${id}"`;
   }
 
   return "";

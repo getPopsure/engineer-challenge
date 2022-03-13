@@ -31,17 +31,11 @@ const client = new ApolloClient({
   }),
 });
 
-function Policy() {
-  return <h1>Policy page</h1>;
-}
-
-function User() {
-  return <h1>User page</h1>;
-}
-
 const Login = React.lazy(() => import("./Login"));
 const App = React.lazy(() => import("./App"));
 const PolicyTablePage = React.lazy(() => import("./PolicyTablePage"));
+const PolicyPage = React.lazy(() => import("./PolicyPage"));
+const CustomerPage = React.lazy(() => import("./CustomerPage"));
 
 function Suspencer({ element }: { element: JSX.Element }) {
   return <React.Suspense fallback={<>...</>}>{element}</React.Suspense>;
@@ -60,9 +54,14 @@ ReactDOM.render(
             />
             <Route
               path="/policy/:id"
-              element={<Suspencer element={<Policy />} />}
+              element={
+                <Suspencer element={<Suspencer element={<PolicyPage />} />} />
+              }
             />
-            <Route path="/user/:id" element={<User />} />
+            <Route
+              path="/customer/:id"
+              element={<Suspencer element={<CustomerPage />} />}
+            />
           </Route>
           <Route path="*" element={<Navigate to={"/policies"} />} />
         </Routes>
