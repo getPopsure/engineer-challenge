@@ -58,7 +58,7 @@ export function TextInputCell({
   return (
     <input
       ref={inputRef}
-      className="min-w-0 max-w-min w-full p-0 text-sm"
+      className="min-w-0 w-full p-0 text-sm"
       type="text"
       defaultValue={defaultValue}
       onKeyDown={handleKeyDown}
