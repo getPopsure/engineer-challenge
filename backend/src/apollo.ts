@@ -3,7 +3,7 @@ import { ApolloServer } from "apollo-server-express";
 import { Server } from "http";
 
 import data from "./data.json";
-import { State, typeDefs } from "./schema";
+import { GraphqlContext, State, typeDefs } from "./schema";
 import {
   getPoliciesQuery,
   mutationUpdatePolicy,
@@ -29,20 +29,22 @@ const resolvers = {
   },
 };
 
-export function createApolloServer() {
+const context = {
+  get state() {
+    return state;
+  },
+  updateState: (value: State): State => {
+    // will be persistent until server restarts
+    // I think this is good enough to demonstrate that mutation is working
+    state = value;
+    return state;
+  },
+};
+
+export function createApolloServer(withContext: GraphqlContext = context) {
   return new ApolloServer({
     typeDefs,
     resolvers,
-    context: {
-      get state() {
-        return state;
-      },
-      updateState: (value: State): State => {
-        // will be persistent until server restarts
-        // I think this is good enough to demonstrate that mutation is working
-        state = value;
-        return state;
-      },
-    },
+    context: withContext,
   });
 }

@@ -19,17 +19,21 @@ apiRouter.use(json());
 apiRouter.use(cookieParser(cookieSecret));
 
 apiRouter.post("/signin", (req, res) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({ message: "Bad Request!" });
+  }
+
   const adminCredentials = admins.find((a) => a.email === req.body.email);
 
   if (!adminCredentials) {
-    return res.status(403).json({ message: "Login or password is incorrect" });
+    return res.status(403).json({ message: "Login or password is incorrect!" });
   }
 
   const [salt, key] = adminCredentials.password.split(":");
   const passwordHash = scryptSync(req.body.password, salt, 64);
 
   if (!timingSafeEqual(passwordHash, Buffer.from(key, "base64"))) {
-    return res.status(403).json({ message: "Login or password is incorrect" });
+    return res.status(403).json({ message: "Login or password is incorrect!" });
   }
 
   return res

@@ -31,7 +31,7 @@ const client = new ApolloClient({
   }),
 });
 
-const Login = React.lazy(() => import("./Login"));
+const LoginPage = React.lazy(() => import("./LoginPage"));
 const App = React.lazy(() => import("./App"));
 const PolicyTablePage = React.lazy(() => import("./PolicyTablePage"));
 const PolicyPage = React.lazy(() => import("./PolicyPage"));
@@ -46,7 +46,10 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Suspencer element={<Login />} />} />
+          <Route
+            path="/login"
+            element={<Suspencer element={<LoginPage />} />}
+          />
           <Route element={<Suspencer element={<App />} />}>
             <Route
               path="/policies"
