@@ -24,7 +24,7 @@ enum InsuranceType {
 }
 
 model Customer {
-  id            String      @id @db.Uuid
+  id            String      @id @default(uuid()) @db.Uuid
   firstName     String      @db.VarChar(255)
   lastName      String      @db.VarChar(255)
   dateOfBirth   DateTime
@@ -32,7 +32,7 @@ model Customer {
 }
 
 model Policy {
-  id            String        @id @db.Uuid
+  id            String        @id @default(uuid()) @db.Uuid
   customer      Customer      @relation(fields: [customerId], references: [id])
   customerId    String        @db.Uuid
   provider      String
