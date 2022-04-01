@@ -9,7 +9,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1978-12-03T06:33:17Z',
     policies: {
       create: {
-        provider: 'Blogtags',
+        provider: 'BARMER',
         insuranceType: 'HEALTH',
         status: 'PENDING',
         startDate: '2017-04-26T05:32:06Z',
@@ -22,7 +22,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1985-02-28T12:51:27Z',
     policies: {
       create: {
-        provider: 'Thoughtblab',
+        provider: 'BARMER',
         insuranceType: 'LIABILITY',
         status: 'PENDING',
         startDate: '2015-01-13T04:52:15Z',
@@ -35,7 +35,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1993-01-20T02:51:20Z',
     policies: {
       create: {
-        provider: 'Aivee',
+        provider: 'AOK',
         insuranceType: 'HEALTH',
         status: 'DROPPED_OUT',
         startDate: '2014-07-14T00:54:34Z',
@@ -48,7 +48,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1997-04-24T11:26:05Z',
     policies: {
       create: {
-        provider: 'Aivee',
+        provider: 'AOK',
         insuranceType: 'HEALTH',
         status: 'PENDING',
         startDate: '2020-07-21T19:40:35Z',
@@ -61,7 +61,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2006-12-04T01:13:38Z',
     policies: {
       create: {
-        provider: 'Gevee',
+        provider: 'BARMER',
         insuranceType: 'HOUSEHOLD',
         status: 'ACTIVE',
         startDate: '2013-03-30T19:27:54Z',
@@ -74,7 +74,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2006-03-17T03:35:43Z',
     policies: {
       create: {
-        provider: 'Janyx',
+        provider: 'AOK',
         insuranceType: 'HEALTH',
         status: 'CANCELLED',
         startDate: '2021-01-12T19:24:41Z',
@@ -87,7 +87,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2022-03-06T08:51:11Z',
     policies: {
       create: {
-        provider: 'Yata',
+        provider: 'BARMER',
         insuranceType: 'HEALTH',
         status: 'ACTIVE',
         startDate: '2018-05-11T11:56:51Z',
@@ -100,7 +100,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1992-05-23T18:12:40Z',
     policies: {
       create: {
-        provider: 'Edgeclub',
+        provider: 'TK',
         insuranceType: 'HOUSEHOLD',
         status: 'PENDING',
         startDate: '2013-01-25T04:14:34Z',
@@ -113,7 +113,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2005-08-12T07:01:40Z',
     policies: {
       create: {
-        provider: 'Mycat',
+        provider: 'TK',
         insuranceType: 'HEALTH',
         status: 'ACTIVE',
         startDate: '2012-09-24T09:55:17Z',
@@ -126,7 +126,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2004-06-15T14:20:52Z',
     policies: {
       create: {
-        provider: 'Bubbletube',
+        provider: 'AOK',
         insuranceType: 'HEALTH',
         status: 'PENDING',
         startDate: '2020-05-02T05:53:46Z',
@@ -139,7 +139,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2006-02-23T00:10:07Z',
     policies: {
       create: {
-        provider: 'Dabtype',
+        provider: 'BARMER',
         insuranceType: 'HOUSEHOLD',
         status: 'PENDING',
         startDate: '2022-01-12T17:47:41Z',
@@ -152,7 +152,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1977-10-16T17:54:53Z',
     policies: {
       create: {
-        provider: 'Gigazoom',
+        provider: 'TK',
         insuranceType: 'HEALTH',
         status: 'ACTIVE',
         startDate: '2012-07-04T15:31:29Z',
@@ -165,7 +165,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1986-12-29T08:02:10Z',
     policies: {
       create: {
-        provider: 'Skiptube',
+        provider: 'TK',
         insuranceType: 'HEALTH',
         status: 'PENDING',
         startDate: '2012-08-01T03:25:59Z',
@@ -178,7 +178,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2005-06-10T22:51:36Z',
     policies: {
       create: {
-        provider: 'Kwilith',
+        provider: 'DAK',
         insuranceType: 'LIABILITY',
         status: 'DROPPED_OUT',
         startDate: '2014-02-22T06:02:58Z',
@@ -191,7 +191,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2002-03-24T11:34:21Z',
     policies: {
       create: {
-        provider: 'Meevee',
+        provider: 'BARMER',
         insuranceType: 'LIABILITY',
         status: 'ACTIVE',
         startDate: '2014-04-14T12:39:02Z',
@@ -204,7 +204,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2009-10-26T12:24:25Z',
     policies: {
       create: {
-        provider: 'Wordify',
+        provider: 'TK',
         insuranceType: 'HOUSEHOLD',
         status: 'DROPPED_OUT',
         startDate: '2017-05-28T11:56:27Z',
@@ -217,7 +217,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2011-08-01T11:56:32Z',
     policies: {
       create: {
-        provider: 'Zoomcast',
+        provider: 'AOK',
         insuranceType: 'HOUSEHOLD',
         status: 'CANCELLED',
         startDate: '2012-03-29T01:59:13Z',
@@ -230,7 +230,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '2017-08-20T14:53:21Z',
     policies: {
       create: {
-        provider: 'Divanoodle',
+        provider: 'DAK',
         insuranceType: 'LIABILITY',
         status: 'PENDING',
         startDate: '2013-11-15T09:58:45Z',
@@ -243,7 +243,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1988-10-25T13:37:10Z',
     policies: {
       create: {
-        provider: 'Quimba',
+        provider: 'DAK',
         insuranceType: 'HEALTH',
         status: 'ACTIVE',
         startDate: '2020-08-16T03:24:30Z',
@@ -256,7 +256,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
     dateOfBirth: '1979-04-23T10:03:12Z',
     policies: {
       create: {
-        provider: 'Edgepulse',
+        provider: 'AOK',
         insuranceType: 'LIABILITY',
         status: 'ACTIVE',
         startDate: '2016-04-14T02:53:58Z',
