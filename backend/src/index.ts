@@ -5,6 +5,8 @@ const app = express();
 const port = 4000;
 const prisma = new PrismaClient();
 
+app.use(express.json())
+
 app.get('/policies', async (req, res) => {
   const { search } = req.query;
 

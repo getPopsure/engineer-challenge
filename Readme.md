@@ -46,12 +46,15 @@ cp ./backend/.env.example ./backend/.env
 3. Build and run the Docker image:
 
 ```bash
-cd backend & docker-compose build & docker-compose up
+cd backend
+docker-compose build
+docker-compose up
 ```
 
-4. Run the seed script to add initial data:
+4. On a new terminal, run the migration and the seed script to add initial data:
 
 ```bash
+docker compose exec backend yarn prisma migrate dev
 docker compose exec backend yarn prisma db seed
 ```
 
@@ -80,7 +83,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 | id             | string                          | Used to identify the policy                   |
 | customer       | [Customer](#Customer)           | Object holding the customer's informations    |
 | provider       | string                          | Name of the provider (Allianz, AXA…)          |
-| insurance type | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
+| insuranceType  | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
 | status         | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
 | startDate      | date                            | Date when the policy should start             |
 | endDate        | date                            | Date when the policy ends                     |
