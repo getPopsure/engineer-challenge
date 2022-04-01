@@ -15,7 +15,7 @@ You can spend as little or as much time as you like on this project. We've gener
 
 ## User story
 
-As a user, I want to be able to search for policies using any of the fields displayed on the table.
+As a user, I want to be able to search for policies using any of the text fields displayed on the table.
 
 When a search filter is applied, I want to see the filtered information on the same table.
 
