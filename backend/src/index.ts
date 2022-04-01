@@ -40,7 +40,7 @@ app.get('/policies', async (req, res) => {
     }
   })
 
-  res.send(policies);
+  res.json(policies);
 })
 
 app.get('/', (req, res) => {
