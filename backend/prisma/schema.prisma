@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PolicyStatus {
+  ACTIVE
+  PENDING
+  CANCELLED
+  DROPPED_OUT
+}
+
+enum InsuranceType {
+  LIABILITY
+  HOUSEHOLD
+  HEALTH
+}
+
+model Customer {
+  id            String      @id @db.Uuid
+  firstName     String      @db.VarChar(255)
+  lastName      String      @db.VarChar(255)
+  dateOfBirth   DateTime
+  policies      Policy[]
+}
+
+model Policy {
+  id            String        @id @db.Uuid
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  customerId    String        @db.Uuid
+  provider      String
+  insuranceType InsuranceType
+  status        PolicyStatus
+  startDate     DateTime
+  endDate       DateTime?
+  createdAt     DateTime      @default(now())
+}
