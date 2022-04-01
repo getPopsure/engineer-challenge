@@ -24,6 +24,7 @@ app.get('/policies', async (req, res) => {
       }
     }
   })
+
   res.send(policies);
 })
 

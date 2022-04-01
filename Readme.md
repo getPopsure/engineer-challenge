@@ -1,64 +1,110 @@
-# Feather - Fullstack Engineer code challenge
+# Feather Take Home Assessment
 
-In this code challenge you'll need to create a simple admin panel from scratch. It would need to have a single table view to list insurance policies showcasing all the various field they may have.
+Thank you for applying at Feather and taking the time to do this home assessment.
 
-The [frontend](./frontend) part would communicate with the [backend](./backend) through a GraphQL API. You need to implement both.
+The goal of this project is to let you show off your coding and problem-solving skills, on a task that resembles the kind of work you’ll be doing with us.
 
-We've generated some boilerplate for you to get started.
+Depending on the position you are applying, you can focus more on the frontend or backend part of the application (or both if you are applying for a fullstack position).
 
-## What we'll be looking at
+You can spend as little or as much time as you like on this project. We've generated some boilerplate for you to get started.
 
-- How you write idiomatic code.
-- How you deal with UI/UX.
-- How you navigate the requirements.
-- How you test & write testable code.
-- How you package the code.
-- How you deal with the security concerns.
-- How you communicate with your fellow programmers.
+1. Start by reading the [User story](#User-story) and the [Acceptance criteria](#Acceptance-criteria) have a clear idea of the requirements.
+2. Use the [Getting started](#Getting-started) guide to set up a local version of the project on your machine.
+3. Take a look at the [Data structure](#Data-structure) and [API](#API) to know what the data looks like.
+4. Finish by answering a [couple of questions](#General-questions) about the project. You can answer them on this very same file.
 
-## Tasks
+## User story
 
-1. On the [backend](./backend), change the GraphQL schema to reflect the [Data structure](#Data-structure)
-2. On the [frontend](./frontend), fetch the data returned by the GraphQL endpoint with the help of the [Apollo client](https://www.apollographql.com)
-3. On the [frontend](./frontend), display all the data returned by the endpoint in a table with the help of [tailwindcss](https://tailwindcss.com)
-   - At least several fields should be editable in place
-   - The table should have pagination and sorting on each of the columns
-   - (Bonus) Add a text search input
-   - (Bonus) Let the admin filter policies by insurance type or other fields
-4. (Bonus) Package the app with Docker
-5. (Bonus) Authenticate admins using login/password
-6. (Bonus) Create more screens (e.g. customer profile, policy page…)
+As a user, I want to be able to search for policies using any of the fields displayed on the table.
+
+When a search filter is applied, I want to see the filtered information on the same table.
+
+When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information.
+
+## Acceptance criteria
+
+- Show only `ACTIVE` and `PENDING` policies.
+- Do not display any results if there are no matches
+- Clearing the search should return the table to its original state
+
+## Task requirements
+
+- Make sure your feature **works as expected**
+- Your code is **easy to understand** and follows best practices
+- The project **runs with one command,** and without any external configuration
+- **Your code has tests** to make sure the functionalities work as expected
+
+## Getting started
+
+1. Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed on your machine
+2. Set up the environment variables
+
+```bash
+cp ./backend/.env.example ./backend/.env
+```
+3. Build and run the Docker image:
+```bash
+cd backend & docker-compose build & docker-compose up
+```
+4. Run the seed script to add initial data:
+
+```bash
+docker compose exec backend yarn prisma db seed
+```
+5. That’s it!
+
+You can see the app on `http://localhost:3000`
+
+The API should be running on `http://localhost:4000`
+
+## API
+
+After following the [Getting started](#Getting-started) guide, the backend should be running on port `4000`. The backend currently have one endpoint:
+
+| Request type | Path      |
+| ------------ | --------- |
+| GET          | /policies |
+
+Feel free to update or add more endpoints to accommodate or improve your solution.
 
 ## Data structure
-
-To make it all work, you have to define a [GraphQL schema first](https://www.apollographql.com/docs/apollo-server/schema/schema/). No need to back it with a real database, however this would make sense to demonstrate the "edit" function.
-Each policy should have at least the following fields:
 
 ### Policy
 
 | fields         | type                            | comment                                       |
 | -------------- | ------------------------------- | --------------------------------------------- |
+| id             | string                          | Used to identify the policy                   |
 | customer       | [Customer](#Customer)           | Object holding the customer's informations    |
 | provider       | string                          | Name of the provider (Allianz, AXA…)          |
 | insurance type | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
 | status         | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
-| policyNumber   | string                          | Used to identify the policy                   |
 | startDate      | date                            | Date when the policy should start             |
 | endDate        | date                            | Date when the policy ends                     |
 | createdAt      | date                            | Date when the record was created              |
 
 ### Customer
 
-| fields      | type   | comment                  |
-| ----------- | ------ | ------------------------ |
-| firstName   | string | Customer’s first name    |
-| lastName    | string | Customer’s last name     |
-| dateOfBirth | date   | Customer’s date of birth |
+| fields      | type   | comment                       |
+| ----------- | ------ | ----------------------------- |
+| id          | uuid   | Used to identify the customer |
+| firstName   | string | Customer’s first name         |
+| lastName    | string | Customer’s last name          |
+| dateOfBirth | date   | Customer’s date of birth      |
 
 ### InsuranceType
 
-InsuranceType can be of `Liability`, `Household`, `Health`
+`InsuranceType` can be of `LIABILITY`, `HOUSEHOLD`, `HEALTH`
 
 ### PolicyStatus
 
-PolicyStatus can be of `Active`, `Pending`, `Cancelled` and `Dropped out`
+`PolicyStatus` can be of `ACTIVE`, `PENDING`, `CANCELLED` and `DROPPED_OUT`
+
+## General questions
+
+- How much time did you spend working on the solution?
+- What’s the part of the solution you are most proud of?
+
+  *You can share a code snippet here if you feel like it*
+
+- If you had more time, what other things you would like to do?
+- Is there anything you would like to change in the current setup?
