@@ -1,12 +1,27 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 
 const app = express();
 const port = 4000;
 const prisma = new PrismaClient();
 
 app.get('/policies', async (req, res) => {
+  const { search } = req.query;
+
+  const or: Prisma.PolicyWhereInput = search
+    ? {
+      OR: [
+        { provider: { contains: search as string, mode: 'insensitive' } },
+        { customer: { firstName: { contains: search as string, mode: 'insensitive' } } },
+        { customer: { lastName: { contains: search as string, mode: 'insensitive' } } }
+      ],
+    }
+    : {};
+
   const policies = await prisma.policy.findMany({
+    where: {
+      ...or,
+    },
     select: {
       id: true,
       provider: true,

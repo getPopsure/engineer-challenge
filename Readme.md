@@ -42,15 +42,19 @@ When a search filter is applied, I want to be able to clear the current search f
 ```bash
 cp ./backend/.env.example ./backend/.env
 ```
+
 3. Build and run the Docker image:
+
 ```bash
 cd backend & docker-compose build & docker-compose up
 ```
+
 4. Run the seed script to add initial data:
 
 ```bash
 docker compose exec backend yarn prisma db seed
 ```
+
 5. That’s it!
 
 You can see the app on `http://localhost:3000`
@@ -61,9 +65,9 @@ The API should be running on `http://localhost:4000`
 
 After following the [Getting started](#Getting-started) guide, the backend should be running on port `4000`. The backend currently have one endpoint:
 
-| Request type | Path      |
-| ------------ | --------- |
-| GET          | /policies |
+| Request type | Path        | Query Params | Example                   |
+| ------------ | ----------- | ------------ | ------------------------- |
+| `GET`        | `/policies` | `search`     | `/policies?search=BARMER` |
 
 Feel free to update or add more endpoints to accommodate or improve your solution.
 
@@ -104,7 +108,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 - How much time did you spend working on the solution?
 - What’s the part of the solution you are most proud of?
 
-  *You can share a code snippet here if you feel like it*
+  _You can share a code snippet here if you feel like it_
 
 - If you had more time, what other things you would like to do?
 - Is there anything you would like to change in the current setup?
