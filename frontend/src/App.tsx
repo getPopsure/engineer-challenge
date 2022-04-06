@@ -1,7 +1,18 @@
+import Navbar from "./Navbar";
+import Header from "./Header";
+import Table from "./Table";
+
 import "./index.css";
 
-function App() {
-  return <h1 className="text-3xl">Fullstack code challenge</h1>;
-}
+const App = () => (
+  <div>
+    <Navbar />
+    <div className="w-full p-8">
+      <Header />
+      <Table />
+    </div>
+  </div>
+);
+
 
 export default App;
