@@ -64,6 +64,15 @@ You can see the app on `http://localhost:3000`
 
 The API should be running on `http://localhost:4000`
 
+** Note **
+If you want to install new dependencies, you'll have to do it inside the docker container. To do that, you can use the following command:
+
+```
+docker compose exec {backend OR frontend} yarn add {the_name_of_the_package}
+```
+
+Make sure to replace the values between the curly braces `{}` with the correct ones.
+
 ## API
 
 After following the [Getting started](#Getting-started) guide, the backend should be running on port `4000`. The backend currently have one endpoint:
