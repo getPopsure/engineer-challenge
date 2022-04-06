@@ -8,7 +8,7 @@ Depending on the position you are applying, you can focus more on the frontend o
 
 You can spend as little or as much time as you like on this project. We've generated some boilerplate for you to get started.
 
-1. Start by reading the [User story](#User-story) and the [Acceptance criteria](#Acceptance-criteria) have a clear idea of the requirements.
+1. Start by reading the [User story](#User-story) and the [Acceptance criteria](#Acceptance-criteria) to have a clear idea of the requirements.
 2. Use the [Getting started](#Getting-started) guide to set up a local version of the project on your machine.
 3. Take a look at the [Data structure](#Data-structure) and [API](#API) to know what the data looks like.
 4. Finish by answering a [couple of questions](#General-questions) about the project. You can answer them on this very same file.
