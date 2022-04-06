@@ -1,6 +1,6 @@
 # Frontend
 
-This is the frontend part of the [Junior Fullstack Engineer code challenge](../Readme.md).
+This is the frontend part of the [Feather Software Engineer code challenge](../Readme.md).
 
 This project has been set up with:
 
@@ -9,6 +9,8 @@ This project has been set up with:
 - [TypeScript](https://www.typescriptlang.org)
 
 ## Getting started
+
+The easiest way to get started is [using Docker](../Readme.md#Getting-started). If you prefer not to use Docker, you can follow the next steps.
 
 Install the dependencies:
 
