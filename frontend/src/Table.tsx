@@ -1,84 +1,87 @@
+import React, { useEffect, useState } from "react";
 import Badge from "./Badge";
 
-const Table = () => (
-  <div className="flex flex-col">
-    <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-lg shadow-sm">
-          <table className="min-w-full">
-            <thead className="border-b bg-gray-100">
-              <tr>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                  #
-                </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                  Name
-                </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                  Provider
-                </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                  Type
-                </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Cyrillus Biddlecombe
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  BARMER
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Health
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Badge status="ACTIVE" />
-                </td>
-              </tr>
+const getTitleCase = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
 
-              <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Brandy Harbour
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  BARMER
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Liability
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Badge status="PENDING" />
-                </td>
-              </tr>
+const Table = () => {
+  useEffect(() => {
+    // TODO: check pagination
+    fetch("http://localhost:4000/policies").then((response) =>
+      response.json().then((data) => setData(data))
+    );
+  }, []);
+  const [data, setData] = useState<any[]>([]);
 
-              <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Ailina Harber
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  BARMER
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Liability
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Badge status="CANCELLED" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+  if (!data.length) return <div>loading...</div>;
+  return (
+    <div className="flex flex-col">
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-lg shadow-sm">
+            <table className="min-w-full">
+              <thead className="border-b bg-gray-100">
+                <tr>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    #
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    Provider
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    Type
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, idx) => (
+                  <tr key={item.id} className="border-b">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {idx + 1}
+                    </td>
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      {item.customer.firstName} {item.customer.lastName}
+                    </td>
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      {item.provider}
+                    </td>
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      {getTitleCase(item.insuranceType)}
+                    </td>
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      <Badge status={item.status} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-)
+  );
+};
 
 export default Table;
