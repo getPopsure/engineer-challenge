@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 import Header from "./Header";
 import Search from "./Search";
 import Table from "./Table";
@@ -9,11 +10,14 @@ const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
 const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
 
-  const fetchPolicies = useCallback((search: string = "") => {
+  const fetchPolicies = useCallback(async (params = {}) => {
     // TODO: check pagination
-    fetch(`${BASE_URL}/policies?search=${search}`).then((response) =>
-      response.json().then((data) => handleDataToDisplay(data))
-    );
+    try {
+      const response = await axios.get(`${BASE_URL}/policies`, { params });
+      handleDataToDisplay(response.data);
+    } catch {
+      window.alert("something went wrong!");
+    }
   }, []);
 
   const handleDataToDisplay = (data: Policy[]) => {
@@ -28,8 +32,8 @@ const Policies = () => {
     fetchPolicies();
   }, [fetchPolicies]);
 
-  const handleSearch = (value: string) => {
-    fetchPolicies(value);
+  const handleSearch = (search: string) => {
+    search ? fetchPolicies({ search }) : fetchPolicies();
   };
 
   const handleClear = () => {
