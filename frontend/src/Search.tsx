@@ -13,6 +13,7 @@ const Search = ({ onSearch }: SearchProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSearch(inputValue);
+    setValue("");
   };
 
   return (
@@ -23,7 +24,6 @@ const Search = ({ onSearch }: SearchProps) => {
         placeholder="type here to search..."
       />
       <input type="submit" value="Search" />
-      {/* <button onClick={onClear}>Clear x</button> */}
     </form>
   );
 };

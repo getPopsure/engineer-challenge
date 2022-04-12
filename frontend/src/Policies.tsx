@@ -9,7 +9,7 @@ const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
 const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
 
-  const fetchPolicies = useCallback((search: string) => {
+  const fetchPolicies = useCallback((search: string = "") => {
     // TODO: check pagination
     fetch(`${BASE_URL}/policies?search=${search}`).then((response) =>
       response.json().then((data) => handleDataToDisplay(data))
@@ -25,17 +25,22 @@ const Policies = () => {
   };
 
   useEffect(() => {
-    fetchPolicies("");
+    fetchPolicies();
   }, [fetchPolicies]);
 
   const handleSearch = (value: string) => {
     fetchPolicies(value);
   };
 
+  const handleClear = () => {
+    fetchPolicies();
+  };
+
   return (
     <div className="w-full p-8">
       <Header />
       <Search onSearch={handleSearch} />
+      <button onClick={handleClear}>Clear</button>
       <Table rowData={rowData} />
     </div>
   );
