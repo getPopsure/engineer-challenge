@@ -1,17 +1,30 @@
-import { ChangeEvent, MouseEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 interface SearchProps {
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSearch: (event: MouseEvent<HTMLButtonElement>) => void;
+  onSearch: (value: string) => void;
 }
 
-const Search = ({ onChange, onSearch }: SearchProps) => {
+const Search = ({ onSearch }: SearchProps) => {
+  const [inputValue, setValue] = useState<string>("");
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setValue(e.target.value);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSearch(inputValue);
+  };
+
   return (
-    <>
-      <input onChange={onChange} placeholder="type here to search..." />
-      <button onClick={onSearch}>Search</button>
+    <form onSubmit={handleSubmit}>
+      <input
+        value={inputValue}
+        onChange={handleChange}
+        placeholder="type here to search..."
+      />
+      <input type="submit" value="Search" />
       {/* <button onClick={onClear}>Clear x</button> */}
-    </>
+    </form>
   );
 };
 

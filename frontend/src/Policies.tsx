@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Header from "./Header";
 import Search from "./Search";
 import Table from "./Table";
@@ -8,18 +8,13 @@ const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
 
 const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
-  const [searchString, setSearchString] = useState<string>("");
 
-  useEffect(() => {
-    fetchPolicies();
-  }, []);
-
-  const fetchPolicies = () => {
+  const fetchPolicies = useCallback((search: string) => {
     // TODO: check pagination
-    fetch(`${BASE_URL}/policies?search=${searchString}`).then((response) =>
+    fetch(`${BASE_URL}/policies?search=${search}`).then((response) =>
       response.json().then((data) => handleDataToDisplay(data))
     );
-  };
+  }, []);
 
   const handleDataToDisplay = (data: Policy[]) => {
     // TODO: this should ideally be done with api param
@@ -29,14 +24,18 @@ const Policies = () => {
     setRowData(dataToDisplay);
   };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchString(e.target.value);
+  useEffect(() => {
+    fetchPolicies("");
+  }, [fetchPolicies]);
+
+  const handleSearch = (value: string) => {
+    fetchPolicies(value);
   };
 
   return (
     <div className="w-full p-8">
       <Header />
-      <Search onChange={handleSearchChange} onSearch={fetchPolicies} />
+      <Search onSearch={handleSearch} />
       <Table rowData={rowData} />
     </div>
   );
