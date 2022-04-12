@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Badge from "./Badge";
 
-const BASE_URL = "http://localhost:4000";
+const COLUMNS = ["#", "Name", "Provider", "Type", "Status"];
 
-const Table = () => {
-  useEffect(() => {
-    // TODO: check pagination
-    fetch(`${BASE_URL}/policies`).then((response) =>
-      response.json().then((data) => {
-        // TODO: this should be done with api param
-        const dataToShow = data.filter((item: Policy) =>
-          ["ACTIVE", "PENDING"].includes(item.status)
-        );
-        setData(dataToShow);
-      })
-    );
-  }, []);
-  const [data, setData] = useState<Policy[]>([]);
+interface TableProps {
+  rowData: Policy[];
+}
 
-  if (!data.length) return <div>loading...</div>;
+const Table = ({ rowData }: TableProps) => {
+  if (!rowData.length) return <div>loading...</div>;
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -27,40 +17,19 @@ const Table = () => {
             <table className="min-w-full">
               <thead className="border-b bg-gray-100">
                 <tr>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    #
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Provider
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Type
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Status
-                  </th>
+                  {COLUMNS.map((header, idx) => (
+                    <th
+                      key={idx}
+                      scope="col"
+                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    >
+                      {header}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, idx) => (
+                {rowData.map((item, idx) => (
                   <tr key={item.id} className="border-b">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {idx + 1}
