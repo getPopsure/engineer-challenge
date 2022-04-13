@@ -1,7 +1,14 @@
-import { render, screen } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import Policies from "./Policies";
+
+/* TEST SETUP */
 
 // taken from seed.ts
 const mockData = [
@@ -230,32 +237,39 @@ afterEach(() => server.resetHandlers());
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
-test("renders pending policies", async () => {
-  render(<Policies />);
-  const items = await screen.findByText("Status");
-  expect(items).toBeVisible();
-  // const linkElement = screen.getByText("PENDING");
-  // expect(linkElement).toBeInTheDocument();
+/* TESTS START HERE */
+
+describe("Show only ACTIVE and PENDING policies", () => {
+  test("renders active policies", async () => {
+    render(<Policies />);
+    const items = await screen.findAllByText("ACTIVE");
+    items.map((item) => expect(item).toBeInTheDocument());
+  });
+
+  test("renders pending policies", async () => {
+    render(<Policies />);
+    const items = await screen.findAllByText("PENDING");
+    items.map((item) => expect(item).toBeInTheDocument());
+  });
+
+  test("does not render cacncelled policies", async () => {
+    render(<Policies />);
+    const items = screen.queryAllByAltText("CANCELLED");
+    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+    await waitFor(() => expect(items).toEqual([]));
+  });
+
+  test("does not render dropped out policies", async () => {
+    render(<Policies />);
+    const items = screen.queryAllByAltText("DROPPED_OUT");
+    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+    await waitFor(() => expect(items).toEqual([]));
+  });
 });
 
-// 1. mock API
-// 2. Get tbody > td with className or any identifier of Badge component (const container = document.querySelector('#app'))
-// 3. get text, assert either PENDING or ACTIVE
-
-// test("renders active policies", () => {
-//   render(<App />);
-//   const linkElement = screen.getByText("ACTIVE");
-//   expect(linkElement).toBeInTheDocument();
-// });
-
-// test("does not render cancelled policies", () => {
-//   render(<App />);
-//   const linkElement = screen.getByText("CANCELLED");
-//   expect(linkElement).toBeNull();
-// });
-
-// test("does not render dropped out policies", () => {
-//   render(<App />);
-//   const linkElement = screen.getByText("DROPPED_OUT");
-//   expect(linkElement).toBeNull();
+// describe("As a user, I want to be able to search for policies using any of the text fields displayed on the table.", () => {
+//   test("When a search filter is applied, I want to see the filtered information on the same table.", () => {});
+//   test("When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information.", () => {});
+//   test("Do not display any results if there are no matches", () => {});
+//   test("Clearing the search should return the table to its original state", () => {});
 // });
