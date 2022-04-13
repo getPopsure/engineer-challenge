@@ -4,11 +4,10 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import Policies from "./Policies";
-
-/* TEST SETUP */
 
 // taken from seed.ts
 const mockData = [
@@ -230,6 +229,11 @@ const server = setupServer(...handlers);
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 
+beforeEach(async () => {
+  render(<Policies />);
+  await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+});
+
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
 afterEach(() => server.resetHandlers());
@@ -237,39 +241,35 @@ afterEach(() => server.resetHandlers());
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
-/* TESTS START HERE */
-
 describe("Show only ACTIVE and PENDING policies", () => {
   test("renders active policies", async () => {
-    render(<Policies />);
     const items = await screen.findAllByText("ACTIVE");
     items.map((item) => expect(item).toBeInTheDocument());
   });
 
   test("renders pending policies", async () => {
-    render(<Policies />);
     const items = await screen.findAllByText("PENDING");
     items.map((item) => expect(item).toBeInTheDocument());
   });
 
   test("does not render cacncelled policies", async () => {
-    render(<Policies />);
     const items = screen.queryAllByAltText("CANCELLED");
-    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
     await waitFor(() => expect(items).toEqual([]));
   });
 
   test("does not render dropped out policies", async () => {
-    render(<Policies />);
     const items = screen.queryAllByAltText("DROPPED_OUT");
-    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
     await waitFor(() => expect(items).toEqual([]));
   });
 });
 
-// describe("As a user, I want to be able to search for policies using any of the text fields displayed on the table.", () => {
-//   test("When a search filter is applied, I want to see the filtered information on the same table.", () => {});
-//   test("When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information.", () => {});
-//   test("Do not display any results if there are no matches", () => {});
-//   test("Clearing the search should return the table to its original state", () => {});
-// });
+describe("As a user, I want to be able to search for policies using any of the text fields displayed on the table.", () => {
+  test("When a search filter is applied, I want to see the filtered information on the same table.", async () => {
+    userEvent.type(screen.getByRole("textbox", { name: "" }), "BARMER");
+    userEvent.click(screen.getByRole("button", { name: "Search" }));
+    const items = await screen.findAllByText("BARMER");
+    items.map((item) => expect(item).toBeInTheDocument());
+  });
+  // test("When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information. Clearing the search should return the table to its original state", () => {});
+  // test("Do not display any results if there are no matches", () => {});
+});
