@@ -28,18 +28,12 @@ const Policies = () => {
     setRowData(dataToDisplay);
   };
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     await fetchPolicies();
-  //   };
-  //   getData();
-  // }, [fetchPolicies]);
-
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/policies")
-      .then((res) => setRowData(res.data));
-  }, []);
+    const getData = async () => {
+      await fetchPolicies();
+    };
+    getData();
+  }, [fetchPolicies]);
 
   const handleSearch = async (search: string) => {
     await fetchPolicies(search ? { search } : {});
