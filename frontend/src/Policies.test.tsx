@@ -20,6 +20,8 @@ const mockData = [
     insuranceType: "HEALTH",
     status: "PENDING",
     startDate: "2017-04-26T05:32:06Z",
+    // endDate
+    // createdAt
   },
   {
     customer: {
@@ -213,13 +215,24 @@ const mockData = [
   },
 ];
 // assign unique id to each item
-const mockDataWithId = mockData.map((item, idx) => ({ ...item, id: idx + 1 }));
+const mockDataWithId = mockData.map((item, idx) => ({
+  ...item,
+  id: (idx + 1).toString(),
+}));
 
 const handlers = [
   // Handles a GET /policies request
   rest.get("http://localhost:4000/policies", (req, res, ctx) => {
+    const keyword = req.url.searchParams.get("search");
+    const filteredMockData = mockDataWithId.filter(
+      // TODO: filter need to work with other fields too
+      (item) => item.provider === keyword
+    );
     // return a mocked policy list
-    return res(ctx.status(200), ctx.json(mockDataWithId));
+    return res(
+      ctx.status(200),
+      ctx.json(keyword ? filteredMockData : mockDataWithId)
+    );
   }),
 ];
 
@@ -265,11 +278,12 @@ describe("Show only ACTIVE and PENDING policies", () => {
 
 describe("As a user, I want to be able to search for policies using any of the text fields displayed on the table.", () => {
   test("When a search filter is applied, I want to see the filtered information on the same table.", async () => {
-    userEvent.type(screen.getByRole("textbox", { name: "" }), "BARMER");
-    userEvent.click(screen.getByRole("button", { name: "Search" }));
-    const items = await screen.findAllByText("BARMER");
-    items.map((item) => expect(item).toBeInTheDocument());
+    const user = userEvent.setup();
+    await user.type(screen.getByRole("textbox", { name: "" }), "AOK");
+    await user.click(screen.getByRole("button", { name: "Search" }));
+    const items = await screen.findAllByRole("row");
+    expect(items.length).toBe(4); // header row included
   });
   // test("When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information. Clearing the search should return the table to its original state", () => {});
-  // test("Do not display any results if there are no matches", () => {});
+  // test("Do not display any results if there are no matches", async () => {});
 });
