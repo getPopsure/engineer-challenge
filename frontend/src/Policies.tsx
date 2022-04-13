@@ -28,16 +28,25 @@ const Policies = () => {
     setRowData(dataToDisplay);
   };
 
-  useEffect(() => {
-    fetchPolicies();
-  }, [fetchPolicies]);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     await fetchPolicies();
+  //   };
+  //   getData();
+  // }, [fetchPolicies]);
 
-  const handleSearch = (search: string) => {
-    search ? fetchPolicies({ search }) : fetchPolicies();
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/policies")
+      .then((res) => setRowData(res.data));
+  }, []);
+
+  const handleSearch = async (search: string) => {
+    await fetchPolicies(search ? { search } : {});
   };
 
-  const handleClear = () => {
-    fetchPolicies();
+  const handleClear = async () => {
+    await fetchPolicies();
   };
 
   return (
