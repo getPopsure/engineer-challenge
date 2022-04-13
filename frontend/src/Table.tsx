@@ -1,4 +1,3 @@
-import React from "react";
 import Badge from "./Badge";
 
 const COLUMNS = ["#", "Name", "Provider", "Type", "Status"];
@@ -8,7 +7,7 @@ interface TableProps {
 }
 
 const Table = ({ rowData }: TableProps) => {
-  if (!rowData.length) return <div>loading...</div>;
+  if (!rowData.length) return <div>no result</div>;
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
