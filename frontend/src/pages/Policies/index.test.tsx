@@ -19,9 +19,6 @@ const mockData = [
     provider: "BARMER",
     insuranceType: "HEALTH",
     status: "PENDING",
-    startDate: "2017-04-26T05:32:06Z",
-    // endDate
-    // createdAt
   },
   {
     id: "2",
@@ -32,7 +29,6 @@ const mockData = [
     provider: "BARMER",
     insuranceType: "LIABILITY",
     status: "PENDING",
-    startDate: "2015-01-13T04:52:15Z",
   },
   {
     id: "3",
@@ -43,7 +39,6 @@ const mockData = [
     provider: "AOK",
     insuranceType: "HEALTH",
     status: "DROPPED_OUT",
-    startDate: "2014-07-14T00:54:34Z",
   },
   {
     id: "4",
@@ -54,7 +49,6 @@ const mockData = [
     provider: "AOK",
     insuranceType: "HEALTH",
     status: "PENDING",
-    startDate: "2020-07-21T19:40:35Z",
   },
   {
     id: "5",
@@ -65,7 +59,6 @@ const mockData = [
     provider: "BARMER",
     insuranceType: "HOUSEHOLD",
     status: "ACTIVE",
-    startDate: "2013-03-30T19:27:54Z",
   },
   {
     id: "6",
@@ -76,7 +69,6 @@ const mockData = [
     provider: "AOK",
     insuranceType: "HEALTH",
     status: "CANCELLED",
-    startDate: "2021-01-12T19:24:41Z",
   },
   {
     id: "7",
@@ -87,7 +79,6 @@ const mockData = [
     provider: "BARMER",
     insuranceType: "HEALTH",
     status: "ACTIVE",
-    startDate: "2018-05-11T11:56:51Z",
   },
   {
     id: "8",
@@ -98,7 +89,6 @@ const mockData = [
     provider: "TK",
     insuranceType: "HOUSEHOLD",
     status: "PENDING",
-    startDate: "2013-01-25T04:14:34Z",
   },
   {
     id: "9",
@@ -109,7 +99,6 @@ const mockData = [
     provider: "TK",
     insuranceType: "HEALTH",
     status: "ACTIVE",
-    startDate: "2012-09-24T09:55:17Z",
   },
   {
     id: "10",
@@ -120,21 +109,76 @@ const mockData = [
     provider: "AOK",
     insuranceType: "HEALTH",
     status: "PENDING",
-    startDate: "2020-05-02T05:53:46Z",
   },
 ];
 
-const mockDataAok = [
+const providerSearchMockData = [
   {
-    id: "3",
+    id: "4",
     customer: {
-      firstName: "Ailina",
-      lastName: "Harber",
+      firstName: "Aguste",
+      lastName: "Bilsford",
     },
     provider: "AOK",
     insuranceType: "HEALTH",
-    status: "DROPPED_OUT",
-    startDate: "2014-07-14T00:54:34Z",
+    status: "PENDING",
+  },
+  {
+    id: "10",
+    customer: {
+      firstName: "Flossie",
+      lastName: "Camings",
+    },
+    provider: "AOK",
+    insuranceType: "HEALTH",
+    status: "PENDING",
+  },
+];
+
+const statusSearchMockData = [
+  {
+    id: "5",
+    customer: {
+      firstName: "Haydon",
+      lastName: "Ballay",
+    },
+    provider: "BARMER",
+    insuranceType: "HOUSEHOLD",
+    status: "ACTIVE",
+  },
+  {
+    id: "7",
+    customer: {
+      firstName: "Tani",
+      lastName: "Erasmus",
+    },
+    provider: "BARMER",
+    insuranceType: "HEALTH",
+    status: "ACTIVE",
+  },
+
+  {
+    id: "9",
+    customer: {
+      firstName: "Rozelle",
+      lastName: "Nipper",
+    },
+    provider: "TK",
+    insuranceType: "HEALTH",
+    status: "ACTIVE",
+  },
+];
+
+const typeSearchMockData = [
+  {
+    id: "1",
+    customer: {
+      firstName: "Cyrillus",
+      lastName: "Biddlecombe",
+    },
+    provider: "BARMER",
+    insuranceType: "HEALTH",
+    status: "PENDING",
   },
   {
     id: "4",
@@ -145,18 +189,27 @@ const mockDataAok = [
     provider: "AOK",
     insuranceType: "HEALTH",
     status: "PENDING",
-    startDate: "2020-07-21T19:40:35Z",
   },
   {
-    id: "6",
+    id: "7",
     customer: {
-      firstName: "Brandyn",
-      lastName: "Argyle",
+      firstName: "Tani",
+      lastName: "Erasmus",
     },
-    provider: "AOK",
+    provider: "BARMER",
     insuranceType: "HEALTH",
-    status: "CANCELLED",
-    startDate: "2021-01-12T19:24:41Z",
+    status: "ACTIVE",
+  },
+
+  {
+    id: "9",
+    customer: {
+      firstName: "Rozelle",
+      lastName: "Nipper",
+    },
+    provider: "TK",
+    insuranceType: "HEALTH",
+    status: "ACTIVE",
   },
   {
     id: "10",
@@ -167,19 +220,41 @@ const mockDataAok = [
     provider: "AOK",
     insuranceType: "HEALTH",
     status: "PENDING",
-    startDate: "2020-05-02T05:53:46Z",
+  },
+];
+
+const clientSearchMockData = [
+  {
+    id: "5",
+    customer: {
+      firstName: "Haydon",
+      lastName: "Ballay",
+    },
+    provider: "BARMER",
+    insuranceType: "HOUSEHOLD",
+    status: "ACTIVE",
   },
 ];
 
 const handlers = [
   rest.get("http://localhost:4000/policies", (req, res, ctx) => {
     const keyword = req.url.searchParams.get("search");
-    if (keyword === "aok") {
-      return res(ctx.status(200), ctx.json(mockDataAok));
+    switch (keyword) {
+      case "aok":
+        return res(ctx.status(200), ctx.json(providerSearchMockData));
+      case "acti":
+        return res(ctx.status(200), ctx.json(statusSearchMockData));
+      case "hea":
+        return res(ctx.status(200), ctx.json(typeSearchMockData));
+      case "hay":
+        return res(ctx.status(200), ctx.json(clientSearchMockData));
+      default:
+        return res(ctx.status(200), ctx.json(mockData));
     }
-    return res(ctx.status(200), ctx.json(mockData));
   }),
 ];
+
+const user = userEvent.setup();
 
 // This configures a request mocking server with the given request handlers.
 const server = setupServer(...handlers);
@@ -198,7 +273,12 @@ afterEach(() => server.resetHandlers());
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
-// test initial state: valid list, searchbar, search button, disabled clear exists
+// TODO:
+// 1. test initial state: valid list, searchbar, search button, disabled clear exists
+// 2. cross field search test
+// 3. test clear button enabled when search is applied
+// 4. change findbytext to findbyrole
+// 5. move mock data
 
 describe("Show only ACTIVE and PENDING policies", () => {
   test("renders correct number of rows", async () => {
@@ -208,7 +288,7 @@ describe("Show only ACTIVE and PENDING policies", () => {
   });
 
   test("renders active policies", async () => {
-    const items = await screen.findAllByText("ACTIVE"); // TODO: change to role
+    const items = await screen.findAllByText("ACTIVE");
     items.map((item) => expect(item).toBeInTheDocument());
   });
 
@@ -229,19 +309,36 @@ describe("Show only ACTIVE and PENDING policies", () => {
 });
 
 describe("As a user, I want to be able to search for policies using any of the text fields displayed on the table.", () => {
-  const user = userEvent.setup();
-
-  test("When a search filter is applied, I want to see the filtered information on the same table.", async () => {
+  test("Correct search result should be displayed when search filter for policies provider is applied", async () => {
     await user.type(screen.getByRole("textbox", { name: "" }), "aok");
     await user.click(screen.getByRole("button", { name: "Search" }));
     const items = await screen.findAllByRole("row");
-    expect(items.length).toBe(3); // header row included
+    expect(items.length).toBe(providerSearchMockData.length + 1); // header row included
   });
-  // test search filter for status
-  // test search filter for type
-  // test search filter for client
+
+  test("Correct search result should be displayed when search filter for policies status is applied", async () => {
+    await user.type(screen.getByRole("textbox", { name: "" }), "acti");
+    await user.click(screen.getByRole("button", { name: "Search" }));
+    const items = await screen.findAllByRole("row");
+    expect(items.length).toBe(statusSearchMockData.length + 1); // header row included
+  });
+
+  test("Correct search result should be displayed when search filter for policies type is applied", async () => {
+    await user.type(screen.getByRole("textbox", { name: "" }), "hea");
+    await user.click(screen.getByRole("button", { name: "Search" }));
+    const items = await screen.findAllByRole("row");
+    expect(items.length).toBe(typeSearchMockData.length + 1); // header row included
+  });
+
+  test("Correct search result should be displayed when search filter for policies client name is applied", async () => {
+    await user.type(screen.getByRole("textbox", { name: "" }), "hay");
+    await user.click(screen.getByRole("button", { name: "Search" }));
+    const items = await screen.findAllByRole("row");
+    expect(items.length).toBe(clientSearchMockData.length + 1); // header row included
+  });
 
   test("Clearing the search should return the table to its original state", async () => {
+    // to enable clear button, filter needs to be applied first
     await user.type(screen.getByRole("textbox", { name: "" }), "aok");
     await user.click(screen.getByRole("button", { name: "Search" }));
     await waitForElementToBeRemoved(() => screen.getByText("loading..."));
@@ -257,6 +354,4 @@ describe("As a user, I want to be able to search for policies using any of the t
     const items = screen.queryAllByRole("row");
     await waitFor(() => expect(items).toEqual([]));
   });
-
-  // test clear enabled when search is applied
 });
