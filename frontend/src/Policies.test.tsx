@@ -238,11 +238,20 @@ describe("As a user, I want to be able to search for policies using any of the t
   // test search filter for type
   // test search filter for client
 
-  test("When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information. Clearing the search should return the table to its original state", () => {
-    // await user.type(screen.getByRole("textbox", { name: "" }), "aok");
-    // await user.click(screen.getByRole("button", { name: "Search" }));
-    // const items = await screen.findAllByRole("row");
-    // expect(items.length).toBe(3); // header row included
+  test("Clearing the search should return the table to its original state", async () => {
+    await user.type(screen.getByRole("textbox", { name: "" }), "aok");
+    await user.click(screen.getByRole("button", { name: "Search" }));
+    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+    await user.click(screen.getByRole("button", { name: "Clear" }));
+    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+    const items = await screen.findAllByRole("row");
+    expect(items.length).toBe(9); // header row included
   });
-  // test("Do not display any results if there are no matches", async () => {});
+
+  test("Do not display any results if there are no matches", async () => {
+    await user.type(screen.getByRole("textbox", { name: "" }), "nonexistent");
+    await user.click(screen.getByRole("button", { name: "Search" }));
+    const items = screen.queryAllByRole("row");
+    await waitFor(() => expect(items).toEqual([]));
+  });
 });
