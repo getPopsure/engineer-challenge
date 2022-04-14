@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState, ChangeEvent } from "react";
-import axios from "axios";
+import axios from "../../axiosConfig";
 import Header from "./Header";
 import Table from "./Table";
 import Search from "./Search";
 
-const BASE_URL = "http://localhost:4000";
 const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
 
 const Policies = () => {
@@ -17,7 +16,7 @@ const Policies = () => {
     // TODO: check pagination
     try {
       setLoading(true);
-      const response = await axios.get(`${BASE_URL}/policies`, { params });
+      const response = await axios.get("/policies", { params });
       handleDataToDisplay(response.data);
     } catch {
       window.alert("something went wrong!");
@@ -31,11 +30,10 @@ const Policies = () => {
     const dataToDisplay = data.filter((item: Policy) =>
       STATUS_TO_DISPLAY.includes(item.status)
     );
-    setRowData(dataToDisplay);
+    setRowData(dataToDisplay); // TODO: add cleanup to cancel setState
   };
 
   useEffect(() => {
-    // TODO: add cleanup
     const getData = async () => {
       await fetchPolicies();
     };
