@@ -7,7 +7,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import Policies from "./Policies";
+import Policies from "../Policies";
 
 const mockData = [
   {
@@ -198,9 +198,12 @@ afterEach(() => server.resetHandlers());
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
+// test initial state: valid list, searchbar, search button, disabled clear exists
+
 describe("Show only ACTIVE and PENDING policies", () => {
   test("renders correct number of rows", async () => {
     const items = await screen.findAllByRole("row");
+    // given: 10, active & pending: 8;
     expect(items.length).toBe(9); // header row included
   });
 
@@ -254,4 +257,6 @@ describe("As a user, I want to be able to search for policies using any of the t
     const items = screen.queryAllByRole("row");
     await waitFor(() => expect(items).toEqual([]));
   });
+
+  // test clear enabled when search is applied
 });

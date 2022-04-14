@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState, ChangeEvent } from "react";
 import axios from "axios";
 import Header from "./Header";
-import Search from "./Search";
 import Table from "./Table";
+import Search from "./Search";
 
 const BASE_URL = "http://localhost:4000";
 const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
@@ -35,6 +35,7 @@ const Policies = () => {
   };
 
   useEffect(() => {
+    // TODO: add cleanup
     const getData = async () => {
       await fetchPolicies();
     };
@@ -72,7 +73,9 @@ const Policies = () => {
             onChange={handleSearchChange}
             onSearch={handleSearchSubmit}
           />
-          {isClearVisible && <button onClick={handleSearchClear}>Clear</button>}
+          <button onClick={handleSearchClear} disabled={!isClearVisible}>
+            Clear
+          </button>
           <Table rowData={rowData} />
         </>
       )}

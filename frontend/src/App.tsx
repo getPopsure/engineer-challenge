@@ -1,6 +1,6 @@
-import Navbar from "./Navbar";
-import Policies from "./Policies";
-import "./index.css";
+import Navbar from "./shared/Navbar";
+import Policies from "./pages/Policies";
+import "./styles/index.css";
 
 const App = () => (
   <div>
