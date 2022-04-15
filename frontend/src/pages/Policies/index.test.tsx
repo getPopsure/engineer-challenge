@@ -7,34 +7,53 @@ import {
 import userEvent from "@testing-library/user-event";
 import {
   clientSearchKeyword,
-  clientSearchResult,
   providerSearchKeyword,
-  providerSearchResult,
   statusSearchKeyword,
-  statusSearchResult,
   typeSearchKeyword,
-  typeSearchResult,
 } from "../../mocks/data";
 import Policies from "../Policies";
 
 const user = userEvent.setup();
 
+let clearButton: HTMLElement;
+let searchButton: HTMLElement;
+let searchInput: HTMLElement;
+
+// TODO:
+// 1. fix loading warning
+// 2. cross field search test
 const waitForLoading = async () => {
   await waitForElementToBeRemoved(() => screen.getByTitle("Spinner"));
 };
 
 beforeEach(async () => {
   render(<Policies />);
-  await waitForLoading();
+  searchInput = screen.getByRole("textbox", { name: "Search" });
+  searchButton = screen.getByRole("button", { name: "Search" });
+  clearButton = screen.getByRole("button", { name: "Clear" });
 });
 
-// TODO:
-// 1. test initial state: valid list, searchbar, search button, disabled clear exists
-// 2. cross field search test
-// 3. test clear button enabled when search is applied
-
-// Show only ACTIVE and PENDING policies
 describe("initial render", () => {
+  test("should display search input", async () => {
+    expect(searchInput).toBeInTheDocument();
+  });
+
+  test("should display search button", async () => {
+    expect(searchButton).toBeInTheDocument();
+  });
+
+  test("search button should be disabled", async () => {
+    expect(searchButton).toBeDisabled();
+  });
+
+  test("should display clear button", async () => {
+    expect(clearButton).toBeInTheDocument();
+  });
+
+  test("clear button should be disabled", async () => {
+    expect(clearButton).toBeDisabled();
+  });
+
   test("should display correct number of results", async () => {
     const items = await screen.findAllByRole("row");
     // given: 10, active & pending: 8;
@@ -62,67 +81,80 @@ describe("initial render", () => {
   });
 });
 
-// As a user, I want to be able to search for policies using any of the text fields displayed on the table.
-describe("search policies", () => {
-  test("should display correct number of results for policies provider search", async () => {
-    await user.type(
-      screen.getByRole("textbox", { name: "Search" }),
-      providerSearchKeyword
-    );
-    await user.click(screen.getByRole("button", { name: "Search" }));
+describe("apply search filter with texts from each field", () => {
+  test("should display correct number of results with provider search", async () => {
+    // apply search
+    await user.type(searchInput, providerSearchKeyword);
+    await user.click(searchButton);
+
     const items = await screen.findAllByRole("row");
-    expect(items.length).toBe(providerSearchResult.length + 1); // header row included
+    expect(items.length).toBe(3); // header row included
   });
 
-  test("should display correct number of results for policies status search", async () => {
-    await user.type(
-      screen.getByRole("textbox", { name: "Search" }),
-      statusSearchKeyword
-    );
-    await user.click(screen.getByRole("button", { name: "Search" }));
+  test("should display correct number of results with status search", async () => {
+    // apply search
+    await user.type(searchInput, statusSearchKeyword);
+    await user.click(searchButton);
+
     const items = await screen.findAllByRole("row");
-    expect(items.length).toBe(statusSearchResult.length + 1); // header row included
+    expect(items.length).toBe(4); // header row included
   });
 
-  test("should display correct number of results for policies type search", async () => {
-    await user.type(
-      screen.getByRole("textbox", { name: "Search" }),
-      typeSearchKeyword
-    );
-    await user.click(screen.getByRole("button", { name: "Search" }));
+  test("should display correct number of results with type search", async () => {
+    // apply search
+    await user.type(searchInput, typeSearchKeyword);
+    await user.click(searchButton);
+
     const items = await screen.findAllByRole("row");
-    expect(items.length).toBe(typeSearchResult.length + 1); // header row included
+    expect(items.length).toBe(6); // header row included
   });
 
-  test("should display correct number of results for policies client name search", async () => {
-    await user.type(
-      screen.getByRole("textbox", { name: "Search" }),
-      clientSearchKeyword
-    );
-    await user.click(screen.getByRole("button", { name: "Search" }));
+  test("should display correct number of results with client name search", async () => {
+    // apply search
+    await user.type(searchInput, clientSearchKeyword);
+    await user.click(searchButton);
+
     const items = await screen.findAllByRole("row");
-    expect(items.length).toBe(clientSearchResult.length + 1); // header row included
+    expect(items.length).toBe(2); // header row included
   });
 
   test("should not display any results if there are no matches", async () => {
-    await user.type(screen.getByRole("textbox", { name: "Search" }), "nomatch");
-    await user.click(screen.getByRole("button", { name: "Search" }));
+    // apply search
+    await user.type(searchInput, "nomatch");
+    await user.click(searchButton);
+
     const items = screen.queryAllByRole("row");
     await waitFor(() => expect(items).toEqual([]));
   });
+
+  test("clear button should be enabled", async () => {
+    // apply search
+    await user.type(searchInput, "random");
+    await user.click(searchButton);
+
+    expect(clearButton).not.toBeDisabled();
+  });
 });
 
-describe("clear search", () => {
+describe("clear search filter applied", () => {
   beforeEach(async () => {
-    // to enable clear button, filter needs to be applied first
-    await user.type(screen.getByRole("textbox", { name: "Search" }), "aok");
-    await user.click(screen.getByRole("button", { name: "Search" }));
-    await waitForLoading();
+    // apply search
+    await user.type(searchInput, "random");
+    await user.click(searchButton);
+    // apply clear
+    await user.click(clearButton);
   });
+
   test("should display correct number of results", async () => {
-    await user.click(screen.getByRole("button", { name: "Clear" }));
-    await waitForLoading();
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(9); // header row included
+  });
+
+  test("clear button should be disabled", async () => {
+    expect(clearButton).toBeDisabled();
+  });
+
+  test("search button should be disabled", async () => {
+    expect(searchButton).toBeDisabled();
   });
 });
