@@ -10,19 +10,21 @@ const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
 const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const [searchValue, setValue] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
-  const fetchPolicies = useCallback(async (params = {}) => {
+  const fetchPolicies = async (params: {}) => {
+    let data: Policy[] = [];
     try {
       setLoading(true);
       const response = await axios.get("/policies", { params });
-      handleDataToDisplay(response.data);
+      data = response.data;
     } catch {
-      window.alert("Oops! Something went wrong!");
+      window.alert("Oops! Something went wrong.");
     } finally {
       setLoading(false);
     }
-  }, []);
+    return data;
+  };
 
   const handleDataToDisplay = (data: Policy[]) => {
     const dataToDisplay = data.filter((item: Policy) =>
@@ -31,30 +33,32 @@ const Policies = () => {
     setRowData(dataToDisplay); // TODO: add cleanup to cancel setState
   };
 
+  const getTableData = useCallback(async (params = {}) => {
+    const data = await fetchPolicies(params);
+    handleDataToDisplay(data);
+  }, []);
+
   useEffect(() => {
-    const getData = async () => {
-      await fetchPolicies();
-    };
-    getData();
-  }, [fetchPolicies]);
+    getTableData();
+  }, [getTableData]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setValue(e.target.value);
+    setSearch(e.target.value);
 
   const handleSearchSubmit = async () => {
-    await fetchPolicies({ search: searchValue });
+    getTableData({ search });
   };
 
   const handleSearchClear = async () => {
-    setValue("");
-    await fetchPolicies();
+    setSearch("");
+    getTableData();
   };
 
   return (
     <div className="w-full p-8">
       <Header />
       <Search
-        value={searchValue}
+        value={search}
         onChange={handleSearchChange}
         onSearch={handleSearchSubmit}
         onSearchClear={handleSearchClear}
