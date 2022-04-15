@@ -1,13 +1,19 @@
 import Badge from "./Badge";
 
-const COLUMNS = ["#", "Name", "Provider", "Type", "Status"];
-
 interface TableProps {
   rowData: Policy[];
 }
 
+const COLUMNS = ["#", "Name", "Provider", "Type", "Status"];
+
 const Table = ({ rowData }: TableProps) => {
-  if (!rowData.length) return <div>no result</div>;
+  if (!rowData.length) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        No result
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

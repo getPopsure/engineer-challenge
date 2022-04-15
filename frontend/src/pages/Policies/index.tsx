@@ -3,12 +3,13 @@ import axios from "../../axiosConfig";
 import Header from "./Header";
 import Table from "./Table";
 import Search from "./Search";
+import Spinner from "../../shared/Spinner";
 
 const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
 
 const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [searchValue, setValue] = useState<string>("");
 
   const fetchPolicies = useCallback(async (params = {}) => {
@@ -17,14 +18,13 @@ const Policies = () => {
       const response = await axios.get("/policies", { params });
       handleDataToDisplay(response.data);
     } catch {
-      window.alert("something went wrong!");
+      window.alert("Oops! Something went wrong!");
     } finally {
       setLoading(false);
     }
   }, []);
 
   const handleDataToDisplay = (data: Policy[]) => {
-    // TODO: this should ideally be done with api param
     const dataToDisplay = data.filter((item: Policy) =>
       STATUS_TO_DISPLAY.includes(item.status)
     );
@@ -53,19 +53,18 @@ const Policies = () => {
   return (
     <div className="w-full p-8">
       <Header />
-      {loading ? (
-        <>loading...</>
+      <Search
+        value={searchValue}
+        onChange={handleSearchChange}
+        onSearch={handleSearchSubmit}
+        onSearchClear={handleSearchClear}
+      />
+      {isLoading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+          <Spinner />
+        </div>
       ) : (
-        <>
-          {/* TODO: responsive */}
-          <Search
-            value={searchValue}
-            onChange={handleSearchChange}
-            onSearch={handleSearchSubmit}
-            onSearchClear={handleSearchClear}
-          />
-          <Table rowData={rowData} />
-        </>
+        <Table rowData={rowData} />
       )}
     </div>
   );

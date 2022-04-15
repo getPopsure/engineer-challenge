@@ -17,8 +17,8 @@ const Search = ({ value, onChange, onSearch, onSearchClear }: SearchProps) => {
   };
 
   return (
-    <div className="flex justify-end">
-      <form onSubmit={handleSubmit}>
+    <div className="flex justify-end flex-col md:flex-row">
+      <form onSubmit={handleSubmit} className="flex flex-col md:flex-row">
         <input
           value={value}
           onChange={onChange}
