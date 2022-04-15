@@ -87,16 +87,16 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 
 ### Policy
 
-| fields         | type                            | comment                                       |
-| -------------- | ------------------------------- | --------------------------------------------- |
-| id             | string                          | Used to identify the policy                   |
-| customer       | [Customer](#Customer)           | Object holding the customer's informations    |
-| provider       | string                          | Name of the provider (Allianz, AXA…)          |
-| insuranceType  | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
-| status         | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
-| startDate      | date                            | Date when the policy should start             |
-| endDate        | date                            | Date when the policy ends                     |
-| createdAt      | date                            | Date when the record was created              |
+| fields        | type                            | comment                                       |
+| ------------- | ------------------------------- | --------------------------------------------- |
+| id            | string                          | Used to identify the policy                   |
+| customer      | [Customer](#Customer)           | Object holding the customer's informations    |
+| provider      | string                          | Name of the provider (Allianz, AXA…)          |
+| insuranceType | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
+| status        | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
+| startDate     | date                            | Date when the policy should start             |
+| endDate       | date                            | Date when the policy ends                     |
+| createdAt     | date                            | Date when the record was created              |
 
 ### Customer
 
@@ -117,10 +117,36 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 
 ## General questions
 
-- How much time did you spend working on the solution?
-- What’s the part of the solution you are most proud of?
+How much time did you spend working on the solution?
 
-  _You can share a code snippet here if you feel like it_
+- 5 days, 31 hours in total. Below is a breakdown on time spent per task.
 
-- If you had more time, what other things you would like to do?
-- Is there anything you would like to change in the current setup?
+| Task                                                                                                                 | Time spent (hr) |
+| -------------------------------------------------------------------------------------------------------------------- | --------------- |
+| setting up                                                                                                           | 1               |
+| writing [tech spec](https://narrow-passive-3f3.notion.site/Policy-Search-Tech-Spec-8f9c7d15368c44e6bccc22bfb8fde253) | 2               |
+| API integration                                                                                                      | 2               |
+| search input and clear (FE)                                                                                          | 3               |
+| search test (FE)                                                                                                     | 10              |
+| search filter (BE)                                                                                                   | 2               |
+| search test (BE)                                                                                                     | 1               |
+| UI polish (FE)                                                                                                       | 4               |
+| cleanup & refactor                                                                                                   | 6               |
+
+What’s the part of the solution you are most proud of?
+
+- Frontend test cases on search functionality including server mock
+
+If you had more time, what other things you would like to do?
+
+- Paginate results on both BE and FE
+- Write more rigorous tests and more test coverage
+  - Error handling on both BE and FE
+  - BE route and controller
+- Explore prisma [fullTextSearch](https://www.prisma.io/docs/concepts/components/prisma-client/full-text-search) for potentially one-for-all search filter solution
+- Add request param for status (`/policies?status=pending,active`)
+- Fix mobile navbar UI
+
+Is there anything you would like to change in the current setup?
+
+- Seems like `${DATABASE_PORT}` of db ports in `docker-compose.yaml` needs to be fixed. My setup got blocked by this issue. (I replaced it with plain number in my code.)
