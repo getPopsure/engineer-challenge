@@ -1,18 +1,12 @@
-import Navbar from "./Navbar";
-import Header from "./Header";
-import Table from "./Table";
-
-import "./index.css";
+import Navbar from "./shared/Navbar";
+import Policies from "./pages/Policies";
+import "./styles/index.css";
 
 const App = () => (
   <div>
     <Navbar />
-    <div className="w-full p-8">
-      <Header />
-      <Table />
-    </div>
+    <Policies />
   </div>
 );
-
 
 export default App;
