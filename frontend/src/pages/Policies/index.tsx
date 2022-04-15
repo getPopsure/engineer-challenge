@@ -26,7 +26,7 @@ const Policies = () => {
     const dataToDisplay = data.filter((item: Policy) =>
       STATUS_TO_DISPLAY.includes(item.status)
     );
-    setRowData(dataToDisplay); // TODO: add cleanup to cancel setState
+    setRowData(dataToDisplay);
   };
 
   const getTableData = useCallback(async (params = {}) => {
