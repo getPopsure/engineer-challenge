@@ -32,7 +32,6 @@ beforeEach(async () => {
 // 1. test initial state: valid list, searchbar, search button, disabled clear exists
 // 2. cross field search test
 // 3. test clear button enabled when search is applied
-// 4. change findbytext to findbyrole
 
 // Show only ACTIVE and PENDING policies
 describe("initial render", () => {
@@ -43,22 +42,22 @@ describe("initial render", () => {
   });
 
   test("should display active policies", async () => {
-    const items = await screen.findAllByText("ACTIVE");
+    const items = await screen.findAllByRole("cell", { name: "ACTIVE" });
     items.map((item) => expect(item).toBeInTheDocument());
   });
 
   test("should display pending policies", async () => {
-    const items = await screen.findAllByText("PENDING");
+    const items = await screen.findAllByRole("cell", { name: "PENDING" });
     items.map((item) => expect(item).toBeInTheDocument());
   });
 
   test("should not display cacncelled policies", async () => {
-    const items = screen.queryAllByAltText("CANCELLED");
+    const items = screen.queryAllByRole("cell", { name: "CANCELLED" });
     await waitFor(() => expect(items).toEqual([]));
   });
 
   test("should not display dropped out policies", async () => {
-    const items = screen.queryAllByAltText("DROPPED_OUT");
+    const items = screen.queryAllByRole("cell", { name: "DROPPED_OUT" });
     await waitFor(() => expect(items).toEqual([]));
   });
 });
@@ -67,7 +66,7 @@ describe("initial render", () => {
 describe("search policies", () => {
   test("should display correct number of results for policies provider search", async () => {
     await user.type(
-      screen.getByRole("textbox", { name: "" }),
+      screen.getByRole("textbox", { name: "Search" }),
       providerSearchKeyword
     );
     await user.click(screen.getByRole("button", { name: "Search" }));
@@ -77,7 +76,7 @@ describe("search policies", () => {
 
   test("should display correct number of results for policies status search", async () => {
     await user.type(
-      screen.getByRole("textbox", { name: "" }),
+      screen.getByRole("textbox", { name: "Search" }),
       statusSearchKeyword
     );
     await user.click(screen.getByRole("button", { name: "Search" }));
@@ -87,7 +86,7 @@ describe("search policies", () => {
 
   test("should display correct number of results for policies type search", async () => {
     await user.type(
-      screen.getByRole("textbox", { name: "" }),
+      screen.getByRole("textbox", { name: "Search" }),
       typeSearchKeyword
     );
     await user.click(screen.getByRole("button", { name: "Search" }));
@@ -97,7 +96,7 @@ describe("search policies", () => {
 
   test("should display correct number of results for policies client name search", async () => {
     await user.type(
-      screen.getByRole("textbox", { name: "" }),
+      screen.getByRole("textbox", { name: "Search" }),
       clientSearchKeyword
     );
     await user.click(screen.getByRole("button", { name: "Search" }));
@@ -106,7 +105,7 @@ describe("search policies", () => {
   });
 
   test("should not display any results if there are no matches", async () => {
-    await user.type(screen.getByRole("textbox", { name: "" }), "nomatch");
+    await user.type(screen.getByRole("textbox", { name: "Search" }), "nomatch");
     await user.click(screen.getByRole("button", { name: "Search" }));
     const items = screen.queryAllByRole("row");
     await waitFor(() => expect(items).toEqual([]));
@@ -116,7 +115,7 @@ describe("search policies", () => {
 describe("clear search", () => {
   beforeEach(async () => {
     // to enable clear button, filter needs to be applied first
-    await user.type(screen.getByRole("textbox", { name: "" }), "aok");
+    await user.type(screen.getByRole("textbox", { name: "Search" }), "aok");
     await user.click(screen.getByRole("button", { name: "Search" }));
     await waitForLoading();
   });

@@ -28,6 +28,7 @@ const Search = ({ onSearch, onClear }: SearchProps) => {
     <div className="flex justify-end flex-col md:flex-row">
       <form onSubmit={handleSubmit} className="flex flex-col md:flex-row">
         <input
+          aria-label="Search"
           value={value}
           onChange={handleChange}
           placeholder="Search"
