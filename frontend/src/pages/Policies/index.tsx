@@ -1,16 +1,15 @@
-import { useCallback, useEffect, useState, ChangeEvent } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "../../axiosConfig";
 import Header from "./Header";
-import Table from "./Table";
 import Search from "./Search";
-import Spinner from "../../shared/Spinner";
+import Table from "./Table";
 
 const STATUS_TO_DISPLAY = ["ACTIVE", "PENDING"];
 
 const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const [search, setSearch] = useState<string>("");
+  const [hasError, setError] = useState(false);
 
   const fetchPolicies = async (params: {}) => {
     let data: Policy[] = [];
@@ -18,7 +17,7 @@ const Policies = () => {
       const response = await axios.get("/policies", { params });
       data = response.data;
     } catch {
-      window.alert("Oops! Something went wrong.");
+      setError(true);
     }
     return data;
   };
@@ -41,34 +40,11 @@ const Policies = () => {
     getTableData();
   }, [getTableData]);
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setSearch(e.target.value);
-
-  const handleSearchSubmit = async () => {
-    getTableData({ search });
-  };
-
-  const handleSearchClear = async () => {
-    setSearch("");
-    getTableData();
-  };
-
   return (
     <div className="w-full p-8">
       <Header />
-      <Search
-        value={search}
-        onChange={handleSearchChange}
-        onSearch={handleSearchSubmit}
-        onSearchClear={handleSearchClear}
-      />
-      {isLoading ? (
-        <div className="w-full h-screen flex justify-center items-center">
-          <Spinner />
-        </div>
-      ) : (
-        <Table rowData={rowData} />
-      )}
+      <Search onSearch={getTableData} onClear={getTableData} />
+      <Table rowData={rowData} isLoading={isLoading} hasError={hasError} />
     </div>
   );
 };

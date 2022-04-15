@@ -1,19 +1,36 @@
 import Badge from "./Badge";
+import Spinner from "../../shared/Spinner";
 
 interface TableProps {
   rowData: Policy[];
+  isLoading: boolean;
+  hasError: boolean;
 }
 
 const COLUMNS = ["#", "Name", "Provider", "Type", "Status"];
 
-const Table = ({ rowData }: TableProps) => {
-  if (!rowData.length) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        No result
-      </div>
-    );
-  }
+const LoadingState = () => (
+  <div className="w-full h-screen flex justify-center items-center">
+    <Spinner />
+  </div>
+);
+
+const ErrorState = () => (
+  <div className="w-full h-screen flex justify-center items-center">
+    Oops! Something went wrong.
+  </div>
+);
+
+const EmptyState = () => (
+  <div className="w-full h-screen flex justify-center items-center">
+    No result
+  </div>
+);
+
+const Table = ({ rowData, isLoading, hasError }: TableProps) => {
+  if (isLoading) return <LoadingState />;
+  if (hasError) return <ErrorState />;
+  if (!rowData.length) return <EmptyState />;
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

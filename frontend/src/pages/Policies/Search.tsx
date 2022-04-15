@@ -1,19 +1,27 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 interface SearchProps {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSearch: () => void;
-  onSearchClear: () => void;
+  onSearch: (search: {}) => void;
+  onClear: () => void;
 }
 
-const Search = ({ value, onChange, onSearch, onSearchClear }: SearchProps) => {
-  const [isClearDisabled, setIsClearDisabled] = useState(!value);
+const Search = ({ onSearch, onClear }: SearchProps) => {
+  const [value, setValue] = useState<string>("");
+  const [isClearDisabled, setIsClearDisabled] = useState(true);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setValue(e.target.value);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSearch();
-    setIsClearDisabled(!value);
+    onSearch({ search: value });
+    setIsClearDisabled(false);
+  };
+
+  const handleClear = () => {
+    onClear();
+    setIsClearDisabled(true);
+    setValue("");
   };
 
   return (
@@ -21,8 +29,8 @@ const Search = ({ value, onChange, onSearch, onSearchClear }: SearchProps) => {
       <form onSubmit={handleSubmit} className="flex flex-col md:flex-row">
         <input
           value={value}
-          onChange={onChange}
-          placeholder="type here to search..."
+          onChange={handleChange}
+          placeholder="Search"
           className="bg-white h-12 p-4 border rounded-md"
         />
         <button
@@ -33,8 +41,8 @@ const Search = ({ value, onChange, onSearch, onSearchClear }: SearchProps) => {
         </button>
       </form>
       <button
-        onClick={onSearchClear}
         disabled={isClearDisabled}
+        onClick={handleClear}
         className="px-4 py-2 disabled:opacity-50 disabled:cursor-default"
       >
         Clear
