@@ -12,7 +12,7 @@ import {
 } from "./data";
 
 export const handlers = [
-  rest.get("http://localhost:4000/allPolicies", (req, res, ctx) => {
+  rest.get("http://localhost:4000/policies", (req, res, ctx) => {
     const keyword = req.url.searchParams.get("search");
     switch (keyword) {
       case providerSearchKeyword:

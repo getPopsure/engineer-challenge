@@ -6,18 +6,26 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
+  clientSearchKeyword,
   clientSearchResult,
+  providerSearchKeyword,
   providerSearchResult,
+  statusSearchKeyword,
   statusSearchResult,
+  typeSearchKeyword,
   typeSearchResult,
 } from "../../mocks/data";
 import Policies from "../Policies";
 
 const user = userEvent.setup();
 
+const waitForLoading = async () => {
+  await waitForElementToBeRemoved(() => screen.getByTitle("Spinner"));
+};
+
 beforeEach(async () => {
   render(<Policies />);
-  await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+  await waitForLoading();
 });
 
 // TODO:
@@ -58,28 +66,40 @@ describe("initial render", () => {
 // As a user, I want to be able to search for policies using any of the text fields displayed on the table.
 describe("search policies", () => {
   test("should display correct number of results for policies provider search", async () => {
-    await user.type(screen.getByRole("textbox", { name: "" }), "aok");
+    await user.type(
+      screen.getByRole("textbox", { name: "" }),
+      providerSearchKeyword
+    );
     await user.click(screen.getByRole("button", { name: "Search" }));
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(providerSearchResult.length + 1); // header row included
   });
 
   test("should display correct number of results for policies status search", async () => {
-    await user.type(screen.getByRole("textbox", { name: "" }), "acti");
+    await user.type(
+      screen.getByRole("textbox", { name: "" }),
+      statusSearchKeyword
+    );
     await user.click(screen.getByRole("button", { name: "Search" }));
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(statusSearchResult.length + 1); // header row included
   });
 
   test("should display correct number of results for policies type search", async () => {
-    await user.type(screen.getByRole("textbox", { name: "" }), "hea");
+    await user.type(
+      screen.getByRole("textbox", { name: "" }),
+      typeSearchKeyword
+    );
     await user.click(screen.getByRole("button", { name: "Search" }));
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(typeSearchResult.length + 1); // header row included
   });
 
   test("should display correct number of results for policies client name search", async () => {
-    await user.type(screen.getByRole("textbox", { name: "" }), "hay");
+    await user.type(
+      screen.getByRole("textbox", { name: "" }),
+      clientSearchKeyword
+    );
     await user.click(screen.getByRole("button", { name: "Search" }));
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(clientSearchResult.length + 1); // header row included
@@ -98,11 +118,11 @@ describe("clear search", () => {
     // to enable clear button, filter needs to be applied first
     await user.type(screen.getByRole("textbox", { name: "" }), "aok");
     await user.click(screen.getByRole("button", { name: "Search" }));
-    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+    await waitForLoading();
   });
   test("should display correct number of results", async () => {
     await user.click(screen.getByRole("button", { name: "Clear" }));
-    await waitForElementToBeRemoved(() => screen.getByText("loading..."));
+    await waitForLoading();
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(9); // header row included
   });
