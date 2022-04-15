@@ -5,7 +5,7 @@ type PolicyStatus = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT";
 type InsuranceType = "LIABILITY" | "HOUSEHOLD" | "HEALTH";
 
 interface Customer {
-  id: string; // TODO: install uuid
+  id: uuid;
   firstName: string;
   lastName: string;
   dateOfBirth: Date;
