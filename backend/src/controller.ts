@@ -4,7 +4,7 @@ import {
   InsuranceType,
   PolicyStatus,
 } from "@prisma/client";
-import { getMatchingEnumValue } from "./utils";
+import { getMatchingEnumValueByString } from "./utils";
 
 const prisma = new PrismaClient();
 
@@ -25,12 +25,12 @@ const getPolicies = async ({ search }: any) => {
           },
           {
             insuranceType: {
-              in: getMatchingEnumValue(InsuranceType, search as string),
+              in: getMatchingEnumValueByString(InsuranceType, search as string),
             },
           },
           {
             status: {
-              in: getMatchingEnumValue(PolicyStatus, search as string),
+              in: getMatchingEnumValueByString(PolicyStatus, search as string),
             },
           },
         ],
