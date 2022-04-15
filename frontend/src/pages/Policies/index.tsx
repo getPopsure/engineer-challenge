@@ -15,13 +15,10 @@ const Policies = () => {
   const fetchPolicies = async (params: {}) => {
     let data: Policy[] = [];
     try {
-      setLoading(true);
       const response = await axios.get("/policies", { params });
       data = response.data;
     } catch {
       window.alert("Oops! Something went wrong.");
-    } finally {
-      setLoading(false);
     }
     return data;
   };
@@ -34,8 +31,10 @@ const Policies = () => {
   };
 
   const getTableData = useCallback(async (params = {}) => {
+    setLoading(true);
     const data = await fetchPolicies(params);
     handleDataToDisplay(data);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
