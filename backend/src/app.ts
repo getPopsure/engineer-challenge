@@ -19,6 +19,4 @@ const routes = [
 ];
 routes.map((route) => app.route(route.path).get(route.handler));
 
-// TODO: add error handler: https://expressjs.com/en/guide/error-handling.html
-
 export default app;

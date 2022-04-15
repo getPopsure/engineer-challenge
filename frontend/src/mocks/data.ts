@@ -1,7 +1,10 @@
-export const providerSearchKeyword = "aok";
-export const statusSearchKeyword = "active";
-export const typeSearchKeyword = "health";
-export const clientSearchKeyword = "haydon";
+export const searchKeywordMock = {
+  provider: "aok",
+  status: "active",
+  type: "health",
+  client: "haydon",
+  crossField: "er",
+};
 
 export const allPolicies = [
   {
@@ -106,7 +109,7 @@ export const allPolicies = [
   },
 ];
 
-export const providerSearchResult = [
+const providerSearchResult = [
   {
     id: "4",
     customer: {
@@ -129,7 +132,7 @@ export const providerSearchResult = [
   },
 ];
 
-export const statusSearchResult = [
+const statusSearchResult = [
   {
     id: "5",
     customer: {
@@ -163,7 +166,7 @@ export const statusSearchResult = [
   },
 ];
 
-export const typeSearchResult = [
+const typeSearchResult = [
   {
     id: "1",
     customer: {
@@ -217,7 +220,7 @@ export const typeSearchResult = [
   },
 ];
 
-export const clientSearchResult = [
+const clientSearchResult = [
   {
     id: "5",
     customer: {
@@ -229,3 +232,65 @@ export const clientSearchResult = [
     status: "ACTIVE",
   },
 ];
+
+const crossFieldSearchResult = [
+  {
+    id: "1",
+    customer: {
+      firstName: "Cyrillus",
+      lastName: "Biddlecombe",
+    },
+    provider: "BARMER",
+    insuranceType: "HEALTH",
+    status: "PENDING",
+  },
+  {
+    id: "2",
+    customer: {
+      firstName: "Brandy",
+      lastName: "Harbour",
+    },
+    provider: "BARMER",
+    insuranceType: "LIABILITY",
+    status: "PENDING",
+  },
+
+  {
+    id: "5",
+    customer: {
+      firstName: "Haydon",
+      lastName: "Ballay",
+    },
+    provider: "BARMER",
+    insuranceType: "HOUSEHOLD",
+    status: "ACTIVE",
+  },
+  {
+    id: "7",
+    customer: {
+      firstName: "Tani",
+      lastName: "Erasmus",
+    },
+    provider: "BARMER",
+    insuranceType: "HEALTH",
+    status: "ACTIVE",
+  },
+  {
+    id: "9",
+    customer: {
+      firstName: "Rozelle",
+      lastName: "Nipper",
+    },
+    provider: "TK",
+    insuranceType: "HEALTH",
+    status: "ACTIVE",
+  },
+];
+
+export const searchResultMock = {
+  provider: providerSearchResult,
+  status: statusSearchResult,
+  type: typeSearchResult,
+  client: clientSearchResult,
+  crossField: crossFieldSearchResult,
+};

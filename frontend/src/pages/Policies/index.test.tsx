@@ -5,12 +5,7 @@ import {
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {
-  clientSearchKeyword,
-  providerSearchKeyword,
-  statusSearchKeyword,
-  typeSearchKeyword,
-} from "../../mocks/data";
+import { searchKeywordMock } from "../../mocks/data";
 import Policies from "../Policies";
 
 const user = userEvent.setup();
@@ -19,9 +14,6 @@ let clearButton: HTMLElement;
 let searchButton: HTMLElement;
 let searchInput: HTMLElement;
 
-// TODO:
-// 1. fix loading warning
-// 2. cross field search test
 const waitForLoading = async () => {
   await waitForElementToBeRemoved(() => screen.getByTitle("Spinner"));
 };
@@ -31,6 +23,7 @@ beforeEach(async () => {
   searchInput = screen.getByRole("textbox", { name: "Search" });
   searchButton = screen.getByRole("button", { name: "Search" });
   clearButton = screen.getByRole("button", { name: "Clear" });
+  await waitForLoading();
 });
 
 describe("initial render", () => {
@@ -84,8 +77,9 @@ describe("initial render", () => {
 describe("apply search filter with texts from each field", () => {
   test("should display correct number of results with provider search", async () => {
     // apply search
-    await user.type(searchInput, providerSearchKeyword);
+    await user.type(searchInput, searchKeywordMock.provider);
     await user.click(searchButton);
+    await waitForLoading();
 
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(3); // header row included
@@ -93,8 +87,9 @@ describe("apply search filter with texts from each field", () => {
 
   test("should display correct number of results with status search", async () => {
     // apply search
-    await user.type(searchInput, statusSearchKeyword);
+    await user.type(searchInput, searchKeywordMock.status);
     await user.click(searchButton);
+    await waitForLoading();
 
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(4); // header row included
@@ -102,8 +97,9 @@ describe("apply search filter with texts from each field", () => {
 
   test("should display correct number of results with type search", async () => {
     // apply search
-    await user.type(searchInput, typeSearchKeyword);
+    await user.type(searchInput, searchKeywordMock.type);
     await user.click(searchButton);
+    await waitForLoading();
 
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(6); // header row included
@@ -111,8 +107,9 @@ describe("apply search filter with texts from each field", () => {
 
   test("should display correct number of results with client name search", async () => {
     // apply search
-    await user.type(searchInput, clientSearchKeyword);
+    await user.type(searchInput, searchKeywordMock.client);
     await user.click(searchButton);
+    await waitForLoading();
 
     const items = await screen.findAllByRole("row");
     expect(items.length).toBe(2); // header row included
@@ -127,10 +124,21 @@ describe("apply search filter with texts from each field", () => {
     await waitFor(() => expect(items).toEqual([]));
   });
 
+  test("should display all matches across fields", async () => {
+    // apply search
+    await user.type(searchInput, searchKeywordMock.crossField);
+    await user.click(searchButton);
+    await waitForLoading();
+
+    const items = await screen.findAllByRole("row");
+    expect(items.length).toBe(6); // header row included
+  });
+
   test("clear button should be enabled", async () => {
     // apply search
     await user.type(searchInput, "random");
     await user.click(searchButton);
+    await waitForLoading();
 
     expect(clearButton).not.toBeDisabled();
   });
@@ -141,8 +149,11 @@ describe("clear search filter applied", () => {
     // apply search
     await user.type(searchInput, "random");
     await user.click(searchButton);
+    await waitForLoading();
+
     // apply clear
     await user.click(clearButton);
+    await waitForLoading();
   });
 
   test("should display correct number of results", async () => {
