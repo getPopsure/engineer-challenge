@@ -10,10 +10,8 @@ const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchValue, setValue] = useState<string>("");
-  const [isClearVisible, setIsClearVisible] = useState(false);
 
   const fetchPolicies = useCallback(async (params = {}) => {
-    // TODO: check pagination
     try {
       setLoading(true);
       const response = await axios.get("/policies", { params });
@@ -44,19 +42,12 @@ const Policies = () => {
     setValue(e.target.value);
 
   const handleSearchSubmit = async () => {
-    if (searchValue) {
-      await fetchPolicies({ search: searchValue });
-      setIsClearVisible(true);
-    } else {
-      await fetchPolicies();
-      setIsClearVisible(false);
-    }
+    await fetchPolicies({ search: searchValue });
   };
 
   const handleSearchClear = async () => {
     setValue("");
     await fetchPolicies();
-    setIsClearVisible(false);
   };
 
   return (
@@ -66,14 +57,13 @@ const Policies = () => {
         <>loading...</>
       ) : (
         <>
+          {/* TODO: responsive */}
           <Search
             value={searchValue}
             onChange={handleSearchChange}
             onSearch={handleSearchSubmit}
+            onSearchClear={handleSearchClear}
           />
-          <button onClick={handleSearchClear} disabled={!isClearVisible}>
-            Clear
-          </button>
           <Table rowData={rowData} />
         </>
       )}
