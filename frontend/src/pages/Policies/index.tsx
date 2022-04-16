@@ -16,7 +16,7 @@ const Policies = () => {
     try {
       const response = await axios.get("/policies", { params });
       data = response.data;
-    } catch {
+    } catch (err: any) {
       setError(true);
     }
     return data;
