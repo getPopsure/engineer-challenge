@@ -119,7 +119,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 
 How much time did you spend working on the solution?
 
-- 5 days, 31 hours in total. Below is a breakdown on time spent per task.
+- 5 days, 33 hours in total. Below is a breakdown on time spent per task.
 
 | Task                                                                                                                 | Time spent (hr) |
 | -------------------------------------------------------------------------------------------------------------------- | --------------- |
@@ -131,7 +131,7 @@ How much time did you spend working on the solution?
 | search filter (BE)                                                                                                   | 2               |
 | search test (BE)                                                                                                     | 1               |
 | UI polish (FE)                                                                                                       | 4               |
-| cleanup & refactor                                                                                                   | 6               |
+| cleanup & refactor                                                                                                   | 8               |
 
 What’s the part of the solution you are most proud of?
 
