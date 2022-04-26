@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "../../axiosConfig";
 import Header from "./Header";
+import Pagination from "./Pagination";
 import Search from "./Search";
 import Table from "./Table";
 
@@ -10,11 +11,13 @@ const Policies = () => {
   const [rowData, setRowData] = useState<Policy[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [hasError, setError] = useState(false);
+  const [page, setPage] = useState(1);
 
   const fetchPolicies = async (params: {}) => {
     let data: Policy[] = [];
     try {
-      const response = await axios.get("/policies", { params });
+      // TODO: get page param from state
+      const response = await axios.get("/policies", { params: { page: 2 } });
       data = response.data;
     } catch (err: any) {
       setError(true);
@@ -45,6 +48,7 @@ const Policies = () => {
       <Header />
       <Search onSearch={getTableData} onClear={getTableData} />
       <Table rowData={rowData} isLoading={isLoading} hasError={hasError} />
+      <Pagination page={page} onPageClick={setPage} />
     </div>
   );
 };
