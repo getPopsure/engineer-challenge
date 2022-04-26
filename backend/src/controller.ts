@@ -12,7 +12,10 @@ const getPolicies = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     policies = await service.findPolicies(search as string, pageInt as number);
-    res.json(policies);
+    const totalPage = await service.getPolicyCount();
+
+    const response = { policies, totalPage: totalPage._count };
+    res.json(response);
   } catch (error) {
     next(error);
   }

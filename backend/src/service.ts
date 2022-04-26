@@ -76,4 +76,4 @@ const findPolicies = async (
   return policies;
 };
 
-export default { findPolicies };
+export default { findPolicies, getPolicyCount };
