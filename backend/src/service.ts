@@ -8,7 +8,8 @@ import { getMatchingEnumValueByString } from "./utils";
 
 const prisma = new PrismaClient();
 
-const ITEMS_PER_PAGE = 5;
+// TODO: move it to a separate file
+export const ITEMS_PER_PAGE = 5;
 
 const getPolicyCount = async () => {
   const aggregations = await prisma.policy.aggregate({

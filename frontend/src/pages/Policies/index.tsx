@@ -12,18 +12,20 @@ const Policies = () => {
   const [isLoading, setLoading] = useState(false);
   const [hasError, setError] = useState(false);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
 
-  const fetchPolicies = async (params: {}) => {
+  const fetchPolicies = useCallback(async (params) => {
     let data: Policy[] = [];
     try {
-      // TODO: get page param from state
-      const response = await axios.get("/policies", { params: { page: 2 } });
-      data = response.data;
+      const response = await axios.get("/policies", { params });
+      const totalPage = response.data.totalPage;
+      setTotalPage(totalPage);
+      data = response.data.policies;
     } catch (err: any) {
       setError(true);
     }
     return data;
-  };
+  }, []);
 
   const handleDataToDisplay = (data: Policy[]) => {
     const dataToDisplay = data.filter((item: Policy) =>
@@ -40,15 +42,20 @@ const Policies = () => {
   }, []);
 
   useEffect(() => {
-    getTableData();
-  }, [getTableData]);
+    // getTableData();
+    const getData = async () => {
+      const data = await fetchPolicies({ page });
+      handleDataToDisplay(data);
+    };
+    getData();
+  }, [page, fetchPolicies]);
 
   return (
     <div className="w-full p-8">
       <Header />
       <Search onSearch={getTableData} onClear={getTableData} />
       <Table rowData={rowData} isLoading={isLoading} hasError={hasError} />
-      <Pagination page={page} onPageClick={setPage} />
+      <Pagination onPageClick={setPage} totalPage={totalPage} />
     </div>
   );
 };
