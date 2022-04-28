@@ -2,11 +2,11 @@
 
 Thank you for applying at Feather and taking the time to do this home assessment.
 
-The goal of this project is to let you show off your coding and problem-solving skills, on a task that resembles the kind of work you’ll be doing with us.
+The goal of this project is to let you **show off your coding and problem-solving skills**, on a task that resembles the kind of work you’ll be doing with us.
 
-Depending on the position you are applying, you can focus more on the frontend or backend part of the application (or both if you are applying for a fullstack position).
+This coding challenge applies to **frontend, backend, and full-stack roles**. Depending on the position you are applying for, you can focus on your specific area.  
 
-You can spend as little or as much time as you like on this project. We've generated some boilerplate for you to get started.
+You can spend as little or as much time as you like on this project. We've added some initial boilerplate to help you get started, but **feel free to refactor every part of this app as you may seem fit**.
 
 1. Start by reading the [User story](#User-story) and the [Acceptance criteria](#Acceptance-criteria) to have a clear idea of the requirements.
 2. Use the [Getting started](#Getting-started) guide to set up a local version of the project on your machine.
@@ -123,4 +123,6 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
   _You can share a code snippet here if you feel like it_
 
 - If you had more time, what other things you would like to do?
-- Is there anything you would like to change in the current setup?
+- Do you have any feedback regarding this coding challenge?  
+
+  _Is the initial setup working?, is something missing?, or any other comment_
