@@ -40,29 +40,34 @@ When a search filter is applied, I want to be able to clear the current search f
 2. Set up the environment variables
 
 ```bash
-cp ./backend/.env.example ./backend/.env
+make prepare-backend
 ```
 
-3. Build and run the Docker image:
+3. Build and run the Docker images:
+- Backend:
+  ```bash
+  make start-backend
+  ```
+- Frontend
+  ```bash
+  make start-frontend
+  ```
 
-```bash
-cd backend
-docker-compose build
-docker-compose up
-```
-
-4. On a new terminal, run the migration and the seed script to add initial data:
-
-```bash
-docker compose exec backend yarn prisma migrate dev
-docker compose exec backend yarn prisma db seed
-```
-
-5. That’s it!
+4. That’s it! 
 
 You can see the app on `http://localhost:3000`
 
 The API should be running on `http://localhost:4000`
+
+To stop docker containers, run
+```bash
+make stop-all
+```
+
+** Note **
+You might want to take a look at Makefile to see a bunch of other helpful commands.
+For example, to run the app without docker container you can simply run `make run-backend` or `make run-frontend`.
+
 
 ** Note **
 If you want to install new dependencies, you'll have to do it inside the docker container. To do that, you can use the following command:
