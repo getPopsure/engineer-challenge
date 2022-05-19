@@ -1,0 +1,20 @@
+name: Build Docker Images
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build Backend Docker Image
+        id: build-backend-image
+        run: make docker-build-backend
+
+      - name: Build Frontend Docker Image
+        id: build-frontend-image
+        run: make docker-build-frontend
