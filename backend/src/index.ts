@@ -15,6 +15,6 @@ app.use("/policies", policiesRouter)
 app.use(errorLogger)
 app.use(errorHandler)
 
-app.listen(BACKEND_PORT, () => {
+export const server = app.listen(BACKEND_PORT, () => {
   console.log(`🚀  Server ready at ${BACKEND_PORT}`)
 })

@@ -6,4 +6,5 @@ export const errorHandler: ErrorRequestHandler = (err: any, req: Request, res: R
   }
   res.status(500)
   res.render("error", {error: err})
+  next()
 }
