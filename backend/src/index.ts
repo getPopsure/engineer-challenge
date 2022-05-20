@@ -1,54 +1,20 @@
-import express from 'express';
-import { PrismaClient, Prisma } from '@prisma/client';
+import express from "express"
+import {BACKEND_PORT} from "./config/infra.config"
+import {errorLogger, logger} from "./middlewares/logger"
+import {indexRouter} from "./routes/root"
+import {policiesRouter} from "./routes/policies"
+import {errorHandler} from "./middlewares/error.handler"
 
-const app = express();
-const port = 4000;
-const prisma = new PrismaClient();
+const app = express()
+console.log("Prisma client initialized")
 
 app.use(express.json())
+app.use(logger)
+app.use("/", indexRouter)
+app.use("/policies", policiesRouter)
+app.use(errorLogger)
+app.use(errorHandler)
 
-app.get('/policies', async (req, res) => {
-  const { search } = req.query;
-
-  const or: Prisma.PolicyWhereInput = search
-    ? {
-      OR: [
-        { provider: { contains: search as string, mode: 'insensitive' } },
-        { customer: { firstName: { contains: search as string, mode: 'insensitive' } } },
-        { customer: { lastName: { contains: search as string, mode: 'insensitive' } } }
-      ],
-    }
-    : {};
-
-  const policies = await prisma.policy.findMany({
-    where: {
-      ...or,
-    },
-    select: {
-      id: true,
-      provider: true,
-      insuranceType: true,
-      status: true,
-      startDate: true,
-      endDate: true,
-      customer: {
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          dateOfBirth: true
-        }
-      }
-    }
-  })
-
-  res.json(policies);
+app.listen(BACKEND_PORT, () => {
+  console.log(`🚀  Server ready at ${BACKEND_PORT}`)
 })
-
-app.get('/', (req, res) => {
-  res.send('Server is up and running 🚀')
-})
-
-app.listen(port, () => {
-  console.log(`🚀  Server ready at ${port}`);
-});

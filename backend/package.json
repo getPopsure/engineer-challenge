@@ -8,24 +8,32 @@
   "dependencies": {
     "@prisma/client": "3.11.1",
     "express": "^4.17.3",
+    "express-winston": "^4.2.0",
+    "prisma": "3.11.1",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.7.2"
   },
   "devDependencies": {
     "@types/express": "4.17.13",
     "@types/node": "16.11.26",
     "@types/uuid": "^8.3.4",
-    "prisma": "3.11.1",
+    "jest": "^28.1.0",
+    "jest-mock-extended": "^2.0.6",
     "ts-node": "10.7.0",
     "typescript": "4.6.3"
   },
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "test": "jest --config test/unit/jest.conf.ts --coverage"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "engines": {
-    "node": "<17"
+    "node": "<17",
+    "npm": "please-use-yarn",
+    "yarn": ">=1"
   }
 }
