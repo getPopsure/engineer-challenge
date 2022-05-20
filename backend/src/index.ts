@@ -5,7 +5,7 @@ import {indexRouter} from "./routes/root"
 import {policiesRouter} from "./routes/policies"
 import {errorHandler} from "./middlewares/error.handler"
 
-const app = express()
+export const app = express()
 console.log("Prisma client initialized")
 
 app.use(express.json())
