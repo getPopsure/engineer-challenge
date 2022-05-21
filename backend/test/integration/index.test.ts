@@ -1,7 +1,7 @@
 import {describe, expect, test} from "@jest/globals"
-import {app, server} from "../../../src"
+import {app, server} from "../../src"
 import request from "supertest"
-import {prismaMock} from "../../singleton"
+import {prismaMock} from "../singleton"
 import {mockReset} from "jest-mock-extended"
 
 beforeEach(() => {

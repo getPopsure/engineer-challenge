@@ -31,7 +31,8 @@
   "scripts": {
     "start": "nodemon",
     "run-dev": "ENV_FILE=.env nodemon",
-    "test": "ENV_FILE=.env npx jest --detectOpenHandles --config jest.config.ts"
+    "unit-tests": "DATABASE_URL=postgresql://dummy npx jest --detectOpenHandles --config jest.config.ts --testPathPattern=test/unit/.*\\.ts$",
+    "integration-tests": "ENV_FILE=.env npx jest --detectOpenHandles --config jest.config.ts --testPathPattern=test/integration/.*\\.ts$"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
