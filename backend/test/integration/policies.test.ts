@@ -1,14 +1,13 @@
 import {describe, expect, test} from "@jest/globals"
-import request, {Response} from "supertest"
 import {app, server} from "../../src"
+import request, {Response} from "supertest"
 
 describe("Test the policies endpoint", function () {
-  test("It should response the GET method", (done) => {
+  test("It should response the GET method", done => {
     request(app)
-      .get("/")
+      .get("/policies")
       .then((response: Response) => {
         expect(response.statusCode).toBe(200)
-        expect(response.body).toBe("failll")
         done()
       })
   })

@@ -4,7 +4,7 @@ import request from "supertest"
 
 
 describe("Test the root endpoint", function () {
-  test("It should response the GET method", (done) => {
+  test("It should response the GET method", done => {
     request(app)
       .get("/")
       .then((response: { statusCode: any }) => {
