@@ -14,18 +14,15 @@ You can spend as little or as much time as you like on this project. We've added
 4. Finish by answering a [couple of questions](#General-questions) about the project. You can answer them on this very same file.
 
 ## User story
-
-As a user, I want to be able to search for policies using any of the text fields displayed on the table.
-
-When a search filter is applied, I want to see the filtered information on the same table.
-
-When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information.
+As a user, I want to be able to view, create and update the policy data.
+- When viewing policies, I want to sort and filter the results.
+- When a policy was edited, I want to have access to the previous versions of the policy.
+- When editing a policy, I want to be able to add or remove customer's family members.
 
 ## Acceptance criteria
-
-- Show only `ACTIVE` and `PENDING` policies.
-- Do not display any results if there are no matches
-- Clearing the search should return the table to its original state
+- The policies API should support sorting and paginating the results.
+- It should be possible to find a policy by its family member names, current or past.
+- The policy history should be available at a separate endpoint.
 
 ## Task requirements
 
@@ -38,20 +35,19 @@ When a search filter is applied, I want to be able to clear the current search f
 
 1. Make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed on your machine
 2. Set up the environment variables
-
-```bash
-make prepare-backend
-```
+    ```bash
+    make prepare-backend
+    ```
 
 3. Build and run the Docker images:
-- Backend:
-  ```bash
-  make start-backend
-  ```
-- Frontend
-  ```bash
-  make start-frontend
-  ```
+   - Backend:
+     ```bash
+     make start-backend
+     ```
+   - Frontend
+     ```bash
+     make start-frontend
+     ```
 
 4. That’s it! 
 
@@ -59,7 +55,7 @@ You can see the app on `http://localhost:3000`
 
 The API should be running on `http://localhost:4000`
 
-To stop docker containers, run
+To stop all docker containers, run
 ```bash
 make stop-all
 ```
