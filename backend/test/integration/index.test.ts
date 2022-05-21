@@ -1,16 +1,10 @@
 import {describe, expect, test} from "@jest/globals"
 import {app, server} from "../../src"
 import request from "supertest"
-import {prismaMock} from "../singleton"
-import {mockReset} from "jest-mock-extended"
-
-beforeEach(() => {
-  mockReset(prismaMock)
-})
 
 
 describe("Test the root endpoint", function () {
-  test("It should response the GET method", done => {
+  test("It should response the GET method", (done) => {
     request(app)
       .get("/")
       .then((response: { statusCode: any }) => {

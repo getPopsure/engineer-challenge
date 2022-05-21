@@ -1,6 +1,6 @@
 import {Prisma} from "@prisma/client"
-import {applicationLogger} from "../middlewares/logger"
-import prismaClient from "../db/prisma.client"
+import {applicationLogger} from "../middlewares/logger.middleware"
+import {Context, getContext} from "../context"
 
 export const parseWhereInput = (search?: string): Prisma.PolicyWhereInput => {
   applicationLogger.info("Serve policies for input " + search)
@@ -15,9 +15,9 @@ export const parseWhereInput = (search?: string): Prisma.PolicyWhereInput => {
     : {}
 }
 
-export const servePolicies = async (query?: Prisma.PolicyWhereInput) => {
+export const servePolicies = (query?: Prisma.PolicyWhereInput, context: Context = getContext()) => {
   applicationLogger.info("Serve policies for input " + (query as string))
-  return prismaClient.policy.findMany({
+  return context.prisma.policy.findMany({
     where: {
       ...query
     },
