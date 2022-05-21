@@ -16,4 +16,4 @@ jobs:
       - name: Test
         uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: --cwd backend test
+          cmd: --cwd backend unit-tests
