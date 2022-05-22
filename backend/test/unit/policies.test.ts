@@ -1,22 +1,21 @@
 import {describe, expect} from "@jest/globals"
-import {parseWhereInput, servePolicies} from "../../src/service/policies.service"
 import {InsuranceType, Policy, PolicyStatus, Prisma} from "@prisma/client"
 import {createMockContext, PrismaClientMock} from "../prisma.client.mock"
-import {Context} from "../../src/context"
+import {PoliciesService} from "../../src/service/policies.service"
 
 
 let mockCtx: PrismaClientMock
-let ctx: Context
+let policiesService: PoliciesService
 
 beforeEach(() => {
   mockCtx = createMockContext()
-  ctx = mockCtx
+  policiesService = new PoliciesService(mockCtx)
 })
 
 describe("Test the policies model", () => {
   describe("parseWhereInput", () => {
     it("Should return correct query", (done) => {
-      const query: Prisma.PolicyWhereInput = parseWhereInput("JohnSmith")
+      const query: Prisma.PolicyWhereInput = policiesService.parseWhereInput("JohnSmith")
       expect(query.OR).toContainEqual({provider: {contains: "JohnSmith", mode: "insensitive"}})
       expect(query.OR).toContainEqual({customer: {firstName: {contains: "JohnSmith", mode: "insensitive"}}})
       expect(query.OR).toContainEqual({customer: {lastName: {contains: "JohnSmith", mode: "insensitive"}}})
@@ -25,7 +24,17 @@ describe("Test the policies model", () => {
   })
 
   describe("servePolicies", () => {
-    it("Should return correct model when matched", done => {
+    it("Should return empty list when no policies exist", done => {
+      const query: Prisma.PolicyWhereInput = {}
+      mockCtx.prisma.policy.findMany.mockResolvedValue([])
+
+      policiesService.searchPolicies(query).then((result: any) => {
+        expect(result).toEqual([])
+        done()
+      })
+    })
+
+    it("Should return correct model when it's present", done => {
       const policy: Policy = {
         id: "1",
         customerId: "1",
@@ -37,16 +46,10 @@ describe("Test the policies model", () => {
         createdAt: new Date()
       }
 
-      const query: Prisma.PolicyWhereInput = {
-        OR: [
-          {provider: {contains: "JohnSmith", mode: "insensitive"}},
-          {customer: {firstName: {contains: "JohnSmith", mode: "insensitive"}}},
-          {customer: {lastName: {contains: "JohnSmith", mode: "insensitive"}}}
-        ]
-      }
+      const query: Prisma.PolicyWhereInput = {}
       mockCtx.prisma.policy.findMany.mockResolvedValue([policy])
 
-      servePolicies(query, ctx).then((result) => {
+      policiesService.searchPolicies(query).then((result: any) => {
         expect(result).toContain(policy)
         done()
       })
