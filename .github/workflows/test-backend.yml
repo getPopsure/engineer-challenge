@@ -4,16 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Yarn install
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: --cwd backend install
-      - name: Test
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: --cwd backend unit-tests
+      - name: Tests
+        run: make run-all-tests

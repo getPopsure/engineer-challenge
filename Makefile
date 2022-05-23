@@ -1,4 +1,4 @@
-.PHONY: run-backend start-backend stop-backend run-frontend start-frontend stop-frontend start-all stop-all
+.PHONY: run-backend start-backend stop-backend run-frontend start-frontend stop-frontend start-all stop-all run-all-tests
 
 project_home:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 backend_home:=${project_home}/backend
@@ -35,6 +35,14 @@ yarn-build-frontend:
 yarn-run-backend:
 	cd ${backend_home} && yarn start
 
+run-unit-tests-backend:
+	cd ${backend_home} && yarn unit-tests
+
+run-integration-tests-backend:
+	cd ${backend_home} && yarn integration-tests
+
+test-backend: run-unit-tests-backend run-integration-tests-backend
+
 yarn-run-frontend:
 	cd ${frontend_home} && yarn start
 
@@ -44,9 +52,6 @@ docker-compose-up:
 docker-compose-down:
 	cd ${backend_home} && docker-compose down
 
-migrate-test:
-	cd ${backend_home} && ENV_FILE=${backend_home}/.env yarn prisma migrate dev
-
 migrate:
 	cd ${backend_home} && docker compose exec backend yarn prisma migrate dev
 
@@ -54,6 +59,8 @@ seed:
 	cd ${backend_home} && docker compose exec backend yarn prisma db seed
 
 prepare-backend: prepare-env docker-build-backend docker-compose-up-backend migrate seed docker-compose-stop-backend
+
+run-all-tests: prepare-env docker-build-backend docker-compose-up-backend migrate docker-compose-stop-backend test-backend stop-all
 
 run-backend: prepare-backend yarn-build-backend yarn-run-backend
 start-backend: prepare-backend docker-compose-up-backend
