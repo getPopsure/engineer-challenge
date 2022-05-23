@@ -16,6 +16,7 @@
     "winston": "^3.7.2"
   },
   "devDependencies": {
+    "@jest/globals": "^28.1.0",
     "@types/express": "4.17.13",
     "@types/jest": "^27.5.1",
     "@types/node": "16.11.26",
@@ -31,8 +32,8 @@
   "scripts": {
     "start": "nodemon",
     "run-dev": "ENV_FILE=.env nodemon",
-    "unit-tests": "DATABASE_URL=postgresql://dummy npx jest --detectOpenHandles --config jest.config.ts --testPathPattern=test/unit/.*\\.ts$",
-    "integration-tests": "ENV_FILE=.env npx jest --detectOpenHandles --config jest.config.ts --testPathPattern=test/integration/.*\\.ts$"
+    "unit-tests": "DATABASE_URL=postgresql://dummy npx jest --silent --detectOpenHandles --config jest.config.ts --testPathPattern=test/unit/.*\\.ts$",
+    "integration-tests": "ENV_FILE=.env npx jest --silent --detectOpenHandles --config jest.config.ts --testPathPattern=test/integration/.*\\.ts$"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

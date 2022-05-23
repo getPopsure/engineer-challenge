@@ -44,6 +44,9 @@ docker-compose-up:
 docker-compose-down:
 	cd ${backend_home} && docker-compose down
 
+migrate-test:
+	cd ${backend_home} && ENV_FILE=${backend_home}/.env yarn prisma migrate dev
+
 migrate:
 	cd ${backend_home} && docker compose exec backend yarn prisma migrate dev
 

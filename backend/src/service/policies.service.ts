@@ -1,6 +1,13 @@
-import {Prisma} from "@prisma/client"
+import {Policy, Prisma} from "@prisma/client"
 import {applicationLogger} from "../middlewares/logger.middleware"
-import {Context, getContext} from "../context"
+import {Context} from "../global/context"
+import {now} from "../util/util"
+import {getContext} from "../db/prisma.client"
+
+export type CreatePolicyRequest = Omit<Prisma.PolicyCreateInput, "customer" | "createdAt"> & { customerId: string }
+export type SearchPolicyRequest = {
+  query?: string
+}
 
 export class PoliciesService {
   private _context: Context
@@ -9,20 +16,40 @@ export class PoliciesService {
     this._context = context
   }
 
-  public parseWhereInput = (search?: string): Prisma.PolicyWhereInput => {
-    applicationLogger.info("Serve policies for input " + search)
-    return search
+  public _parseWhereInput = (search: SearchPolicyRequest): Prisma.PolicyWhereInput => {
+    return search.query
       ? {
         OR: [
-          {provider: {contains: search, mode: "insensitive"}},
-          {customer: {firstName: {contains: search, mode: "insensitive"}}},
-          {customer: {lastName: {contains: search, mode: "insensitive"}}}
+          {provider: {contains: search.query, mode: "insensitive"}},
+          {customer: {firstName: {contains: search.query, mode: "insensitive"}}},
+          {customer: {lastName: {contains: search.query, mode: "insensitive"}}}
         ]
       }
       : {}
   }
-  public searchPolicies = (query?: Prisma.PolicyWhereInput) => {
-    applicationLogger.info("Serve policies for input " + (query as string))
+
+  public createPolicy = (policy: CreatePolicyRequest): Promise<Policy> => {
+    applicationLogger.info("Creating policy for input", policy)
+    return this._context.prisma.policy.create({
+      data: {
+        createdAt: now(),
+        endDate: policy.endDate,
+        startDate: policy.startDate,
+        status: policy.status,
+        provider: policy.provider,
+        insuranceType: policy.insuranceType,
+        customer: {
+          connect: {
+            id: policy.customerId
+          }
+        }
+      }
+    })
+  }
+
+  public searchPolicies = (search: SearchPolicyRequest = {}) => {
+    applicationLogger.info("Searching policies for input", search)
+    const query = this._parseWhereInput(search);
     return this._context.prisma.policy.findMany({
       where: {
         ...query

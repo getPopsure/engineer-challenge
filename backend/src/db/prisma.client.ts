@@ -1,4 +1,9 @@
 import {PrismaClient} from "@prisma/client"
+import {Context} from "../global/context"
 
-const prisma = new PrismaClient()
-export default prisma
+export const prisma = new PrismaClient()
+export const getContext = (): Context => {
+  return {
+    prisma: prisma
+  }
+}

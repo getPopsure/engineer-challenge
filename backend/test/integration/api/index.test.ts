@@ -1,5 +1,5 @@
 import {describe, expect, test} from "@jest/globals"
-import {app, server} from "../../src"
+import {app, server} from "../../../src"
 import request from "supertest"
 
 
@@ -14,6 +14,6 @@ describe("Test the root endpoint", function () {
   })
 })
 
-afterAll((done) => {
+afterAll(done => {
   server.close(done)
 })
