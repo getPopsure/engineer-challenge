@@ -60,7 +60,7 @@ seed:
 
 prepare-backend: prepare-env docker-build-backend docker-compose-up-backend migrate seed docker-compose-stop-backend
 
-run-all-tests: prepare-env docker-build-backend docker-compose-up-backend migrate docker-compose-stop-backend test-backend stop-all
+run-all-tests: prepare-env yarn-build-backend docker-build-backend docker-compose-up-backend migrate docker-compose-stop-backend test-backend stop-all
 
 run-backend: prepare-backend yarn-build-backend yarn-run-backend
 start-backend: prepare-backend docker-compose-up-backend
