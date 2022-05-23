@@ -8,24 +8,18 @@ This coding challenge applies to **frontend, backend, and full-stack roles**. De
 
 You can spend as little or as much time as you like on this project. We've added some initial boilerplate to help you get started, but **feel free to refactor every part of this app as you may seem fit**.
 
-1. Start by reading the [User story](#User-story) and the [Acceptance criteria](#Acceptance-criteria) to have a clear idea of the requirements.
+1. Start by reading the [Engineering challenge](#Engineering-challenge) for the position you've applied for and don't forget about the **Acceptance criteria** to have a clear idea of the requirements.
 2. Use the [Getting started](#Getting-started) guide to set up a local version of the project on your machine.
 3. Take a look at the [Data structure](#Data-structure) and [API](#API) to know what the data looks like.
 4. Finish by answering a [couple of questions](#General-questions) about the project. You can answer them on this very same file.
 
-## User story
+## Engineering challenge
 
-As a user, I want to be able to search for policies using any of the text fields displayed on the table.
+We've prepared several different user stories to work on. Depending on what position you applied to, pick one of them:  
+- [Backend](./backend-readme.md)
+- [Frontend](./frontend-readme.md)
+- [Full Stack](./full-stack-readme.md)
 
-When a search filter is applied, I want to see the filtered information on the same table.
-
-When a search filter is applied, I want to be able to clear the current search filter, this action will display the original information.
-
-## Acceptance criteria
-
-- Show only `ACTIVE` and `PENDING` policies.
-- Do not display any results if there are no matches
-- Clearing the search should return the table to its original state
 
 ## Task requirements
 
