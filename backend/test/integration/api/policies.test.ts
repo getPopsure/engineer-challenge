@@ -4,9 +4,8 @@ import request, {Response} from "supertest"
 import {getContext} from "../../../src/db/prisma.client"
 import {InsuranceType, PolicyStatus} from "@prisma/client"
 import {randomUUID} from "crypto"
-import {cleanupDB} from "../cleanup.database"
+import {cleanupDB, createCustomer, createPolicies} from "../util"
 import {CustomerService} from "../../../src/service/customer.service"
-import {now} from "../../../src/util/util"
 import {PoliciesService} from "../../../src/service/policies.service"
 import {any} from "jest-mock-extended"
 
@@ -21,12 +20,8 @@ beforeAll(done => {
 })
 
 beforeEach(done => {
-  customerService.createCustomer({
-    firstName: "John",
-    lastName: "Smith",
-    dateOfBirth: now()
-  }).then(customer => {
-    customerId = customer.id
+  createCustomer().then(id => {
+    customerId = id
   }).then(() => done())
 })
 
@@ -41,7 +36,7 @@ afterEach(done => {
 })
 
 describe("Test the policies endpoint", () => {
-  test("It should response the GET method", done => {
+  test("Should response the GET method", done => {
     request(app)
       .get("/policies")
       .then((response: Response) => {
@@ -50,7 +45,7 @@ describe("Test the policies endpoint", () => {
       })
   })
 
-  test("It should response with 404 to the POST method when customer does not exist", done => {
+  test("Should response with 404 to the POST method when customer does not exist", done => {
     const customerId = randomUUID()
     request(app)
       .post("/policies")
@@ -69,7 +64,7 @@ describe("Test the policies endpoint", () => {
       })
   })
 
-  test("It should response with 200 to the POST method with correct body", done => {
+  test("Should response with 200 to the POST method with correct body", done => {
     const startDate = new Date()
     request(app)
       .post("/policies")
@@ -97,7 +92,7 @@ describe("Test the policies endpoint", () => {
       })
   })
 
-  test("It should response with 400 to the POST method with missing fields", done => {
+  test("Should response with 400 to the POST method with missing fields", done => {
     request(app)
       .post("/policies")
       .send({
@@ -121,5 +116,18 @@ describe("Test the policies endpoint", () => {
         expect(response.body.error).toEqual("startDate should be a date, but got not-a-date instead")
         done()
       })
+  })
+
+  test("Should take into account pagination params in GET request", done => {
+    createPolicies(10, customerId).then(() => {
+      request(app)
+        .get("/policies?take=3&skip=3")
+        .then((response: Response) => {
+          expect(response.statusCode).toBe(200)
+          expect(response.body).toBeInstanceOf(Array)
+          expect(response.body.length).toBe(3)
+          done()
+        })
+    })
   })
 })

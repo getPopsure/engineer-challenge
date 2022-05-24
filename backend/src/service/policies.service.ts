@@ -6,8 +6,8 @@ import {getContext} from "../db/prisma.client"
 import {InvalidEntityException, NotFoundException} from "../exceptions"
 
 export type Pager = {
-  start: number,
-  limit: number
+  skip?: number,
+  take?: number
 }
 
 export type CreatePolicy = Omit<Policy, "id" | "createdAt" | "customer">
@@ -132,6 +132,8 @@ export class PoliciesService {
     applicationLogger.debug("Searching policies for input", search)
     const query = this._parseWhereInput(search);
     return await this._context.prisma.policy.findMany({
+      skip: search?.pager?.skip,
+      take: search?.pager?.take,
       where: {
         ...query
       },

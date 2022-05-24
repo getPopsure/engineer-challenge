@@ -2,8 +2,8 @@ import {describe, test} from "@jest/globals";
 import {CustomerService} from "../../../src/service/customer.service"
 import {PoliciesService} from "../../../src/service/policies.service"
 import {getContext} from "../../../src/db/prisma.client"
-import {cleanupDB} from "../cleanup.database"
-import {InsuranceType, Policy, PolicyChangeType, PolicyStatus} from "@prisma/client"
+import {cleanupDB, createCustomer, createPolicies, createPolicy} from "../util"
+import {InsuranceType, PolicyChangeType, PolicyStatus} from "@prisma/client"
 import {server} from "../../../src"
 import {any} from "jest-mock-extended"
 import {randomUUID} from "crypto"
@@ -31,13 +31,72 @@ afterEach(done => {
 })
 
 beforeEach(done => {
-  customerService.createCustomer({
-    firstName: "John",
-    lastName: "Smith",
-    dateOfBirth: now()
-  }).then(customer => {
-    customerId = customer.id
+  createCustomer().then(id => {
+    customerId = id
   }).then(() => done())
+})
+
+describe("searchPolicy", () => {
+  test("Should return all policies when no search specified", done => {
+    const timestamp = now()
+    const policies = []
+    for (let i = 0; i < 10; i++) {
+      policies.push({
+        endDate: null,
+        startDate: timestamp,
+        status: PolicyStatus.ACTIVE,
+        provider: 'feather',
+        insuranceType: InsuranceType.HEALTH,
+        customerId: customerId
+      })
+    }
+
+    getContext().prisma.policy.createMany({
+      data: policies
+    }).then(() => {
+      policiesService.searchPolicies().then(result => {
+        expect(result).toBeInstanceOf(Array)
+        expect(result.length).toEqual(10)
+        done()
+      })
+    })
+  })
+
+  test("Should return empty array when nothing matched", done => {
+    createPolicies(10, customerId).then(() => {
+      policiesService.searchPolicies({
+        query: "NotExisting"
+      }).then(result => {
+        expect(result).toBeInstanceOf(Array)
+        expect(result.length).toBe(0)
+        done()
+      })
+    })
+  })
+
+  test("Should take pager into account when returning requests", done => {
+    createPolicies(10, customerId).then(() => {
+      policiesService.searchPolicies({
+        pager: {
+          skip: 3,
+          take: 3
+        }
+      }).then(result => {
+        expect(result).toBeInstanceOf(Array)
+        expect(result.length).toBe(3)
+        policiesService.searchPolicies({
+          pager: {
+            skip: 8,
+            take: 5
+          }
+        }).then(result => {
+          expect(result).toBeInstanceOf(Array)
+          expect(result.length).toBe(2)
+          done()
+        })
+      })
+    })
+  })
 })
 
 describe("createPolicy", () => {
@@ -224,23 +283,3 @@ describe("getHistory", () => {
     })
   })
 })
-
-const createPolicy = async (customerId: string): Promise<Policy> => {
-  return getContext().prisma.policy.create({
-    data: {
-      startDate: now(),
-      status: PolicyStatus.ACTIVE,
-      provider: "feather",
-      insuranceType: InsuranceType.HEALTH,
-      customer: {
-        connect: {
-          id: customerId
-        }
-      }
-    }
-  }).then(created => {
-    return {
-      ...created as unknown as Policy
-    }
-  })
-}

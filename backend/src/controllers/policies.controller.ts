@@ -20,8 +20,15 @@ export class PoliciesController {
 
   public get = async (req: Request, res: Response) => {
     applicationLogger.debug("Got GET request", req, res)
-    const searchPolicyRequest: SearchPolicyRequest = {query: req.query.toString()}
-
+    const skip = req.query.skip?.toString()
+    const take = req.query.take?.toString()
+    const searchPolicyRequest: SearchPolicyRequest = {
+      query: req.query.search?.toString(),
+      pager: {
+        skip: skip ? parseInt(skip) : undefined,
+        take: take ? parseInt(take) : undefined
+      }
+    }
     res.json(await this._policiesService.searchPolicies(searchPolicyRequest))
   }
 
