@@ -48,6 +48,7 @@ docker-compose up
 4. On a new terminal, run the migration and the seed script to add initial data:
 
 ```bash
+cd backend
 docker compose exec backend yarn prisma migrate dev
 docker compose exec backend yarn prisma db seed
 ```
