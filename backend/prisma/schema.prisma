@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
@@ -23,6 +24,11 @@ enum InsuranceType {
   HEALTH
 }
 
+enum PolicyChangeType {
+  UPDATE
+  DELETE
+}
+
 model Customer {
   id            String      @id @default(uuid()) @db.Uuid
   firstName     String      @db.VarChar(255)
@@ -32,13 +38,27 @@ model Customer {
 }
 
 model Policy {
-  id            String        @id @default(uuid()) @db.Uuid
-  customer      Customer      @relation(fields: [customerId], references: [id])
-  customerId    String        @db.Uuid
-  provider      String
-  insuranceType InsuranceType
-  status        PolicyStatus
-  startDate     DateTime
-  endDate       DateTime?
-  createdAt     DateTime      @default(now())
+  id              String        @id @default(uuid()) @db.Uuid
+  customer        Customer      @relation(fields: [customerId], references: [id])
+  customerId      String        @db.Uuid
+  provider        String
+  insuranceType   InsuranceType
+  status          PolicyStatus
+  startDate       DateTime
+  endDate         DateTime?
+  createdAt       DateTime      @default(now())
+}
+
+model PolicyHistory {
+  id                String        @id @default(uuid()) @db.Uuid
+  policyId          String
+  customerId        String
+  policyCreatedAt   DateTime
+  provider          String
+  insuranceType     InsuranceType
+  status            PolicyStatus
+  startDate         DateTime
+  endDate           DateTime?
+  createdAt         DateTime      @default(now())
+  policyChangeType  PolicyChangeType
 }

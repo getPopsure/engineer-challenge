@@ -9,5 +9,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Tests
-        run: make run-all-tests
+      - name: Install Docker Compose
+        uses: KengoTODA/actions-setup-docker-compose@main
+        with:
+          version: '1.29.2'
+      - name: Prepare Backend
+        run: make prepare-backend
+      - name: Run yarn install
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: --cwd backend install
+      - name: Run yarn unit-tests
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: --cwd backend unit-tests
+      - name: Run yarn integration-tests
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: --cwd backend integration-tests
+      - name: Stop Containers
+        run: make stop-all

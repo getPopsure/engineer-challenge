@@ -52,15 +52,13 @@ docker-compose-up:
 docker-compose-down:
 	cd ${backend_home} && docker-compose down
 
-migrate:
+docker-compose-migrate:
 	cd ${backend_home} && docker compose exec backend yarn prisma migrate dev
 
-seed:
+docker-compose-seed:
 	cd ${backend_home} && docker compose exec backend yarn prisma db seed
 
-prepare-backend: prepare-env docker-build-backend docker-compose-up-backend migrate seed docker-compose-stop-backend
-
-run-all-tests: prepare-env yarn-build-backend docker-build-backend docker-compose-up-backend migrate docker-compose-stop-backend test-backend stop-all
+prepare-backend: prepare-env docker-build-backend docker-compose-up-backend docker-compose-migrate docker-compose-seed docker-compose-stop-backend
 
 run-backend: prepare-backend yarn-build-backend yarn-run-backend
 start-backend: prepare-backend docker-compose-up-backend

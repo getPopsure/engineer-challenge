@@ -27,7 +27,7 @@ describe("Test the policies model", () => {
   })
 
   describe("servePolicies", () => {
-    it("Should return empty list when no policies exist", done => {
+    test("Should return empty list when no policies exist", done => {
 
       mockCtx.prisma.policy.findMany.mockResolvedValue([])
 
@@ -36,7 +36,7 @@ describe("Test the policies model", () => {
       }).finally(done)
     })
 
-    it("Should return correct model when it's present", done => {
+    test("Should return correct model when it's present", done => {
       const policy: Policy = {
         id: "1",
         customerId: "1",

@@ -10,8 +10,8 @@ export class CustomerService {
     this._context = context
   }
 
-  public createCustomer(customer: CreateCustomerRequest): Promise<Customer> {
-    return this._context.prisma.customer.create({
+  public createCustomer = async (customer: CreateCustomerRequest): Promise<Customer> => {
+    return await this._context.prisma.customer.create({
       data: {
         ...customer
       }
