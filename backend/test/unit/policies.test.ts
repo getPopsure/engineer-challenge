@@ -16,7 +16,7 @@ beforeEach(done => {
 describe("Test the policies model", () => {
   describe("parseWhereInput", () => {
     it("Should return correct query", (done) => {
-      const query: Prisma.PolicyWhereInput = policiesService._parseQuery({
+      const query: Prisma.PolicyWhereInput = PoliciesService._parseQuery({
         query: "JohnSmith"
       })
       expect(query.OR).toContainEqual({provider: {contains: "JohnSmith", mode: "insensitive"}})
@@ -46,6 +46,7 @@ describe("Test the policies model", () => {
         startDate: new Date(),
         endDate: null,
         createdAt: new Date(),
+        deleted: false,
         familyMembers: [{
           firstName: "Eva",
           lastName: "Smith"
