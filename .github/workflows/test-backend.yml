@@ -27,9 +27,5 @@ jobs:
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: --cwd backend unit-tests
-      - name: Run yarn integration-tests
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: --cwd backend integration-tests
       - name: Stop Containers
         run: make stop-all
