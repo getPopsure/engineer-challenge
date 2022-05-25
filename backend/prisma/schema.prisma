@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["interactiveTransactions"]
+  previewFeatures = ["interactiveTransactions", "filterJson"]
 }
 
 datasource db {
@@ -47,11 +47,15 @@ model Policy {
   startDate       DateTime
   endDate         DateTime?
   createdAt       DateTime      @default(now())
+  familyMembers   Json?
+  deleted         Boolean       @default(false)
+  policyHistories PolicyHistory[]
 }
 
 model PolicyHistory {
-  id                String        @id @default(uuid()) @db.Uuid
-  policyId          String
+  id                String          @id @default(uuid()) @db.Uuid
+  Policy            Policy          @relation(fields: [policyId], references: [id])
+  policyId          String          @db.Uuid
   customerId        String
   policyCreatedAt   DateTime
   provider          String
@@ -59,6 +63,7 @@ model PolicyHistory {
   status            PolicyStatus
   startDate         DateTime
   endDate           DateTime?
-  createdAt         DateTime      @default(now())
-  policyChangeType  PolicyChangeType
+  createdAt         DateTime         @default(now())
+  policyChangeType  PolicyChangeType @default(UPDATE)
+  familyMembers     Json?
 }

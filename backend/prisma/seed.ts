@@ -1,8 +1,8 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import {Prisma, PrismaClient} from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const userData: Prisma.CustomerCreateInput[] =  [
+const userData: Prisma.CustomerCreateInput[] = [
   {
     firstName: 'Cyrillus',
     lastName: 'Biddlecombe',

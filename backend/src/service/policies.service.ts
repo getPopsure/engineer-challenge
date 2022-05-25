@@ -10,8 +10,14 @@ export type Pager = {
   take?: number
 }
 
-export type CreatePolicy = Omit<Policy, "id" | "createdAt" | "customer">
-export type UpdatePolicy = Nullable<Omit<Policy, "id" | "customer" | "createdAt">>
+export type CreatePolicy = Omit<Policy, "id" | "createdAt" | "customer" | "deleted">
+export type UpdatePolicy = Nullable<Omit<Policy, "id" | "customer" | "createdAt" | "deleted">>
+export type PolicyDto = Omit<Policy, "customer" | "deleted">
+export type FamilyMember = {
+  firstName: string,
+  lastName: string
+}
+export type FamilyMembers = Array<FamilyMember>
 
 export type CreatePolicyRequest = {
   policy: CreatePolicy
@@ -19,7 +25,7 @@ export type CreatePolicyRequest = {
 
 export type SearchPolicyRequest = {
   query?: string,
-  field?: string,
+  familyMember?: FamilyMember
   pager?: Pager
 }
 
@@ -43,19 +49,47 @@ export class PoliciesService {
     this._context = context
   }
 
-  public _parseWhereInput = (search: SearchPolicyRequest): Prisma.PolicyWhereInput => {
-    return search.query
+  public static _parseQuery = (search: SearchPolicyRequest): Prisma.PolicyWhereInput => {
+    const query = search.query
       ? {
         OR: [
           {provider: {contains: search.query, mode: "insensitive"}},
           {customer: {firstName: {contains: search.query, mode: "insensitive"}}},
           {customer: {lastName: {contains: search.query, mode: "insensitive"}}}
-        ]
+        ],
+        AND: [{deleted: {equals: false}}]
+      } : {
+        AND: [{deleted: {equals: false}}]
       }
-      : {}
+    if (search.familyMember) {
+      if (!query.OR) {
+        // @ts-ignore
+        query.OR = []
+      }
+      // @ts-ignore
+      query.OR.push(PoliciesService._familyMemberContains({firstName: "Eva", lastName: "Smith"}))
+      // @ts-ignore
+      query.OR.push({policyHistories: {some: PoliciesService._familyMemberContains({firstName: "Eva", lastName: "Smith"})}})
+    }
+    return query as Prisma.PolicyWhereInput
   }
 
-  public createPolicy = async (policyRequest: CreatePolicyRequest): Promise<Policy> => {
+  private static _familyMemberContains = (familyMember?: FamilyMember) => {
+    return {familyMembers: {array_contains: [familyMember]}}
+  }
+
+  private static familyMembersAsInput(familyMembers: FamilyMembers | Prisma.JsonValue | null | undefined): Prisma.InputJsonObject | 'DbNull' | undefined {
+    if (familyMembers === null) {
+      return Prisma.DbNull
+    }
+    if (familyMembers === undefined) {
+      return undefined
+    } else {
+      return familyMembers as unknown as Prisma.InputJsonObject
+    }
+  }
+
+  public createPolicy = async (policyRequest: CreatePolicyRequest): Promise<PolicyDto> => {
     applicationLogger.info("Creating policy for input", policyRequest)
     return await this._context.prisma.$transaction(async (tx) => {
       const customer = await tx.customer.findUnique({
@@ -74,6 +108,8 @@ export class PoliciesService {
           status: policyRequest.policy.status,
           provider: policyRequest.policy.provider,
           insuranceType: policyRequest.policy.insuranceType,
+          deleted: false,
+          familyMembers: PoliciesService.familyMembersAsInput(policyRequest.policy.familyMembers),
           customer: {
             connect: {
               id: customer.id
@@ -84,7 +120,7 @@ export class PoliciesService {
     })
   }
 
-  public deletePolicy = async (deleteRequest: DeletePolicyRequest): Promise<Policy> => {
+  public deletePolicy = async (deleteRequest: DeletePolicyRequest): Promise<PolicyDto> => {
     applicationLogger.debug("Deleting policies for input", deleteRequest)
     const policyId = deleteRequest.id
     return await this._context.prisma.$transaction(async (tx) => {
@@ -94,19 +130,21 @@ export class PoliciesService {
         }
       })
       applicationLogger.debug("Updating policy value", existingPolicy)
-      if (!existingPolicy) {
+      if (!existingPolicy || existingPolicy.deleted) {
         throw new NotFoundException("Policy with id " + policyId + " not found")
       }
       await this.createPolicyHistory(existingPolicy, PolicyChangeType.DELETE, tx)
-      return await tx.policy.delete({
+      return await tx.policy.update({
         where: {
           id: policyId
+        }, data: {
+          deleted: true
         },
       })
     })
   }
 
-  public updatePolicy = async (updateRequest: UpdatePolicyRequest): Promise<Policy> => {
+  public updatePolicy = async (updateRequest: UpdatePolicyRequest): Promise<PolicyDto> => {
     applicationLogger.debug("Updating policies for input", updateRequest)
     return await this._context.prisma.$transaction(async (tx) => {
       const existingPolicy = await tx.policy.findUnique({
@@ -115,7 +153,7 @@ export class PoliciesService {
         }
       })
       applicationLogger.debug("Updating policy value", existingPolicy)
-      if (!existingPolicy) {
+      if (!existingPolicy || existingPolicy.deleted) {
         throw new NotFoundException("Policy with id " + updateRequest.id + " not found")
       }
       await this.createPolicyHistory(existingPolicy, PolicyChangeType.UPDATE, tx)
@@ -123,14 +161,17 @@ export class PoliciesService {
         where: {
           id: updateRequest.id
         },
-        data: {...objWithoutUndefinedFields(updateRequest.policy)}
+        data: {
+          ...objWithoutUndefinedFields(updateRequest.policy),
+          familyMembers: PoliciesService.familyMembersAsInput(updateRequest.policy.familyMembers)
+        }
       })
     })
   }
 
-  public searchPolicies = async (search: SearchPolicyRequest = {}): Promise<Omit<Policy, "customerId">[]> => {
+  public searchPolicies = async (search: SearchPolicyRequest = {}): Promise<Array<PolicyDto>> => {
     applicationLogger.debug("Searching policies for input", search)
-    const query = this._parseWhereInput(search);
+    const query = PoliciesService._parseQuery(search);
     return await this._context.prisma.policy.findMany({
       skip: search?.pager?.skip,
       take: search?.pager?.take,
@@ -145,14 +186,9 @@ export class PoliciesService {
         startDate: true,
         endDate: true,
         createdAt: true,
-        customer: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            dateOfBirth: true
-          }
-        }
+        familyMembers: true,
+        deleted: true,
+        customerId: true
       }
     })
   }
@@ -169,7 +205,8 @@ export class PoliciesService {
         status: policy.status,
         customerId: policy.customerId,
         policyCreatedAt: policy.createdAt,
-        policyChangeType: policyChangeType
+        policyChangeType: policyChangeType,
+        familyMembers: PoliciesService.familyMembersAsInput(policy.familyMembers)
       }
     })
   }
@@ -190,7 +227,8 @@ export class PoliciesService {
         endDate: true,
         policyId: true,
         policyChangeType: true,
-        policyCreatedAt: true
+        policyCreatedAt: true,
+        familyMembers: true
       }
     })
   }
@@ -217,7 +255,7 @@ export class PoliciesValidator {
    * @param fieldName
    */
   public static validateString(str: any, fieldName: string) {
-    if (!(typeof str === 'string' || str instanceof String)) {
+    if (!(str && (typeof str === 'string' || str instanceof String))) {
       throw new InvalidEntityException(fieldName + " should be a correct string, but got " + str + " instead")
     }
   }
@@ -227,23 +265,26 @@ export class PoliciesValidator {
    * @param policy
    */
   public static validateUpdatePolicy(policy: UpdatePolicy) {
-    if (policy.endDate !== null) {
+    if (policy.endDate) {
       this.validateDate(policy.endDate, "endDate")
     }
-    if (policy.startDate !== null) {
+    if (policy.startDate) {
       this.validateDate(policy.startDate, "startDate")
     }
-    if (policy.status !== null) {
+    if (policy.status) {
       this.validateString(policy.status, "status")
     }
-    if (policy.insuranceType !== null) {
+    if (policy.insuranceType) {
       this.validateString(policy.insuranceType, "insuranceType")
     }
-    if (policy.customerId !== null) {
+    if (policy.customerId) {
       this.validateUuid(policy.customerId, "customerId")
     }
-    if (policy.provider !== null) {
+    if (policy.provider) {
       this.validateString(policy.provider, "provider")
+    }
+    if (policy.familyMembers) {
+      this.validateFamilyMembers(policy.familyMembers)
     }
   }
 
@@ -264,6 +305,9 @@ export class PoliciesValidator {
       this.validateUuid(policy.customerId, "customerId")
     }
     this.validateString(policy.provider, "provider")
+    if (policy.familyMembers) {
+      this.validateFamilyMembers(policy.familyMembers)
+    }
   }
 
   /**
@@ -308,6 +352,14 @@ export class PoliciesValidator {
     this.validateString(id, fieldName)
     if (!PoliciesValidator.UUID_REGEXP.test(id)) {
       throw new InvalidEntityException(fieldName + " should be a correct uuid, but got " + id + " instead")
+    }
+  }
+
+  public static validateFamilyMembers(familyMembers: Prisma.JsonValue) {
+    const members = familyMembers as unknown as FamilyMembers
+    for (let i = 0; i < members.length; i++) {
+      this.validateString(members[i].firstName, `familyMembers[${i}].firstName`)
+      this.validateString(members[i].lastName, `familyMembers[${i}].lastName`)
     }
   }
 }

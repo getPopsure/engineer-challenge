@@ -16,7 +16,7 @@ beforeEach(done => {
 describe("Test the policies model", () => {
   describe("parseWhereInput", () => {
     it("Should return correct query", (done) => {
-      const query: Prisma.PolicyWhereInput = policiesService._parseWhereInput({
+      const query: Prisma.PolicyWhereInput = policiesService._parseQuery({
         query: "JohnSmith"
       })
       expect(query.OR).toContainEqual({provider: {contains: "JohnSmith", mode: "insensitive"}})
@@ -27,7 +27,7 @@ describe("Test the policies model", () => {
   })
 
   describe("servePolicies", () => {
-    test("Should return empty list when no policies exist", done => {
+    it("Should return empty list when no policies exist", done => {
 
       mockCtx.prisma.policy.findMany.mockResolvedValue([])
 
@@ -36,7 +36,7 @@ describe("Test the policies model", () => {
       }).finally(done)
     })
 
-    test("Should return correct model when it's present", done => {
+    it("Should return correct model when it's present", done => {
       const policy: Policy = {
         id: "1",
         customerId: "1",
@@ -45,7 +45,11 @@ describe("Test the policies model", () => {
         status: PolicyStatus.ACTIVE,
         startDate: new Date(),
         endDate: null,
-        createdAt: new Date()
+        createdAt: new Date(),
+        familyMembers: [{
+          firstName: "Eva",
+          lastName: "Smith"
+        }]
       }
 
       mockCtx.prisma.policy.findMany.mockResolvedValue([policy])
