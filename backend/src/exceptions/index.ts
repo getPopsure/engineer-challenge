@@ -30,7 +30,7 @@ export class BadRequestException extends DomainException {
   }
 }
 
-export class InvalidEntityException extends DomainException {
+export class InvalidEntityException extends BadRequestException {
   constructor(message: string) {
     super(message)
     Object.setPrototypeOf(this, InvalidEntityException.prototype);
@@ -54,12 +54,5 @@ export const getMessage = (e: any): string => {
     return e.message
   } else {
     return "Something Went Wrong"
-  }
-}
-
-
-export class TODO extends Error {
-  constructor() {
-    super("Not Implemented");
   }
 }

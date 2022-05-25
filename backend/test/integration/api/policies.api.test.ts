@@ -76,7 +76,7 @@ describe("Policies API", () => {
     it("Should response with 400 when only firstName queried", done => {
       createPolicies(10, customerId)
       createPolicy(customerId, [{firstName: "Eva", lastName: "Smith"}])
-        .then(policy => {
+        .then(() => {
           request(app).get("/policies?familyMemberFirstName=Eva")
             .then((response: Response) => {
               expect(response.statusCode).toBe(400)
@@ -103,7 +103,6 @@ describe("Policies API", () => {
 
   describe("PUT /policies/:id", () => {
     it("Should response with 200 to the PUT method with family members", done => {
-      const startDate = new Date()
       createPolicy(customerId).then(policy => {
         request(app)
           .put(`/policies/${policy.id}`)

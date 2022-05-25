@@ -43,7 +43,7 @@ describe("Policies Service", () => {
         createPolicy(customerId).then(secondPolicy => {
           policiesService.deletePolicy({
             id: secondPolicy.id
-          }).then(deletedPolicy => {
+          }).then(() => {
             policiesService.searchPolicies({}).then(result => {
               expect(result.length).toBe(1)
               expect(result).toContainEqual({
