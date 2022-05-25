@@ -119,11 +119,18 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
+  * A few hours overall
 - What’s the part of the solution you are most proud of?
+  * Refactoring of the project structure
+  * Continuous integration and build overall
 
   _You can share a code snippet here if you feel like it_
 
 - If you had more time, what other things you would like to do?
-- Do you have any feedback regarding this coding challenge?  
-
-  _Is the initial setup working?, is something missing?, or any other comment_
+  * Find out how to make openapi definition connected with prisma models
+  * Add more tests
+  * Add ability to query for non-exact matches in family members. The problem here is non-exact matching in JSON arrays of objects is only implemented for MySQL
+    and doesn't work in Postgres connector
+- Do you have any feedback regarding this coding challenge?
+  * It was quite cool to develop, to be honest, otherwise I wouldn't spend that much time :)
+    _Is the initial setup working?, is something missing?, or any other comment_
