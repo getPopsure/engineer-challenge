@@ -1,7 +1,7 @@
 export abstract class DomainException extends Error {
   protected constructor(message: string) {
     super(message)
-    Object.setPrototypeOf(this, DomainException.prototype);
+    Object.setPrototypeOf(this, DomainException.prototype)
   }
 
   abstract getStatus(): number
@@ -11,7 +11,7 @@ export abstract class DomainException extends Error {
 export class NotFoundException extends DomainException {
   constructor(message: string) {
     super(message)
-    Object.setPrototypeOf(this, NotFoundException.prototype);
+    Object.setPrototypeOf(this, NotFoundException.prototype)
   }
 
   override getStatus(): number {
@@ -22,22 +22,22 @@ export class NotFoundException extends DomainException {
 export class BadRequestException extends DomainException {
   constructor(message: string) {
     super(message)
-    Object.setPrototypeOf(this, BadRequestException.prototype);
+    Object.setPrototypeOf(this, BadRequestException.prototype)
   }
 
   override getStatus(): number {
-    return 400;
+    return 400
   }
 }
 
 export class InvalidEntityException extends BadRequestException {
   constructor(message: string) {
     super(message)
-    Object.setPrototypeOf(this, InvalidEntityException.prototype);
+    Object.setPrototypeOf(this, InvalidEntityException.prototype)
   }
 
   override getStatus(): number {
-    return 400;
+    return 400
   }
 }
 
@@ -49,7 +49,7 @@ export const getStatus = (e: Error): number => {
   }
 }
 
-export const getMessage = (e: any): string => {
+export const getMessage = (e: unknown): string => {
   if (e instanceof Error) {
     return e.message
   } else {

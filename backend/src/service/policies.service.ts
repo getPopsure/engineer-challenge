@@ -63,11 +63,14 @@ export class PoliciesService {
       }
     if (search.familyMember) {
       if (!query.OR) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         query.OR = []
       }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       query.OR.push(PoliciesService._familyMemberContains({firstName: "Eva", lastName: "Smith"}))
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       query.OR.push({policyHistories: {some: PoliciesService._familyMemberContains({firstName: "Eva", lastName: "Smith"})}})
     }
@@ -78,7 +81,7 @@ export class PoliciesService {
     return {familyMembers: {array_contains: [familyMember]}}
   }
 
-  private static familyMembersAsInput(familyMembers: FamilyMembers | Prisma.JsonValue | null | undefined): Prisma.InputJsonObject | 'DbNull' | undefined {
+  private static familyMembersAsInput(familyMembers: FamilyMembers | Prisma.JsonValue | null | undefined): Prisma.InputJsonObject | "DbNull" | undefined {
     if (familyMembers === null) {
       return Prisma.DbNull
     }
@@ -161,6 +164,8 @@ export class PoliciesService {
         where: {
           id: updateRequest.id
         },
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         data: {
           ...objWithoutUndefinedFields(updateRequest.policy),
           familyMembers: PoliciesService.familyMembersAsInput(updateRequest.policy.familyMembers)
@@ -171,7 +176,7 @@ export class PoliciesService {
 
   public searchPolicies = async (search: SearchPolicyRequest = {}): Promise<Array<PolicyDto>> => {
     applicationLogger.debug("Searching policies for input", search)
-    const query = PoliciesService._parseQuery(search);
+    const query = PoliciesService._parseQuery(search)
     return await this._context.prisma.policy.findMany({
       skip: search?.pager?.skip,
       take: search?.pager?.take,
@@ -235,7 +240,7 @@ export class PoliciesService {
 }
 
 export class PoliciesValidator {
-  private static UUID_REGEXP: RegExp = new RegExp("^[\\da-f]{8}-[\\da-f]{4}-[1-5][\\da-f]{3}-[89ab][\\da-f]{3}-[\\da-f]{12}$")
+  private static UUID_REGEXP = new RegExp("^[\\da-f]{8}-[\\da-f]{4}-[1-5][\\da-f]{3}-[89ab][\\da-f]{3}-[\\da-f]{12}$")
 
 
   /**
@@ -243,8 +248,8 @@ export class PoliciesValidator {
    * @param date
    * @param fieldName
    */
-  public static validateDate(date: any, fieldName: string) {
-    if (!(date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date))) {
+  public static validateDate(date: unknown, fieldName: string) {
+    if (!(date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(<number>date))) {
       throw new InvalidEntityException(fieldName + " should be a date, but got " + date + " instead")
     }
   }
@@ -254,8 +259,8 @@ export class PoliciesValidator {
    * @param str
    * @param fieldName
    */
-  public static validateString(str: any, fieldName: string) {
-    if (!(str && (typeof str === 'string' || str instanceof String))) {
+  public static validateString(str: unknown, fieldName: string) {
+    if (!(str && (typeof str === "string" || str instanceof String))) {
       throw new InvalidEntityException(fieldName + " should be a correct string, but got " + str + " instead")
     }
   }
@@ -348,9 +353,9 @@ export class PoliciesValidator {
    * @param id
    * @param fieldName
    */
-  public static validateUuid(id: any, fieldName: string) {
+  public static validateUuid(id: unknown, fieldName: string) {
     this.validateString(id, fieldName)
-    if (!PoliciesValidator.UUID_REGEXP.test(id)) {
+    if (!PoliciesValidator.UUID_REGEXP.test(<string>id)) {
       throw new InvalidEntityException(fieldName + " should be a correct uuid, but got " + id + " instead")
     }
   }

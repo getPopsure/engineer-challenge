@@ -1,4 +1,4 @@
-import {describe} from "@jest/globals";
+import {describe} from "@jest/globals"
 import {CustomerService} from "../../../src/service/customer.service"
 import {PoliciesService} from "../../../src/service/policies.service"
 import {getContext} from "../../../src/db/prisma.client"
@@ -11,12 +11,11 @@ import {now} from "../../../src/util/util"
 import {NotFoundException} from "../../../src/exceptions"
 
 
-let customerService: CustomerService
 let policiesService: PoliciesService
 let customerId: string
 
 beforeAll(done => {
-  customerService = new CustomerService(getContext())
+  new CustomerService(getContext())
   policiesService = new PoliciesService(getContext())
   cleanupDB(getContext()).then(() => done())
 })
@@ -231,7 +230,7 @@ describe("Policies Service", () => {
     })
   })
 
-  describe('updatePolicy', () => {
+  describe("updatePolicy", () => {
     it("Should update policy in the DB and create history entry when policy exists", done => {
       createPolicy(customerId).then(initial => {
         const timestamp: Date = now()
@@ -405,7 +404,7 @@ describe("Policies Service", () => {
     })
   })
 
-  describe('deletePolicy', () => {
+  describe("deletePolicy", () => {
     it("Should delete existing policy and create history entry in DB when policy exists", done => {
       createPolicy(customerId).then(initial => {
         policiesService.deletePolicy({

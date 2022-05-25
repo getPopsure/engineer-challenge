@@ -19,6 +19,10 @@ jobs:
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: --cwd backend install
+      - name: Run yarn eslint
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: --cwd backend eslint
       - name: Run yarn unit-tests
         uses: borales/actions-yarn@v2.3.0
         with:

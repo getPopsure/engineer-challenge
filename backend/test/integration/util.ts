@@ -36,7 +36,7 @@ export const createPolicy = async (customerId: string, familyMembers?: FamilyMem
   })
 }
 
-export const createPolicies = async (count: number, customerId: string): Promise<any> => {
+export const createPolicies = async (count: number, customerId: string): Promise<unknown> => {
   const timestamp = now()
   const policies = []
   for (let i = 0; i < count; i++) {
@@ -44,7 +44,7 @@ export const createPolicies = async (count: number, customerId: string): Promise
       endDate: null,
       startDate: timestamp,
       status: PolicyStatus.ACTIVE,
-      provider: 'feather',
+      provider: "feather",
       insuranceType: InsuranceType.HEALTH,
       customerId: customerId
     })

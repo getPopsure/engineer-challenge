@@ -19,9 +19,8 @@ export const applicationLogger: Logger = winston.createLogger({
 })
 
 export const requestLogger: Handler = expressWinston.logger({
-    ...baseLoggerOptions
-  }
-)
+  ...baseLoggerOptions
+})
 
 export const errorLogger: ErrorRequestHandler = expressWinston.errorLogger({
   ...baseLoggerOptions

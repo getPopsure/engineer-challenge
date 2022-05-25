@@ -7,6 +7,7 @@ import {policiesRoutes} from "./routes/policies.routes"
 import {getContext} from "./db/prisma.client"
 
 require("express-async-errors")
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const jsonStringifyDate = require("json-stringify-date")
 
 export const app = express()
@@ -19,7 +20,7 @@ app.use("/policies", policiesRoutes(context))
 app.use(errorLogger)
 app.use(errorHandler)
 
-export const server = app.listen(BACKEND_PORT, async () => {
+export const server = app.listen(BACKEND_PORT, async (): Promise<void> => {
   applicationLogger.info(`🚀  Server ready at ${BACKEND_PORT}`)
   try {
     await context.prisma.$queryRaw`SELECT now();`

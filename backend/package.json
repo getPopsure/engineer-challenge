@@ -24,6 +24,9 @@
     "@types/node": "16.11.26",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "eslint": "^8.16.0",
     "jest": "^28.1.0",
     "jest-mock-extended": "^2.0.6",
     "supertest": "^6.2.3",
@@ -34,6 +37,7 @@
   "scripts": {
     "start": "nodemon",
     "run-dev": "ENV_FILE=.env nodemon",
+    "eslint": "eslint src/** test/**",
     "unit-tests": "DATABASE_URL=postgresql://dummy npx jest --silent --runInBand --config jest.config.ts --testPathPattern=test/unit/.*\\.ts$",
     "integration-tests": "ENV_FILE=.env npx jest --silent --runInBand --config jest.config.ts --testPathPattern=test/integration/.*\\.ts$"
   },

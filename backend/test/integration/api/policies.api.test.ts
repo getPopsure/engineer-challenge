@@ -5,18 +5,12 @@ import {getContext} from "../../../src/db/prisma.client"
 import {InsuranceType, PolicyStatus} from "@prisma/client"
 import {randomUUID} from "crypto"
 import {cleanupDB, createCustomer, createPolicies, createPolicy} from "../util"
-import {CustomerService} from "../../../src/service/customer.service"
-import {PoliciesService} from "../../../src/service/policies.service"
 import {any} from "jest-mock-extended"
 
 
 let customerId: string
-let customerService: CustomerService
-let policiesService: PoliciesService
 beforeAll(done => {
   cleanupDB(getContext()).then(() => done())
-  customerService = new CustomerService(getContext())
-  policiesService = new PoliciesService(getContext())
 })
 
 beforeEach(done => {

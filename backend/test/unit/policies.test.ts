@@ -31,7 +31,7 @@ describe("Test the policies model", () => {
 
       mockCtx.prisma.policy.findMany.mockResolvedValue([])
 
-      policiesService.searchPolicies().then((result: any) => {
+      policiesService.searchPolicies().then((result: unknown) => {
         expect(result).toEqual([])
       }).finally(done)
     })
@@ -55,7 +55,7 @@ describe("Test the policies model", () => {
 
       mockCtx.prisma.policy.findMany.mockResolvedValue([policy])
 
-      policiesService.searchPolicies().then((result: any) => {
+      policiesService.searchPolicies().then((result: unknown) => {
         expect(result).toContain(policy)
       }).finally(done)
     })
