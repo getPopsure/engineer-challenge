@@ -8,21 +8,17 @@ This coding challenge applies to **frontend, backend, and full-stack roles**. De
 
 You can spend as little or as much time as you like on this project. We've added some initial boilerplate to help you get started, but **feel free to refactor every part of this app as you may seem fit**.
 
-1. Start by reading the [User story](#User-story) and the [Acceptance criteria](#Acceptance-criteria) to have a clear idea of the requirements.
+1. Start by reading the [Engineering challenge](#Engineering-challenge) for the position you've applied for and don't forget about the **Acceptance criteria** to have a clear idea of the requirements.
 2. Use the [Getting started](#Getting-started) guide to set up a local version of the project on your machine.
 3. Take a look at the [Data structure](#Data-structure) and [API](#API) to know what the data looks like.
 4. Finish by answering a [couple of questions](#General-questions) about the project. You can answer them on this very same file.
 
-## User story
-As a user, I want to be able to view, create and update the policy data.
-- When viewing policies, I want to sort and filter the results.
-- When a policy was edited, I want to have access to the previous versions of the policy.
-- When editing a policy, I want to be able to add or remove customer's family members.
+## Engineering challenge
 
-## Acceptance criteria
-- The policies API should support sorting and paginating the results.
-- It should be possible to find a policy by its family member names, current or past.
-- The policy history should be available at a separate endpoint.
+We've prepared several different user stories to work on. Depending on what position you applied to, pick one of them:  
+- [Backend](./backend-readme.md)
+- [Frontend](./frontend-readme.md)
+- [Full Stack](./full-stack-readme.md)
 
 ## Task requirements
 
