@@ -13,5 +13,6 @@ You need to implement the backend part for the following user story. Please, mak
 ### Acceptance criteria
 
 - The policies API should support sorting and paginating the results.
+- The family members should be stored on a separate table that is linked to the policy.
 - It should be possible to find a policy by it's family member names, current or past.
 - The policy history should be available at a separate endpoint.
