@@ -1,8 +1,8 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient, Prisma } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-const userData: Prisma.CustomerCreateInput[] =  [
+const userData: Prisma.CustomerCreateInput[] = [
   {
     firstName: 'Cyrillus',
     lastName: 'Biddlecombe',
@@ -13,6 +13,22 @@ const userData: Prisma.CustomerCreateInput[] =  [
         insuranceType: 'HEALTH',
         status: 'PENDING',
         startDate: '2017-04-26T05:32:06Z',
+        relatives: {
+          createMany: {
+            data: [
+              {
+                firstName: 'aldo',
+                lastName: 'casareto',
+                dateOfBirth: '1978-12-03T06:33:17Z',
+              },
+              {
+                firstName: 'raul',
+                lastName: 'casareto',
+                dateOfBirth: '1978-12-03T06:33:17Z',
+              },
+            ],
+          },
+        },
       },
     },
   },
@@ -26,6 +42,13 @@ const userData: Prisma.CustomerCreateInput[] =  [
         insuranceType: 'LIABILITY',
         status: 'PENDING',
         startDate: '2015-01-13T04:52:15Z',
+        relatives: {
+          create: {
+            firstName: 'gael',
+            lastName: 'garcia',
+            dateOfBirth: '1978-12-03T06:33:17Z',
+          },
+        },
       },
     },
   },
@@ -265,23 +288,22 @@ const userData: Prisma.CustomerCreateInput[] =  [
   },
 ];
 
-
 async function main() {
-  console.log(`Start seeding ...`)
+  console.log(`Start seeding ...`);
   for (const u of userData) {
     const user = await prisma.customer.create({
       data: u,
-    })
-    console.log(`Created user with id: ${user.id}`)
+    });
+    console.log(`Created user with id: ${user.id}`);
   }
-  console.log(`Seeding finished.`)
+  console.log(`Seeding finished.`);
 }
 
 main()
   .catch((e) => {
-    console.error(e)
-    process.exit(1)
+    console.error(e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });
