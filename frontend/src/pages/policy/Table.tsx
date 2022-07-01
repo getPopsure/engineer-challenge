@@ -32,12 +32,12 @@ const Table = ({ tableData, isLoading, hasError }: TableProps) => {
   )
 
   if (hasError) return (
-    <div className="w-full m-8 text-center items-center">
+    <div className="w-full m-8 text-center items-center" data-testid="fail-msg" >
       Oops! Something went wrong.
     </div>
   );
   if (!tableData.length) return (
-    <div className="w-full m-8 text-center items-center">
+    <div className="w-full m-8 text-center items-center" data-testid="error-msg">
       Sorry! We can't find any results that match your search
     </div> 
   );

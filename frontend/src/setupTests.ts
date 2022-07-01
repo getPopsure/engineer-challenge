@@ -9,6 +9,7 @@ import { server } from "./mocks/server";
 
 beforeAll(() => {
   server.listen(); // Establish API mocking before all tests.
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 });
 
 afterEach(() => {
@@ -17,4 +18,5 @@ afterEach(() => {
 
 afterAll(() => {
   server.close(); // Clean up after the tests are finished.
+  globalThis.IS_REACT_ACT_ENVIRONMENT = false;
 });

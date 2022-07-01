@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "@prisma/client": "3.11.1",
+    "@types/react-dom": "^18.0.5",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.17.3",

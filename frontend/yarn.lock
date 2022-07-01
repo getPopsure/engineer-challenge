@@ -2145,14 +2145,14 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/react@^13.3.0":
-  version "13.3.0"
-  resolved "https://registry.npmjs.org/@testing-library/react/-/react-13.3.0.tgz"
-  integrity sha512-DB79aA426+deFgGSjnf5grczDPiL4taK3hFaa+M5q7q20Kcve9eQottOG5kZ74KEr55v0tU2CQormSSDK87zYQ==
+"@testing-library/react@^13.0.0-alpha.7":
+  version "13.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-13.0.0-alpha.7.tgz#0537af3a8d45edd925fd0275aee7d409285ef1fe"
+  integrity sha512-8Y1PvFczthSeow1WZ0Cq6WbOzpVGLGyEQTr+lL6BwXqAf2IykVY8ZN8V21Ch1cTlbZuZJI5UV3gOyrOHrw9YZQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^8.5.0"
-    "@types/react-dom" "^18.0.0"
+    "@types/react-dom" "*"
 
 "@testing-library/user-event@^14.2.1":
   version "14.2.1"
@@ -2345,7 +2345,7 @@
   resolved "https://registry.npmjs.org/@types/q/-/q-1.5.5.tgz"
   integrity sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ==
 
-"@types/react-dom@^18.0.0", "@types/react-dom@^18.0.5":
+"@types/react-dom@*", "@types/react-dom@^18.0.5":
   version "18.0.5"
   resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.5.tgz"
   integrity sha512-OWPWTUrY/NIrjsAPkAk1wW9LZeIjSvkXRhclsFO8CZcZGCOg2G0YZy4ft+rOyYxy8B7ui5iZzi9OkDebZ7/QSA==
@@ -10159,7 +10159,7 @@ react-dev-utils@^11.0.3:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-react-dom@^18.0.2:
+react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -10281,7 +10281,7 @@ react-transition-group@^4.3.0, react-transition-group@^4.4.0, react-transition-g
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@^18.0.2:
+react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

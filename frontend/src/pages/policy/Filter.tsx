@@ -11,15 +11,15 @@ const Filter = ({ setTermToFilter, termToFilter, rawData, setData }: FilterProps
 
     const filterByName = (value: string) => {
       const filteredNames = rawData.filter((element: { customer: { firstName: string; lastName: string; }; }) => {
-        if (
+        return (
         element.customer.firstName
           .toLowerCase()
           .includes(value.toLowerCase()) ||
         element.customer.lastName
           .toLowerCase()
           .includes(value.toLowerCase())
-        )return element;
-        });
+        )
+      });
       return setData(filteredNames);
     };
 
@@ -48,6 +48,7 @@ const Filter = ({ setTermToFilter, termToFilter, rawData, setData }: FilterProps
           className="input w-40 md:w-64 border-b-2 border-gray-100 focus:outline-none focus:border-primary md:pb-3 md:pt-6 pt-3 pb-2 pl-6 m-0 mb-3"
           type="search"
           role="search"
+          data-testid="search-field"
           id="name-search"
           value={termToFilter}
           onChange={handleInputSearch}
