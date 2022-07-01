@@ -12,7 +12,6 @@ interface TableProps {
 const Headers = ["#", "Name", "Provider", "Type", "Status"];
 
 const Table = ({ tableData, isLoading, hasError }: TableProps) => {
-  console.log(isLoading);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -26,10 +25,10 @@ const Table = ({ tableData, isLoading, hasError }: TableProps) => {
   };
   if (isLoading) return (
     <div className="wrapper">
-    <div className="circle"></div>
-    <div className="circle"></div>
-    <div className="circle"></div>
-</div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+    </div>
   )
 
   if (hasError) return (
@@ -63,7 +62,7 @@ const Table = ({ tableData, isLoading, hasError }: TableProps) => {
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 ).map((item:any, index:number) =>  (
-                <tr key={index} className="border-b">
+                <tr key={index} role="row" className="border-b">
                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" role="cell">{index+1}</td>
                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap" role="cell">{item.customer.firstName} {item.customer.lastName}</td>
                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap" role="cell">{item.provider}</td>

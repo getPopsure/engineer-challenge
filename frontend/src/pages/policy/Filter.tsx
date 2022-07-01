@@ -1,31 +1,26 @@
-import { ChangeEvent, useState } from "react";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { ChangeEvent } from "react";
 
 interface FilterProps {
   setTermToFilter: (value: string) => void;
   setData:(value: Policy[]) => void;
   rawData: Policy[];
   termToFilter: string;
-  data: Array<any>;
 }
 
 const Filter = ({ setTermToFilter, termToFilter, rawData, setData }: FilterProps) => {
 
     const filterByName = (value: string) => {
-        const filteredNames = rawData.filter((element: { customer: { firstName: string; lastName: string; }; }) => {
-            if (
-            element.customer.firstName
-                .toLowerCase()
-                .includes(value.toLowerCase()) ||
-            element.customer.lastName
-                .toLowerCase()
-                .includes(value.toLowerCase())
-            ){return element;}
-         });
-        return setData(filteredNames);
+      const filteredNames = rawData.filter((element: { customer: { firstName: string; lastName: string; }; }) => {
+        if (
+        element.customer.firstName
+          .toLowerCase()
+          .includes(value.toLowerCase()) ||
+        element.customer.lastName
+          .toLowerCase()
+          .includes(value.toLowerCase())
+        )return element;
+        });
+      return setData(filteredNames);
     };
 
     const handleInputSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +29,7 @@ const Filter = ({ setTermToFilter, termToFilter, rawData, setData }: FilterProps
     };
   
   return (
-      <div className="flex justify-center md:justify-start" role="search">
+      <div className="flex justify-center md:justify-start">
         <div className="mt-3 md:mt-6 md:ml-2 lg:inset-y-0 left-0  items-center pointer-events-none">
         <svg
             className="w-5 h-5 text-primary dark:text-gray-400"
@@ -52,6 +47,7 @@ const Filter = ({ setTermToFilter, termToFilter, rawData, setData }: FilterProps
       <input
           className="input w-40 md:w-64 border-b-2 border-gray-100 focus:outline-none focus:border-primary md:pb-3 md:pt-6 pt-3 pb-2 pl-6 m-0 mb-3"
           type="search"
+          role="search"
           id="name-search"
           value={termToFilter}
           onChange={handleInputSearch}
