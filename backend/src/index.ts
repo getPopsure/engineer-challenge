@@ -1,3 +1,14 @@
+const Redis = require('ioredis')
+const redisBlocking = new Redis({
+  host: 'cache',
+  port: 6379,
+})
+
+const redis = new Redis({
+  host: 'cache',
+  port: 6379,
+})
+
 import express from 'express'
 import { PrismaClient, Prisma } from '@prisma/client'
 

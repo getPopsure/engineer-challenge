@@ -7,7 +7,9 @@
   "private": true,
   "dependencies": {
     "@prisma/client": "3.11.1",
+    "@types/ioredis": "^4.28.10",
     "express": "^4.17.3",
+    "ioredis": "^5.2.2",
     "nodemon": "^2.0.12",
     "uuid": "^8.3.2"
   },

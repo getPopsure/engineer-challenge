@@ -26,8 +26,25 @@ services:
       - /app/node_modules
     depends_on:
       - db
+      - redis
     ports:
       - "4000:4000"
+
+  history-manager:
+    container_name: history-manager
+    env_file:
+      - ./history-manager/.env
+    build:
+        context: ./backend/
+    command: sh -c "yarn prisma generate && yarn start"
+    volumes:
+      - ./history-manager/:/app
+      - /app/node_modules
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "4001:4001"    
 
   frontend:
     container_name: frontend
@@ -40,5 +57,14 @@ services:
       - /app/node_modules
     depends_on:
       - backend
+      - history-manager
     ports:
       - "3000:3000"
+
+  redis:
+    container_name: feather_redis
+    image: redis:latest
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
