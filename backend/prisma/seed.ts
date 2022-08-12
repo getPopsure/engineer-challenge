@@ -2,7 +2,7 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const userData: Prisma.CustomerCreateInput[] =  [
+const userData: Prisma.CustomerCreateInput[] = [
   {
     firstName: 'Cyrillus',
     lastName: 'Biddlecombe',
@@ -13,6 +13,20 @@ const userData: Prisma.CustomerCreateInput[] =  [
         insuranceType: 'HEALTH',
         status: 'PENDING',
         startDate: '2017-04-26T05:32:06Z',
+        familyMembers: {
+          create: [
+            {
+              firstName: 'Nimal',
+              lastName: 'Biddlecombe',
+              dateOfBirth: '1978-12-03T06:33:17Z',
+            },
+            {
+              firstName: 'Sunil',
+              lastName: 'Biddlecombe',
+              dateOfBirth: '1990-12-03T06:33:17Z',
+            },
+          ],
+        },
       },
     },
   },
@@ -26,6 +40,25 @@ const userData: Prisma.CustomerCreateInput[] =  [
         insuranceType: 'LIABILITY',
         status: 'PENDING',
         startDate: '2015-01-13T04:52:15Z',
+        familyMembers: {
+          create: [
+            {
+              firstName: 'Lexi',
+              lastName: 'Harbour',
+              dateOfBirth: '1995-11-03T06:33:17Z',
+            },
+            {
+              firstName: 'Meli',
+              lastName: 'Harbour',
+              dateOfBirth: '1999-12-03T06:33:17Z',
+            },
+            {
+              firstName: 'Nel',
+              lastName: 'Harbour',
+              dateOfBirth: '2000-12-03T06:33:17Z',
+            },
+          ],
+        },
       },
     },
   },
@@ -263,8 +296,7 @@ const userData: Prisma.CustomerCreateInput[] =  [
       },
     },
   },
-];
-
+]
 
 async function main() {
   console.log(`Start seeding ...`)
