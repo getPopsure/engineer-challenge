@@ -4,7 +4,7 @@ Thank you for applying at Feather and taking the time to do this home assessment
 
 The goal of this project is to let you **show off your coding and problem-solving skills**, on a task that resembles the kind of work you’ll be doing with us.
 
-This coding challenge applies to **frontend, backend, and full-stack roles**. Depending on the position you are applying for, you can focus on your specific area.  
+This coding challenge applies to **frontend, backend, and full-stack roles**. Depending on the position you are applying for, you can focus on your specific area.
 
 You can spend as little or as much time as you like on this project. We've added some initial boilerplate to help you get started, but **feel free to refactor every part of this app as you may seem fit**.
 
@@ -15,11 +15,11 @@ You can spend as little or as much time as you like on this project. We've added
 
 ## Engineering challenge
 
-We've prepared several different user stories to work on. Depending on what position you applied to, pick one of them:  
+We've prepared several different user stories to work on. Depending on what position you applied to, pick one of them:
+
 - [Backend](./backend-readme.md)
 - [Frontend](./frontend-readme.md)
 - [Full Stack](./full-stack-readme.md)
-
 
 ## Task requirements
 
@@ -82,16 +82,16 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 
 ### Policy
 
-| fields         | type                            | comment                                       |
-| -------------- | ------------------------------- | --------------------------------------------- |
-| id             | string                          | Used to identify the policy                   |
-| customer       | [Customer](#Customer)           | Object holding the customer's informations    |
-| provider       | string                          | Name of the provider (Allianz, AXA…)          |
-| insuranceType  | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
-| status         | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
-| startDate      | date                            | Date when the policy should start             |
-| endDate        | date                            | Date when the policy ends                     |
-| createdAt      | date                            | Date when the record was created              |
+| fields        | type                            | comment                                       |
+| ------------- | ------------------------------- | --------------------------------------------- |
+| id            | string                          | Used to identify the policy                   |
+| customer      | [Customer](#Customer)           | Object holding the customer's informations    |
+| provider      | string                          | Name of the provider (Allianz, AXA…)          |
+| insuranceType | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
+| status        | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
+| startDate     | date                            | Date when the policy should start             |
+| endDate       | date                            | Date when the policy ends                     |
+| createdAt     | date                            | Date when the record was created              |
 
 ### Customer
 
@@ -118,6 +118,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
   _You can share a code snippet here if you feel like it_
 
 - If you had more time, what other things you would like to do?
-- Do you have any feedback regarding this coding challenge?  
+- Do you have any feedback regarding this coding challenge?
 
   _Is the initial setup working?, is something missing?, or any other comment_
+  https://stackoverflow.com/questions/64723235/docker-compose-environment-variables-blank-string

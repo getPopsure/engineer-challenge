@@ -1,11 +1,11 @@
 const Redis = require('ioredis')
 const redisBlocking = new Redis({
-  host: 'cache',
+  host: 'redis',
   port: 6379,
 })
 
 const redis = new Redis({
-  host: 'cache',
+  host: 'redis',
   port: 6379,
 })
 
@@ -52,46 +52,78 @@ app.get('/policies', async (req, res) => {
       }
     : {}
 
-  const policies = await prisma.policy.findMany({
-    skip,
-    take: limit,
-    orderBy: [
-      {
-        provider: order,
+  try {
+    const policies = await prisma.policy.findMany({
+      skip,
+      take: limit,
+      orderBy: [
+        {
+          provider: order,
+        },
+        {
+          customer: {
+            firstName: order,
+          },
+        },
+        {
+          customer: {
+            lastName: order,
+          },
+        },
+      ],
+      where: {
+        ...or,
       },
-      {
+      select: {
+        id: true,
+        provider: true,
+        insuranceType: true,
+        status: true,
+        startDate: true,
+        endDate: true,
         customer: {
-          firstName: order,
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            dateOfBirth: true,
+          },
         },
       },
-      {
-        customer: {
-          lastName: order,
-        },
+    })
+    const totalPages = await prisma.policy.count()
+    res.json({ policies, totalPages })
+  } catch (e) {
+    res.status(400).json({ message: 'Bad Request' })
+  }
+})
+
+app.patch('/policies/:id', async (req, res) => {
+  try {
+    const policy = req.body
+    const { id } = req.params
+    if (!policy) {
+      return res.status(400).json({ message: 'Invalid Policy Data' })
+    }
+
+    // check if policy exists and update policy
+    const updatedPolicy = await prisma.policy.update({
+      where: {
+        id,
       },
-    ],
-    where: {
-      ...or,
-    },
-    select: {
-      id: true,
-      provider: true,
-      insuranceType: true,
-      status: true,
-      startDate: true,
-      endDate: true,
-      customer: {
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          dateOfBirth: true,
-        },
-      },
-    },
-  })
-  const totalPages = await prisma.policy.count()
-  res.json({ policies, totalPages })
+      data: policy,
+    })
+
+    if (!updatedPolicy) {
+      return res.status(400).json({ message: 'Policy not found' })
+    }
+    // emit history event
+    await redis.lpush(`QUEUE:POLICY_UPDATE`, JSON.stringify(updatedPolicy))
+    // return then updated policy
+    res.status(200).json(updatedPolicy)
+  } catch (e) {
+    res.status(400).json({ message: 'Bad Request' })
+  }
 })
 
 app.get('/', (req, res) => {

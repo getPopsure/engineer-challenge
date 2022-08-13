@@ -4,7 +4,7 @@ services:
   db:
     container_name: db
     env_file:
-      - ./backend/.env
+      - .env
     image: postgres:13.4
     ports:
       - "5432:${DATABASE_PORT}"
@@ -17,7 +17,7 @@ services:
   backend:
     container_name: backend
     env_file:
-      - ./backend/.env
+      - .env
     build:
         context: ./backend/
     command: sh -c "yarn prisma generate && yarn start"
@@ -33,9 +33,9 @@ services:
   history-manager:
     container_name: history-manager
     env_file:
-      - ./history-manager/.env
+      - .env
     build:
-        context: ./backend/
+        context: ./history-manager/
     command: sh -c "yarn prisma generate && yarn start"
     volumes:
       - ./history-manager/:/app
@@ -49,7 +49,7 @@ services:
   frontend:
     container_name: frontend
     env_file:
-      - ./backend/.env
+      - .env
     build:
       context: ./frontend/
     volumes:
@@ -63,8 +63,13 @@ services:
 
   redis:
     container_name: feather_redis
-    image: redis:latest
-    expose:
-      - 6379
+    image: redis:6.2-alpine
+    restart: always
     ports:
-      - "6379:6379"
+      - '6379:6379'
+    command: redis-server
+    volumes: 
+      - feather_redis:/data
+volumes:
+  feather_redis:
+    driver: local
