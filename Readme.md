@@ -122,3 +122,5 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 
   _Is the initial setup working?, is something missing?, or any other comment_
   https://stackoverflow.com/questions/64723235/docker-compose-environment-variables-blank-string
+  needed to generate prisma client whenever i made a change to the schema
+  had to add persisant data storage otherwise the data was lost

@@ -60,39 +60,15 @@ model FamilyMember {
 }
 
 model PolicyHistory {
-  id                  String                @id @default(uuid()) @db.Uuid
-  policyId            String
-  provider            String
-  eventType           ServiceEvents
-  insuranceType       InsuranceType
-  status              PolicyStatus
-  startDate           DateTime
-  endDate             DateTime?
-  createdAt           DateTime              @default(now())
-  CustomerHistory     CustomerHistory?      @relation(fields: [customerHistoryId], references: [id])
-  customerHistoryId   String?               @db.Uuid
-  FamilyMemberHistory FamilyMemberHistory[]
-}
-
-model CustomerHistory {
-  id            String          @id @default(uuid()) @db.Uuid
-  customerId    String
+  id            String        @id @default(uuid()) @db.Uuid
+  policyId      String
+  provider      String
   eventType     ServiceEvents
-  firstName     String          @db.VarChar(255)
-  lastName      String          @db.VarChar(255)
-  createdAt     DateTime        @default(now())
-  dateOfBirth   DateTime
-  PolicyHistory PolicyHistory[]
-}
-
-model FamilyMemberHistory {
-  id              String         @id @default(uuid()) @db.Uuid
-  memberId        String
-  eventType       ServiceEvents
-  firstName       String         @db.VarChar(255)
-  lastName        String         @db.VarChar(255)
-  createdAt       DateTime       @default(now())
-  dateOfBirth     DateTime
-  PolicyHistory   PolicyHistory? @relation(fields: [policyHistoryId], references: [id])
-  policyHistoryId String?        @db.Uuid
+  insuranceType InsuranceType
+  status        PolicyStatus
+  startDate     DateTime
+  endDate       DateTime?
+  createdAt     DateTime      @default(now())
+  customer      Json
+  familyMembers Json
 }

@@ -81,6 +81,7 @@ app.get('/policies', async (req, res) => {
         status: true,
         startDate: true,
         endDate: true,
+        familyMembers: true,
         customer: {
           select: {
             id: true,
@@ -106,6 +107,29 @@ app.patch('/policies/:id', async (req, res) => {
       return res.status(400).json({ message: 'Invalid Policy Data' })
     }
 
+    // query old data
+    const previousRecord = await prisma.policy.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        provider: true,
+        insuranceType: true,
+        status: true,
+        startDate: true,
+        endDate: true,
+        customer: true,
+        familyMembers: true,
+      },
+    })
+    if (!previousRecord) {
+      return res.status(400).json({ message: 'Policy does not exist' })
+    }
+
+    // emit history event
+    await redis.lpush(`QUEUE:POLICY_UPDATE`, JSON.stringify(previousRecord))
+
     // check if policy exists and update policy
     const updatedPolicy = await prisma.policy.update({
       where: {
@@ -117,8 +141,6 @@ app.patch('/policies/:id', async (req, res) => {
     if (!updatedPolicy) {
       return res.status(400).json({ message: 'Policy not found' })
     }
-    // emit history event
-    await redis.lpush(`QUEUE:POLICY_UPDATE`, JSON.stringify(updatedPolicy))
     // return then updated policy
     res.status(200).json(updatedPolicy)
   } catch (e) {
