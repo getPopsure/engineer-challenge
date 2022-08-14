@@ -49,6 +49,26 @@ app.get('/policies', async (req, res) => {
               lastName: { contains: search as string, mode: 'insensitive' },
             },
           },
+          {
+            familyMembers: {
+              some: {
+                OR: [
+                  {
+                    firstName: {
+                      contains: search as string,
+                      mode: 'insensitive',
+                    },
+                  },
+                  {
+                    lastName: {
+                      contains: search as string,
+                      mode: 'insensitive',
+                    },
+                  },
+                ],
+              },
+            },
+          },
         ],
       }
     : {}
