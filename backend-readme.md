@@ -6,9 +6,9 @@ You need to implement the backend part for the following user story. Please, mak
 
 ### As a user, I want to be able to view, create and update the policy data.
 
-- When viewing policies, I want to sort and filter the results.
-- When a policy was edited, I want to have access to the previous versions of the policy.
-- When editing a policy, I want to be able to add or remove customer's family members.
+[X] When viewing policies, I want to sort and filter the results.
+[] When a policy was edited, I want to have access to the previous versions of the policy.
+[X] When editing a policy, I want to be able to add or remove customer's family members.
 
 ### Acceptance criteria
 

@@ -48,9 +48,17 @@ async function ProcessHistoricalEvent(event: any, eventType: string) {
 function HistoryEventHandler() {
   redisBlocking.brpop(`QUEUE:POLICY_UPDATE`, 5).then(async (data: any) => {
     if (data && Array.isArray(data) && data.length > 1) {
-      if (data[0] === 'QUEUE:POLICY_UPDATE') {
-        console.log(`Saving history for  POLICY_UPDATE ${data[1]}`)
-        await ProcessHistoricalEvent(JSON.parse(data[1]), 'POLICY_UPDATED')
+      switch (data[0]) {
+        case 'QUEUE:POLICY_UPDATE':
+          {
+            console.log(`Saving history for  POLICY_UPDATE ${data[1]}`)
+            await ProcessHistoricalEvent(JSON.parse(data[1]), 'POLICY_UPDATED')
+          }
+          break
+        default: {
+          console.log('invalid event type: ' + data[0])
+          return
+        }
       }
     }
 
@@ -61,8 +69,12 @@ function HistoryEventHandler() {
 HistoryEventHandler()
 
 app.get('/policy-history', async (req: Request, res: Response) => {
-  const history = await await prisma.policyHistory.findMany()
-  res.status(200).json(history)
+  try {
+    const history = await await prisma.policyHistory.findMany()
+    res.status(200).json(history)
+  } catch (e) {
+    res.status(400).json({ message: 'Bad Request' })
+  }
 })
 
 app.get('/', (req, res) => {

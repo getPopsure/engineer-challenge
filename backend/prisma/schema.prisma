@@ -55,8 +55,8 @@ model FamilyMember {
   firstName   String   @db.VarChar(255)
   lastName    String   @db.VarChar(255)
   dateOfBirth DateTime
-  policy      Policy   @relation(fields: [policyId], references: [id])
-  policyId    String   @db.Uuid
+  policy      Policy?  @relation(fields: [policyId], references: [id])
+  policyId    String?  @db.Uuid
 }
 
 model PolicyHistory {
@@ -69,6 +69,6 @@ model PolicyHistory {
   startDate     DateTime
   endDate       DateTime?
   createdAt     DateTime      @default(now())
-  customer      Json
-  familyMembers Json
+  customer      Json?
+  familyMembers Json?
 }
