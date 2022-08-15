@@ -13,7 +13,17 @@ services:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=${DATABASE_NAME}
 
-
+  dynamodb:
+    build: 
+      context: .
+    hostname: dynamodb-local
+    container_name: dynamodb-local
+    volumes:
+      - dynamodb-data:/home/dynamodblocal
+    ports:
+      - 8000:8000
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
+    
   backend:
     container_name: backend
     env_file:
@@ -27,6 +37,7 @@ services:
     depends_on:
       - db
       - redis
+      - dynamodb
     ports:
       - "4000:4000"
 
@@ -36,12 +47,11 @@ services:
       - .env
     build:
         context: ./history-manager/
-    command: sh -c "yarn prisma generate && yarn start"
     volumes:
       - ./history-manager/:/app
       - /app/node_modules
     depends_on:
-      - db
+      - dynamodb
       - redis
     ports:
       - "4001:4001"    
@@ -73,3 +83,5 @@ services:
 volumes:
   feather_redis:
     driver: local
+  dynamodb-data:
+   

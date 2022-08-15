@@ -1,9 +1,5 @@
 const Redis = require('ioredis')
 import _ from 'lodash'
-const redisBlocking = new Redis({
-  host: 'redis',
-  port: 6379,
-})
 
 const redis = new Redis({
   host: 'redis',
@@ -12,6 +8,7 @@ const redis = new Redis({
 
 import express from 'express'
 import { PrismaClient, Prisma, FamilyMember } from '@prisma/client'
+import { FamilyHistory } from './models/FamilyHistory'
 
 const app = express()
 const port = 4000
@@ -24,56 +21,62 @@ app.get('/policies', async (req, res) => {
     asc = 'asc',
     desc = 'desc',
   }
-  const myOldCursor = 200
 
   const { search } = req.query
-  const orderByFields = ['provider', 'firstName', 'lastName']
   // handle the skip and limit params
   let limit = Number(req.query?.limit) || 10
   let skip = Number(req.query?.skip) || 0
   let order =
     (req.query?.order as Prisma.SortOrder) ||
     (sortTypes.asc as Prisma.SortOrder)
-
-  const or: Prisma.PolicyWhereInput = search
-    ? {
-        OR: [
-          { provider: { contains: search as string, mode: 'insensitive' } },
-          {
-            customer: {
-              firstName: { contains: search as string, mode: 'insensitive' },
-            },
-          },
-          {
-            customer: {
-              lastName: { contains: search as string, mode: 'insensitive' },
-            },
-          },
-          {
-            familyMembers: {
-              some: {
-                OR: [
-                  {
-                    firstName: {
-                      contains: search as string,
-                      mode: 'insensitive',
-                    },
-                  },
-                  {
-                    lastName: {
-                      contains: search as string,
-                      mode: 'insensitive',
-                    },
-                  },
-                ],
+  try {
+    const familyHistory = await FamilyHistory.query('firstName')
+      .eq(search)
+      .attributes(['policyId'])
+      .exec()
+    const uniqueIds = _.uniqBy(familyHistory.toJSON(), 'policyId').map(
+      (policy: any) => policy.policyId,
+    )
+    console.log('fckkkkkkk', uniqueIds)
+    const or: Prisma.PolicyWhereInput = search
+      ? {
+          OR: [
+            { id: { in: uniqueIds } },
+            { provider: { contains: search as string, mode: 'insensitive' } },
+            {
+              customer: {
+                firstName: { contains: search as string, mode: 'insensitive' },
               },
             },
-          },
-        ],
-      }
-    : {}
+            {
+              customer: {
+                lastName: { contains: search as string, mode: 'insensitive' },
+              },
+            },
+            {
+              familyMembers: {
+                some: {
+                  OR: [
+                    {
+                      firstName: {
+                        contains: search as string,
+                        mode: 'insensitive',
+                      },
+                    },
+                    {
+                      lastName: {
+                        contains: search as string,
+                        mode: 'insensitive',
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        }
+      : {}
 
-  try {
     const policies = await prisma.policy.findMany({
       skip,
       take: limit,
@@ -116,6 +119,7 @@ app.get('/policies', async (req, res) => {
     const totalPages = await prisma.policy.count()
     res.json({ policies, totalPages })
   } catch (e) {
+    console.log(e)
     res.status(400).json({ message: 'Bad Request' })
   }
 })
@@ -124,7 +128,7 @@ app.patch('/policies/:id/family-members', async (req, res) => {
   const { id } = req.params
   const { familyMembers, action } = req.body
   enum PolicyActionType {
-    EDIT = 'add',
+    ADD = 'add',
     DELETE = 'delete',
   }
   try {
@@ -152,7 +156,7 @@ app.patch('/policies/:id/family-members', async (req, res) => {
     }
 
     switch (action) {
-      case PolicyActionType.EDIT:
+      case PolicyActionType.ADD:
         {
           const query = _.uniqBy(
             [
@@ -177,14 +181,19 @@ app.patch('/policies/:id/family-members', async (req, res) => {
                 set: query as any,
               },
             },
+            include: {
+              familyMembers: true,
+            },
           })
-          console.log(
-            'updateUser',
-            familyMembers.map((familyMember: FamilyMember) => {
-              return {
-                push: { id: familyMember.id },
-              }
-            }) as any,
+          console.log('updateUser', updateUser)
+          const idList = query.map((member) => member.id)
+          await redis.lpush(
+            `QUEUE:FAMILY_MEMBER_ADD`,
+            JSON.stringify(
+              updateUser.familyMembers.filter((familyMember) =>
+                idList.includes(familyMember.id),
+              ),
+            ),
           )
         }
         break
@@ -199,8 +208,20 @@ app.patch('/policies/:id/family-members', async (req, res) => {
                 disconnect: familyMembers,
               },
             },
+            include: {
+              familyMembers: true,
+            },
           })
           console.log('updateUser', updateUser)
+          const idList = familyMembers.map((familyMember) => familyMember.id)
+          await redis.lpush(
+            `QUEUE:FAMILY_MEMBER_DELETE`,
+            JSON.stringify(
+              previousRecord.familyMembers.filter((familyMember) =>
+                idList.includes(familyMember.id),
+              ),
+            ),
+          )
         }
         break
       default: {
@@ -242,10 +263,7 @@ app.patch('/policies/:id', async (req, res) => {
     if (!previousRecord) {
       return res.status(400).json({ message: 'Policy does not exist' })
     }
-    const categories = [
-      { update: { id: '1' }, where: { id: '1' } },
-      { create: { id: '2' }, where: { id: '2' } },
-    ]
+
     const updatedPolicy = await prisma.policy.update({
       where: {
         id,
@@ -265,8 +283,17 @@ app.patch('/policies/:id', async (req, res) => {
   }
 })
 
-app.get('/', (req, res) => {
-  res.send('Server is up and running 🚀')
+app.get('/f/:id', async (req, res) => {
+  try {
+    const fm = await prisma.familyMember.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    })
+    res.status(200).json(fm)
+  } catch (e) {
+    res.status(400).json({ message: 'Bad Request' })
+  }
 })
 
 app.listen(port, () => {
