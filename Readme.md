@@ -127,7 +127,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
   5. Then doing the same queries within the business logic doesn't make any sense so I moved the whole history logic to a different microservice.
   6. For the asynchronous communication, I've used redis. but i could've used a different data pipeline as I've mentioned in the architecture diagram.
      <br/>
-     <img src="./\_docs/feather_design.jpg" alt="Architecture diagram"/>
+     ![Architectural diagram](./docs/feather_design.jpg)
 
 - If you had more time, what other things you would like to do?
 
