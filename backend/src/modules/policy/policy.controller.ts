@@ -1,9 +1,4 @@
-import {
-  PrismaClient,
-  Prisma,
-  FamilyMember,
-  PolicyStatus,
-} from '@prisma/client'
+import { Prisma, FamilyMember, PolicyStatus } from '@prisma/client'
 import { Request, Response } from 'express'
 import _ from 'lodash'
 import { FamilyHistory } from '../../models/FamilyHistory'
