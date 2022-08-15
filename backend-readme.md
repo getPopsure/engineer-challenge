@@ -14,7 +14,7 @@ You need to implement the backend part for the following user story. Please, mak
 
 [X] The policies API should support sorting and paginating the results. -
 [X] The family members should be stored on a separate table that is linked to the policy.
-[X] It should be possible to find a policy by it's family member names, current or past. // no history family member history
+[X] It should be possible to find a policy by it's family member names, current or past.  
 [X] The policy history should be available at a separate endpoint.
 
 ### FR
@@ -27,4 +27,4 @@ You need to implement the backend part for the following user story. Please, mak
 
 ### NFR
 
-1. High Performant search
+1. High Performant search # time was too long. so I have up on this. but i was thinking of caching all the requests on redis. as a write through cache
