@@ -8,8 +8,8 @@ import { HistoricalEvent } from './models/HistoricalEvent'
 import { FamilyHistory } from './models/FamilyHistory'
 
 const redisBlocking = new Redis({
-  host: 'redis',
-  port: 6379,
+  host: process.env.REDIS_HOST || 'redis',
+  port: process.env.REDIS_PORT || 6379,
 })
 
 const app = express()
