@@ -34,7 +34,7 @@ We've prepared several different user stories to work on. Depending on what posi
 2. Set up the environment variables
 
 ```bash
-cp ./backend/.env.example ./backend/.env
+cp ./.env.example ./.env
 ```
 
 3. Build and run the Docker image:
@@ -151,3 +151,5 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
   2. needed to generate prisma client whenever I made a change to the schema
 
   3. Had to add persisant data storage using docker volumes, otherwise the data was lost.
+
+\*\* Note - Commited the .env.example with the same value to .env as this is a test repo.
