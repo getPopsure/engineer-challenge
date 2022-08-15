@@ -1,13 +1,16 @@
 import * as dynamoose from 'dynamoose'
 const sdk = dynamoose.aws.sdk // require("aws-sdk");
 sdk.config.update({
-  accessKeyId: 'AKID',
-  secretAccessKey: 'SECRET',
-  region: 'us-east-1',
+  accessKeyId: process.env.AWS_KEY,
+  secretAccessKey: process.env.AWS_SECRET,
+  region: process.env.AWS_REGION,
 })
+// Dynamodb connection configuration. Only setup for local as of now
+dynamoose.aws.ddb.local(process.env.DYNAMODB_URL || 'http://dynamodb:8000')
 
-dynamoose.aws.ddb.local('http://dynamodb:8000')
-
+/**
+ * Dynamodb schema to store family member history
+ */
 const familyHistorySchema = new dynamoose.Schema(
   {
     id: {
