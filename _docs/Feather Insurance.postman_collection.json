@@ -1,0 +1,688 @@
+{
+	"info": {
+		"_postman_id": "f0af745f-871a-4c3c-bde7-a6a0741296c2",
+		"name": "Feather Insurance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2822837"
+	},
+	"item": [
+		{
+			"name": "get policies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:{{b-port}}/policies?search=Nimal&order=asc",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{b-port}}",
+					"path": [
+						"policies"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "Nimal"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "get policies",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies?search=AOK&order=asc",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "AOK"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1857"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"741-FukNo8Gb4v3NF4GcKO99gVH+5UA\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 13 Aug 2022 09:10:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"policies\": [\n        {\n            \"id\": \"ab854753-d915-4a02-a86d-4f312265e0d3\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"PENDING\",\n            \"startDate\": \"2020-07-21T19:40:35.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"0984cfe9-361a-4fbf-98cf-b58ab2b74aa9\",\n                \"firstName\": \"Aguste\",\n                \"lastName\": \"Bilsford\",\n                \"dateOfBirth\": \"1997-04-24T11:26:05.000Z\"\n            }\n        },\n        {\n            \"id\": \"01dc8f50-3ad7-46ad-bd4b-2944bd582f34\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"DROPPED_OUT\",\n            \"startDate\": \"2014-07-14T00:54:34.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"bc3ec64b-ec51-4376-a4bf-d633d2bd0201\",\n                \"firstName\": \"Ailina\",\n                \"lastName\": \"Harber\",\n                \"dateOfBirth\": \"1993-01-20T02:51:20.000Z\"\n            }\n        },\n        {\n            \"id\": \"bd2b4113-18b5-4913-ba26-91677b1ff3e2\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"CANCELLED\",\n            \"startDate\": \"2021-01-12T19:24:41.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"32a62f57-6b7f-4240-befa-1b1e69375868\",\n                \"firstName\": \"Brandyn\",\n                \"lastName\": \"Argyle\",\n                \"dateOfBirth\": \"2006-03-17T03:35:43.000Z\"\n            }\n        },\n        {\n            \"id\": \"016e00e6-0fb5-4875-a43b-9ebfd1a2b3af\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"PENDING\",\n            \"startDate\": \"2020-05-02T05:53:46.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"5bf294c6-0011-490f-bda0-b5b54ea4dc72\",\n                \"firstName\": \"Flossie\",\n                \"lastName\": \"Camings\",\n                \"dateOfBirth\": \"2004-06-15T14:20:52.000Z\"\n            }\n        },\n        {\n            \"id\": \"32f4fb77-a1f9-4cd9-bd5f-e59b0f53e3a2\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HOUSEHOLD\",\n            \"status\": \"CANCELLED\",\n            \"startDate\": \"2012-03-29T01:59:13.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"9a02312d-1535-4f56-ad12-c481f7df2368\",\n                \"firstName\": \"Mariette\",\n                \"lastName\": \"Cristofanini\",\n                \"dateOfBirth\": \"2011-08-01T11:56:32.000Z\"\n            }\n        },\n        {\n            \"id\": \"606bf08d-52d9-45ea-bb50-74bcdd535a65\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"LIABILITY\",\n            \"status\": \"ACTIVE\",\n            \"startDate\": \"2016-04-14T02:53:58.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"cd6b93aa-d69b-47b1-a538-edf1aae55efc\",\n                \"firstName\": \"Valeria\",\n                \"lastName\": \"Keysel\",\n                \"dateOfBirth\": \"1979-04-23T10:03:12.000Z\"\n            }\n        }\n    ],\n    \"totalPages\": 20\n}"
+				},
+				{
+					"name": "get policies",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies?search=Nimal&order=asc",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Nimal"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "540"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21c-0/VGyf89GHlrIsHXs3Wad/AtKVM\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 15 Aug 2022 08:36:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"policies\": [\n        {\n            \"id\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\",\n            \"provider\": \"BARMER\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"PENDING\",\n            \"startDate\": \"2017-04-26T05:32:06.000Z\",\n            \"endDate\": null,\n            \"familyMembers\": [\n                {\n                    \"id\": \"2b8c8601-c091-40be-a012-ef14e5eca00b\",\n                    \"firstName\": \"Sunil\",\n                    \"lastName\": \"Biddlecombe\",\n                    \"dateOfBirth\": \"1990-12-03T06:33:17.000Z\",\n                    \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n                }\n            ],\n            \"customer\": {\n                \"id\": \"7f1afdae-e157-4d07-ae40-4754586706a6\",\n                \"firstName\": \"Cyrillus\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\"\n            }\n        }\n    ],\n    \"totalPages\": 20\n}"
+				}
+			]
+		},
+		{
+			"name": "get policyHistory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:{{h-port}}/policy-history/af004c1a-48a9-4872-9cde-0184c1c81e1d",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{h-port}}",
+					"path": [
+						"policy-history",
+						"af004c1a-48a9-4872-9cde-0184c1c81e1d"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "get policies",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies?search=AOK&order=asc",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "AOK"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1857"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"741-FukNo8Gb4v3NF4GcKO99gVH+5UA\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 13 Aug 2022 09:10:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"policies\": [\n        {\n            \"id\": \"ab854753-d915-4a02-a86d-4f312265e0d3\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"PENDING\",\n            \"startDate\": \"2020-07-21T19:40:35.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"0984cfe9-361a-4fbf-98cf-b58ab2b74aa9\",\n                \"firstName\": \"Aguste\",\n                \"lastName\": \"Bilsford\",\n                \"dateOfBirth\": \"1997-04-24T11:26:05.000Z\"\n            }\n        },\n        {\n            \"id\": \"01dc8f50-3ad7-46ad-bd4b-2944bd582f34\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"DROPPED_OUT\",\n            \"startDate\": \"2014-07-14T00:54:34.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"bc3ec64b-ec51-4376-a4bf-d633d2bd0201\",\n                \"firstName\": \"Ailina\",\n                \"lastName\": \"Harber\",\n                \"dateOfBirth\": \"1993-01-20T02:51:20.000Z\"\n            }\n        },\n        {\n            \"id\": \"bd2b4113-18b5-4913-ba26-91677b1ff3e2\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"CANCELLED\",\n            \"startDate\": \"2021-01-12T19:24:41.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"32a62f57-6b7f-4240-befa-1b1e69375868\",\n                \"firstName\": \"Brandyn\",\n                \"lastName\": \"Argyle\",\n                \"dateOfBirth\": \"2006-03-17T03:35:43.000Z\"\n            }\n        },\n        {\n            \"id\": \"016e00e6-0fb5-4875-a43b-9ebfd1a2b3af\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"PENDING\",\n            \"startDate\": \"2020-05-02T05:53:46.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"5bf294c6-0011-490f-bda0-b5b54ea4dc72\",\n                \"firstName\": \"Flossie\",\n                \"lastName\": \"Camings\",\n                \"dateOfBirth\": \"2004-06-15T14:20:52.000Z\"\n            }\n        },\n        {\n            \"id\": \"32f4fb77-a1f9-4cd9-bd5f-e59b0f53e3a2\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HOUSEHOLD\",\n            \"status\": \"CANCELLED\",\n            \"startDate\": \"2012-03-29T01:59:13.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"9a02312d-1535-4f56-ad12-c481f7df2368\",\n                \"firstName\": \"Mariette\",\n                \"lastName\": \"Cristofanini\",\n                \"dateOfBirth\": \"2011-08-01T11:56:32.000Z\"\n            }\n        },\n        {\n            \"id\": \"606bf08d-52d9-45ea-bb50-74bcdd535a65\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"LIABILITY\",\n            \"status\": \"ACTIVE\",\n            \"startDate\": \"2016-04-14T02:53:58.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"cd6b93aa-d69b-47b1-a538-edf1aae55efc\",\n                \"firstName\": \"Valeria\",\n                \"lastName\": \"Keysel\",\n                \"dateOfBirth\": \"1979-04-23T10:03:12.000Z\"\n            }\n        }\n    ],\n    \"totalPages\": 20\n}"
+				},
+				{
+					"name": "get policyHistory",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{h-port}}/policy-history/af004c1a-48a9-4872-9cde-0184c1c81e1d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{h-port}}",
+							"path": [
+								"policy-history",
+								"af004c1a-48a9-4872-9cde-0184c1c81e1d"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "3203"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c83-ZYqE704lxi0x4UQuvHJI+S2zDoc\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 15 Aug 2022 08:24:22 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"createdAt\": \"2022-08-15T08:23:24.075Z\",\n        \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\",\n        \"endDate\": \"\",\n        \"provider\": \"BARMER\",\n        \"id\": \"8be153e4-8875-4f0f-98f4-6eea6948cee3\",\n        \"eventType\": \"POLICY_UPDATE\",\n        \"insuranceType\": \"HEALTH\",\n        \"familyMembers\": [\n            {\n                \"firstName\": \"Sunil\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1990-12-03T06:33:17.000Z\",\n                \"id\": \"2b8c8601-c091-40be-a012-ef14e5eca00b\",\n                \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n            },\n            {\n                \"firstName\": \"Nimal\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\",\n                \"id\": \"63c5075a-d010-4678-83ab-f66666b77b1a\",\n                \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n            }\n        ],\n        \"startDate\": \"2017-04-26T05:32:06.000Z\",\n        \"status\": \"PENDING\",\n        \"customer\": {\n            \"firstName\": \"Cyrillus\",\n            \"lastName\": \"Biddlecombe\",\n            \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\",\n            \"id\": \"7f1afdae-e157-4d07-ae40-4754586706a6\"\n        },\n        \"updatedAt\": \"2022-08-15T08:23:24.075Z\"\n    },\n    {\n        \"createdAt\": \"2022-08-15T08:23:14.772Z\",\n        \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\",\n        \"endDate\": \"\",\n        \"provider\": \"BARMER\",\n        \"id\": \"3998629f-620c-4d31-acc9-776052aa3e73\",\n        \"eventType\": \"POLICY_UPDATE\",\n        \"insuranceType\": \"HEALTH\",\n        \"familyMembers\": [\n            {\n                \"firstName\": \"Sunil\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1990-12-03T06:33:17.000Z\",\n                \"id\": \"2b8c8601-c091-40be-a012-ef14e5eca00b\",\n                \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n            }\n        ],\n        \"startDate\": \"2017-04-26T05:32:06.000Z\",\n        \"status\": \"PENDING\",\n        \"customer\": {\n            \"firstName\": \"Cyrillus\",\n            \"lastName\": \"Biddlecombe\",\n            \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\",\n            \"id\": \"7f1afdae-e157-4d07-ae40-4754586706a6\"\n        },\n        \"updatedAt\": \"2022-08-15T08:23:14.772Z\"\n    },\n    {\n        \"createdAt\": \"2022-08-15T08:20:35.889Z\",\n        \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\",\n        \"endDate\": \"\",\n        \"provider\": \"BARMER\",\n        \"id\": \"4342d268-1c19-4a7e-848e-f44fb56e419f\",\n        \"eventType\": \"POLICY_UPDATE\",\n        \"insuranceType\": \"HEALTH\",\n        \"familyMembers\": [\n            {\n                \"firstName\": \"Nimal\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\",\n                \"id\": \"63c5075a-d010-4678-83ab-f66666b77b1a\",\n                \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n            },\n            {\n                \"firstName\": \"Sunil\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1990-12-03T06:33:17.000Z\",\n                \"id\": \"2b8c8601-c091-40be-a012-ef14e5eca00b\",\n                \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n            }\n        ],\n        \"startDate\": \"2017-04-26T05:32:06.000Z\",\n        \"status\": \"PENDING\",\n        \"customer\": {\n            \"firstName\": \"Cyrillus\",\n            \"lastName\": \"Biddlecombe\",\n            \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\",\n            \"id\": \"7f1afdae-e157-4d07-ae40-4754586706a6\"\n        },\n        \"updatedAt\": \"2022-08-15T08:20:35.889Z\"\n    },\n    {\n        \"createdAt\": \"2022-08-15T08:20:41.312Z\",\n        \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\",\n        \"endDate\": \"\",\n        \"provider\": \"BARMER\",\n        \"id\": \"d8e3f568-1dc7-4076-b4e8-0c72821d5ece\",\n        \"eventType\": \"POLICY_UPDATE\",\n        \"insuranceType\": \"HEALTH\",\n        \"familyMembers\": [\n            {\n                \"firstName\": \"Nimal\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\",\n                \"id\": \"63c5075a-d010-4678-83ab-f66666b77b1a\",\n                \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n            },\n            {\n                \"firstName\": \"Sunil\",\n                \"lastName\": \"Biddlecombe\",\n                \"dateOfBirth\": \"1990-12-03T06:33:17.000Z\",\n                \"id\": \"2b8c8601-c091-40be-a012-ef14e5eca00b\",\n                \"policyId\": \"af004c1a-48a9-4872-9cde-0184c1c81e1d\"\n            }\n        ],\n        \"startDate\": \"2017-04-26T05:32:06.000Z\",\n        \"status\": \"PENDING\",\n        \"customer\": {\n            \"firstName\": \"Cyrillus\",\n            \"lastName\": \"Biddlecombe\",\n            \"dateOfBirth\": \"1978-12-03T06:33:17.000Z\",\n            \"id\": \"7f1afdae-e157-4d07-ae40-4754586706a6\"\n        },\n        \"updatedAt\": \"2022-08-15T08:20:41.312Z\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "search policyHistory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}:{{h-port}}/policy-history",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{h-port}}",
+					"path": [
+						"policy-history"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "get policies",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies?search=AOK&order=asc",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "AOK"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1857"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"741-FukNo8Gb4v3NF4GcKO99gVH+5UA\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 13 Aug 2022 09:10:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"policies\": [\n        {\n            \"id\": \"ab854753-d915-4a02-a86d-4f312265e0d3\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"PENDING\",\n            \"startDate\": \"2020-07-21T19:40:35.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"0984cfe9-361a-4fbf-98cf-b58ab2b74aa9\",\n                \"firstName\": \"Aguste\",\n                \"lastName\": \"Bilsford\",\n                \"dateOfBirth\": \"1997-04-24T11:26:05.000Z\"\n            }\n        },\n        {\n            \"id\": \"01dc8f50-3ad7-46ad-bd4b-2944bd582f34\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"DROPPED_OUT\",\n            \"startDate\": \"2014-07-14T00:54:34.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"bc3ec64b-ec51-4376-a4bf-d633d2bd0201\",\n                \"firstName\": \"Ailina\",\n                \"lastName\": \"Harber\",\n                \"dateOfBirth\": \"1993-01-20T02:51:20.000Z\"\n            }\n        },\n        {\n            \"id\": \"bd2b4113-18b5-4913-ba26-91677b1ff3e2\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"CANCELLED\",\n            \"startDate\": \"2021-01-12T19:24:41.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"32a62f57-6b7f-4240-befa-1b1e69375868\",\n                \"firstName\": \"Brandyn\",\n                \"lastName\": \"Argyle\",\n                \"dateOfBirth\": \"2006-03-17T03:35:43.000Z\"\n            }\n        },\n        {\n            \"id\": \"016e00e6-0fb5-4875-a43b-9ebfd1a2b3af\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HEALTH\",\n            \"status\": \"PENDING\",\n            \"startDate\": \"2020-05-02T05:53:46.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"5bf294c6-0011-490f-bda0-b5b54ea4dc72\",\n                \"firstName\": \"Flossie\",\n                \"lastName\": \"Camings\",\n                \"dateOfBirth\": \"2004-06-15T14:20:52.000Z\"\n            }\n        },\n        {\n            \"id\": \"32f4fb77-a1f9-4cd9-bd5f-e59b0f53e3a2\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"HOUSEHOLD\",\n            \"status\": \"CANCELLED\",\n            \"startDate\": \"2012-03-29T01:59:13.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"9a02312d-1535-4f56-ad12-c481f7df2368\",\n                \"firstName\": \"Mariette\",\n                \"lastName\": \"Cristofanini\",\n                \"dateOfBirth\": \"2011-08-01T11:56:32.000Z\"\n            }\n        },\n        {\n            \"id\": \"606bf08d-52d9-45ea-bb50-74bcdd535a65\",\n            \"provider\": \"AOK\",\n            \"insuranceType\": \"LIABILITY\",\n            \"status\": \"ACTIVE\",\n            \"startDate\": \"2016-04-14T02:53:58.000Z\",\n            \"endDate\": null,\n            \"customer\": {\n                \"id\": \"cd6b93aa-d69b-47b1-a538-edf1aae55efc\",\n                \"firstName\": \"Valeria\",\n                \"lastName\": \"Keysel\",\n                \"dateOfBirth\": \"1979-04-23T10:03:12.000Z\"\n            }\n        }\n    ],\n    \"totalPages\": 20\n}"
+				}
+			]
+		},
+		{
+			"name": "update policy",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"insuranceType\": \"HEALTH\"\n   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}:{{b-port}}/policies/a4e6defb-6d37-49ab-8fec-fe301f79f590",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{b-port}}",
+					"path": [
+						"policies",
+						"a4e6defb-6d37-49ab-8fec-fe301f79f590"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "update policy",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"insuranceType\": \"LIABILITY\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies/wwww72fb-5a3b-48e3-b7de-e2f325c60f58",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies",
+								"wwww72fb-5a3b-48e3-b7de-e2f325c60f58"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "279"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"117-dnDq0w4SwU8Nxe7y5ILSLH/7rxc\""
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 13 Aug 2022 22:21:16 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"ddfe72fb-5a3b-48e3-b7de-e2f325c60f58\",\n    \"customerId\": \"7d9f6f16-2ddf-4d96-b3c5-f88feb6feb01\",\n    \"provider\": \"BARMER\",\n    \"insuranceType\": \"LIABILITY\",\n    \"status\": \"PENDING\",\n    \"startDate\": \"2015-01-13T04:52:15.000Z\",\n    \"endDate\": \"2040-01-13T04:52:15.000Z\",\n    \"createdAt\": \"2022-08-13T08:50:53.415Z\"\n}"
+				},
+				{
+					"name": "update policy",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"insuranceType\": \"HEALTH\"\n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies/a4e6defb-6d37-49ab-8fec-fe301f79f590",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies",
+								"a4e6defb-6d37-49ab-8fec-fe301f79f590"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "35"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"23-w/zRUFWczrsWO2eKI/w+rQDMbfE\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 15 Aug 2022 08:24:05 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Policy does not exist\"\n}"
+				}
+			]
+		},
+		{
+			"name": "add or remove family members",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"action\": \"delete\",\n    \"familyMembers\": [\n        {\n            \"id\": \"63c5075a-d010-4678-83ab-f66666b77b1a\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}:{{b-port}}/policies/af004c1a-48a9-4872-9cde-0184c1c81e1d/family-members",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{b-port}}",
+					"path": [
+						"policies",
+						"af004c1a-48a9-4872-9cde-0184c1c81e1d",
+						"family-members"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "add or remove family members",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"delete\",\n    \"familyMembers\": [\n        {\n            \"id\": \"63c5075a-d010-4678-83ab-f66666b77b1a\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies/af004c1a-48a9-4872-9cde-0184c1c81e1d/family-members",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies",
+								"af004c1a-48a9-4872-9cde-0184c1c81e1d",
+								"family-members"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"22-KN8hwUZi4URapceCwFjArsrZGWc\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 15 Aug 2022 08:26:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully updated\"\n}"
+				},
+				{
+					"name": "add or remove family members",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"delete\",\n    \"familyMembers\": [\n        {\n            \"id\": \"63c5075a-d010-4678-83ab-f66666b77b1a\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{b-port}}/policies/af004c1a-48a9-4872-9cde-0184c1c81e1d/family-members",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{b-port}}",
+							"path": [
+								"policies",
+								"af004c1a-48a9-4872-9cde-0184c1c81e1d",
+								"family-members"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"22-KN8hwUZi4URapceCwFjArsrZGWc\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 15 Aug 2022 08:26:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Successfully updated\"\n}"
+				}
+			]
+		}
+	]
+}

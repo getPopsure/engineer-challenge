@@ -113,14 +113,38 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
+  I think around 20h or something.
 - What’s the part of the solution you are most proud of?
 
-  _You can share a code snippet here if you feel like it_
+  - I implemented an event driven architecture for some extent. I've also attached a diagram. So proud of what i could do without restricting myself to a single solution.
+
+  ### Thinking process
+
+  1. Could've easily gone with a monolith but as the assignment had features like maintainin a history/snapshots, I had to come up with a different strategy.
+  2. Saving the duplicate docs on a consistent database like postgress will be really slow and expensive.
+  3. Could've used a debezium connector with kafka but then again the database has to do more processing which is not what we need
+  4. So finally I had to use an eventually consistent masterless database like dynamodb to save histories.
+  5. Then doing the same queries within the business logic doesn't make any sense so I moved the whole history logic to a different microservice.
+  6. For the asynchronous communication, I've used redis. but i could've used a different data pipeline as I've mentioned in the architecture diagram.
+     <br/>
+     <img src="./\_docs/feather_design.jpg" alt="Architecture diagram"/>
 
 - If you had more time, what other things you would like to do?
+
+  1. Refactor more
+  2. Test Coverage
+  3. Plan the UI in a way to decouple the backend logic more
+  4. Create a proper data pipeline using AWS (Kakfa, s3 connector, s3, gule, athena and lambda)
+
 - Do you have any feedback regarding this coding challenge?
 
+  The Assignment is good because the thinking process can be expanded.
+
   _Is the initial setup working?, is something missing?, or any other comment_
-  https://stackoverflow.com/questions/64723235/docker-compose-environment-variables-blank-string
-  needed to generate prisma client whenever i made a change to the schema
-  had to add persisant data storage otherwise the data was lost
+  Yes it was working but littlebit tricky. The docker-compose didn't take the .env as specified by the path. So i had to execute the commands in the project root.
+
+  1. https://stackoverflow.com/questions/64723235/docker-compose-environment-variables-blank-string
+
+  2. needed to generate prisma client whenever I made a change to the schema
+
+  3. Had to add persisant data storage using docker volumes, otherwise the data was lost.
