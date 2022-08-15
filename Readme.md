@@ -113,7 +113,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
-  I think around 20h or something.
+  I think around 24h or something. (spread across several days)
 - What’s the part of the solution you are most proud of?
 
   - I implemented an event driven architecture for some extent. I've also attached a diagram. So proud of what i could do without restricting myself to a single solution.
@@ -131,10 +131,12 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 
 - If you had more time, what other things you would like to do?
 
-  1. Refactor more
-  2. Test Coverage
-  3. Plan the UI in a way to decouple the backend logic more
-  4. Create a proper data pipeline using AWS (Kakfa, s3 connector, s3, gule, athena and lambda)
+  1. Test Coverage, needs more API testing
+  2. Plan the UI in a way to decouple the backend logic more
+  3. Create a proper data pipeline using AWS (Kakfa, s3 connector, s3, gule, athena and lambda)
+  4. Refactor more
+  5. Replace redis with event bridge and make everything serverless
+  6. Create CI/CD piplines and deploy
 
 - Do you have any feedback regarding this coding challenge?
 
