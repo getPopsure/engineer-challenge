@@ -37,7 +37,6 @@ app.get('/policies', async (req, res) => {
     const uniqueIds = _.uniqBy(familyHistory.toJSON(), 'policyId').map(
       (policy: any) => policy.policyId,
     )
-    console.log('fckkkkkkk', uniqueIds)
     const or: Prisma.PolicyWhereInput = search
       ? {
           OR: [
