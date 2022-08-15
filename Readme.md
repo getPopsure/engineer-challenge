@@ -137,6 +137,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
   4. Refactor more
   5. Replace redis with event bridge and make everything serverless
   6. Create CI/CD piplines and deploy
+  7. Add cache layers to optimize the performance
 
 - Do you have any feedback regarding this coding challenge?
 
