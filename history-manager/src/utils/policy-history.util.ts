@@ -25,7 +25,7 @@ export const createPolicyHistory = (history: any, eventType: string) => {
  * @returns
  */
 export const createFamilyHistory = (members: any, eventType: string) => {
-  const { id, policyId, createdAt, endDate, ...rest } = members
+  const { id, policyId, ...rest } = members
   const familyHistory = {
     id: uuidv4(),
     memberId: id,
