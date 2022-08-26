@@ -23,22 +23,51 @@ enum InsuranceType {
   HEALTH
 }
 
-model Customer {
-  id            String      @id @default(uuid()) @db.Uuid
-  firstName     String      @db.VarChar(255)
-  lastName      String      @db.VarChar(255)
-  dateOfBirth   DateTime
-  policies      Policy[]
+enum Relation {
+  SELF
+  MOTHER
+  FATHER
+  HUSBAND
+  WIFE
+  DAUGHTER
+  SON
+  OTHER
+}
+
+model Person {
+  id                String             @id @default(uuid()) @db.Uuid
+  firstName         String             @db.VarChar(255)
+  lastName          String             @db.VarChar(255)
+  dateOfBirth       DateTime
+  //Relations
+  ownedPolicies     Policy[]           @relation("ownedPolicies")
+  dependantPolicies PolicyDependants[] @relation("dependantPolicies")
+
+  @@index([firstName, lastName])
 }
 
 model Policy {
-  id            String        @id @default(uuid()) @db.Uuid
-  customer      Customer      @relation(fields: [customerId], references: [id])
-  customerId    String        @db.Uuid
+  id            String             @id @default(uuid()) @db.Uuid
   provider      String
   insuranceType InsuranceType
   status        PolicyStatus
   startDate     DateTime
   endDate       DateTime?
-  createdAt     DateTime      @default(now())
+  createdAt     DateTime           @default(now())
+  //Relations
+  client        Person             @relation("ownedPolicies", fields: [clientId], references: [id])
+  clientId      String             @db.Uuid
+  dependants    PolicyDependants[] @relation("dependants")
+
+  @@index([provider])
+}
+
+model PolicyDependants {
+  id          String   @id @default(uuid()) @db.Uuid
+  relation    Relation
+  //Relations
+  policy      Policy   @relation("dependants", fields: [policyId], references: [id])
+  policyId    String   @db.Uuid
+  dependant   Person   @relation("dependantPolicies", fields: [dependantId], references: [id])
+  dependantId String   @db.Uuid
 }
