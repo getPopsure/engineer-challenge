@@ -306,8 +306,8 @@ const userData: Prisma.PolicyCreateInput[] = [
 async function main() {
   console.log(`Clearing DB`);
   await prisma.policyDependants.deleteMany();
-  await prisma.person.deleteMany();
   await prisma.policy.deleteMany();
+  await prisma.person.deleteMany();
 
   console.log(`Start seeding ...`)
   for (const u of userData) {
@@ -319,7 +319,12 @@ async function main() {
   console.log(`Seeding finished.`)
 }
 
-main()
+async function test() {
+  const policies = await prisma.policy.findMany();
+  console.log("Reading db", policies)
+}
+
+test()
   .catch((e) => {
     console.error(e)
     process.exit(1)
