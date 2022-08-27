@@ -33,7 +33,10 @@ async function getAllPolicies(req: Request, res: Response) {
         const policies = await prisma.policy.findMany({
             select: SELECT_FIELDS
         });
-        res.json(policies);
+        return res.json(policies.map(policy => ({
+            ...policy,
+            dependants: policy.dependants.map(ele => ele.dependant)
+        })));
     } catch (err) {
         res.status(500).json(buildSystemErrorResponse(req, res, err))
     }
@@ -45,8 +48,12 @@ async function searchPolicies(req: Request, res: Response) {
         const policies = await prisma.policy.findMany({
             where: predicate,
             select: SELECT_FIELDS
-        })
-        res.json(policies);
+        });
+
+        return res.json(policies.map(policy => ({
+            ...policy,
+            dependants: policy.dependants.map(ele => ele.dependant)
+        })));
     } catch (err) {
         res.status(500).json(buildSystemErrorResponse(req, res, err))
     }

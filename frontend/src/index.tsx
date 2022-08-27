@@ -1,12 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
+
+import Policies from "./policies";
+
+import { ContentContext, getLocalisedContent } from './common/context'
 import reportWebVitals from "./reportWebVitals";
+
+import "./styles/index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ContentContext.Provider value ={getLocalisedContent}>
+      <Policies />
+    </ ContentContext.Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
