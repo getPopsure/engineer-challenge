@@ -15,9 +15,22 @@ function validateRequestSchema(req: Request, res: Response, next: NextFunction) 
 }
 
 const SEARCH_POLICY_REQUEST_VALIDATOR = [
-    body('insuranceType').isIn(Object.keys(InsuranceType)).withMessage('INVALID_INSURANCE_TYPE'),
-    body('status').isIn(Object.keys(PolicyStatus)).withMessage('INVALID_POLICY_STATUS'),
-    body('searchKey').escape()
+    body('insuranceType')
+        .optional()
+        .isArray().withMessage('SEARCH_POLICIES.VALIDATION_ERROR.INVALID_INSURANCE_TYPE_TYPE')
+        .isIn(Object.keys(InsuranceType)).withMessage('SEARCH_POLICIES.VALIDATION_ERROR.INVALID_INSURANCE_TYPE_VALUE'),
+    body('policyStatus')
+        .optional()
+        .isArray().withMessage('SEARCH_POLICIES.VALIDATION_ERROR.INVALID_INSURANCE_TYPE_TYPE')
+        .isIn(Object.keys(PolicyStatus)).withMessage('SEARCH_POLICIES.VALIDATION_ERROR.INVALID_INSURANCE_TYPE_VALUE'),
+    body('value')
+        .optional()
+        .isString().withMessage('SEARCH_POLICIES.VALIDATION_ERROR.INVALID_VALUE_TYPE')
+        .escape().trim(),
+    body('field')
+        .optional()
+        .isString().withMessage('SEARCH_POLICIES.VALIDATION_ERROR.INVALID_FIELD_TYPE')
+        .escape().trim()
 ]
 
 export {

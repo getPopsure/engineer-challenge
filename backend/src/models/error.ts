@@ -1,19 +1,25 @@
+import ExpressValidator, { Location } from "express-validator";
 
 type ErrorResponse = {
     name: String;
     message: String;
-    details: ErrorDetails[]
+    details?: ErrorDetails[]
 }
 
 type ErrorDetails = {
     field: String;
     value: String;
-    issue: String;
     description: String;
-    path: String;
+    issue: String;
+    location: Location | undefined;
+}
+
+type ValidationError = ExpressValidator.ValidationError & {
+    desc: string
 }
 
 export {
     ErrorDetails,
-    ErrorResponse
+    ErrorResponse,
+    ValidationError
 }

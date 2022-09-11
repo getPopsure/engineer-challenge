@@ -1,65 +1,96 @@
 import { InsuranceType, PolicyStatus, Prisma } from '@prisma/client';
 
 type SearchParams = {
-    searchKey: String;
+    field: string;
+    value: string;
     insuranceType: InsuranceType[];
-    status: PolicyStatus[];
+    policyStatus: PolicyStatus[];
 }
 
-function buildSearchRequest({ status = [], insuranceType = [], searchKey = "" }: SearchParams) {
-    const caseInsensitiveEqualsPredicate: Prisma.StringFilter = { equals: searchKey as string, mode: "insensitive" };
-
+function buildSearchRequest({ policyStatus = [], insuranceType = [], value = "", field= "" }: SearchParams) {
     const search: Prisma.PolicyWhereInput = {
         AND: [
             {
                 status: {
-                    notIn: ["CANCELLED", "DROPPED_OUT"],
-                    ...status.length > 0 && {
-                        in: status
+                    ...policyStatus.length > 0 && {
+                        in: policyStatus
                     }
                 },
                 ...insuranceType.length > 0 && {
                     insuranceType: { in: insuranceType }
                 },
-                ...!!searchKey.trim() && {
-                    OR: [{
-                        provider: caseInsensitiveEqualsPredicate
-                    },
-                    {
-                        client: {
-                            firstName: caseInsensitiveEqualsPredicate
-                        }
-                    },
-                    {
-                        client: {
-                            lastName: caseInsensitiveEqualsPredicate
-                        }
-                    },
-                    {
-                        dependants: {
-                            some: {
-                                dependant: {
-                                    firstName: { equals: searchKey as string, not: "", mode: "insensitive" }
-                                }
-                            },
-                        }
-                    },
-                    {
-                        dependants: {
-                            some: {
-                                dependant: {
-                                    lastName: { equals: searchKey as string, not: "", mode: "insensitive" }
-                                }
-                            },
-                        }
-                    }
-                    ]
-                }
+                ...!!value && getFieldSearchPredicate(value, field)
             }
         ]
     };
 
     return search;
+}
+
+
+function getFieldSearchPredicate(value:string, field:string) {
+    const caseInsensitiveEqualsPredicate: Prisma.StringFilter = { equals: value as string, mode: "insensitive" };
+    switch (field) {
+        case "CLIENT_FIRSTNAME": return {
+            client: {
+                firstName: caseInsensitiveEqualsPredicate
+            }
+        }
+        case "CLIENT_LASTNAME": return {
+            client: {
+                lastName: caseInsensitiveEqualsPredicate
+            }
+        }
+        case "DEPENDANT_FIRSTNAME": return {
+            dependants: {
+                some: {
+                    dependant: {
+                        firstName: caseInsensitiveEqualsPredicate
+                    }
+                },
+            }
+        }
+        case "DEPENDANT_LASTNAME": return {
+            dependants: {
+                some: {
+                    dependant: {
+                        lastName: caseInsensitiveEqualsPredicate
+                    }
+                },
+            }
+        }
+        default: return {
+            OR: [{
+                    client: {
+                        firstName: caseInsensitiveEqualsPredicate
+                    }
+                },
+                {
+                    client: {
+                        lastName: caseInsensitiveEqualsPredicate
+                    }
+                },
+                {
+                    dependants: {
+                        some: {
+                            dependant: {
+                                firstName: caseInsensitiveEqualsPredicate
+                            }
+                        },
+                    }
+                },
+                {
+                    dependants: {
+                        some: {
+                            dependant: {
+                                lastName: caseInsensitiveEqualsPredicate
+                            }
+                        },
+                    }
+                }
+            ]
+        } 
+    }
 }
 
 export {
