@@ -4,5 +4,10 @@ module.exports = {
     postcss: {
       plugins: [require("tailwindcss"), require("autoprefixer")],
     },
-  },
+  }, 
+  
+  devServer: {
+    hot: true,
+    inline: false
+ }
 };
