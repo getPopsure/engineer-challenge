@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from '../assets/logo.svg'
 
 const Navbar = () => (
@@ -68,4 +69,4 @@ const Navbar = () => (
   </div>
 )
 
-export default Navbar;
+export default React.memo(Navbar);

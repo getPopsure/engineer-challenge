@@ -30,4 +30,4 @@ const CheckboxList: React.FC<TCheckboxList & IProps> = ({ filterKey, values }) =
   )
 };
 
-export default CheckboxList;
+export default React.memo(CheckboxList);

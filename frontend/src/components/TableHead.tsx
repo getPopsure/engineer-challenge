@@ -1,3 +1,5 @@
+import React from "react";
+
 const TableHead = () => (
   <thead className="border-b bg-gray-100">
     <tr>
@@ -21,4 +23,4 @@ const TableHead = () => (
 )
 
 
-export default TableHead;
+export default React.memo(TableHead);

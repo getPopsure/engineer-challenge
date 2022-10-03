@@ -2,6 +2,7 @@ import { FC } from "react";
 import Badge from "./Badge";
 
 import { Policy } from "../types";
+import React from "react";
 
 interface IProps {
   policy: Policy;
@@ -27,4 +28,4 @@ const TableRow: FC<IProps> = ({ policy }) => {
   )
 }
 
-export default TableRow;
+export default React.memo(TableRow);

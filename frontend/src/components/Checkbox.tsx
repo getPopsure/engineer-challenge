@@ -26,4 +26,4 @@ const Checkbox: React.FC<TCheckbox & IProps> = ({ label, onChange }) => (
   </div>
 );
 
-export default Checkbox;
+export default React.memo(Checkbox);

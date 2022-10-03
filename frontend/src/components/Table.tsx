@@ -29,4 +29,4 @@ const Table: React.FC<TTable & IProps> = ({ policies }) => (
   </div>
 )
 
-export default Table;
+export default React.memo(Table);

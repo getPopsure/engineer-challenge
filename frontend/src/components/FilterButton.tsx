@@ -1,3 +1,5 @@
+import React from "react";
+
 type TFilter = React.HTMLAttributes<HTMLButtonElement>;
 
 interface IProps {
@@ -13,4 +15,4 @@ const FilterButton: React.FC<TFilter & IProps> = ({ callback }) => (
   </button>
 );
 
-export default FilterButton;
+export default React.memo(FilterButton);

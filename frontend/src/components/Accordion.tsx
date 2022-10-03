@@ -39,4 +39,4 @@ const Accordion: React.FC<IProps & TAccordion> = ({ children, title }) => {
   );
 };
 
-export default Accordion
+export default React.memo(Accordion);

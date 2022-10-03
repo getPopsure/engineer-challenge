@@ -34,4 +34,4 @@ const Filter: React.FC<TFilter & IProps> = ({ isFilterOpen, setIsFilterOpen, pro
   )
 };
 
-export default Filter;
+export default React.memo(Filter);

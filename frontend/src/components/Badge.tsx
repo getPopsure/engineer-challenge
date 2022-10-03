@@ -1,3 +1,5 @@
+import React from "react"
+
 type Status = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT'
 
 interface BadgeProps {
@@ -25,4 +27,4 @@ const Badge = ({ status }: BadgeProps) => {
   return <p className={className}>{status.replace("_", " ")}</p>
 }
 
-export default Badge;
+export default React.memo(Badge);
