@@ -8,6 +8,7 @@ import { useState, useMemo, useEffect } from "react";
 import { getPolicies } from "./api";
 import { Policy } from "./types";
 import FilterButton from "./components/FilterButton";
+import FilterList from "./components/FilterList";
 
 const App = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(true);
@@ -32,6 +33,7 @@ const App = () => {
             <Filter isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} providers={providers} />
           </div>
         </div>
+        <FilterList />
         <Table policies={policies} />
       </div>
     </div>
