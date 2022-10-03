@@ -1,37 +1,32 @@
-import { useEffect, useState } from "react";
+import React from "react";
 
-import { getPolicies } from "../api";
 import TableRow from "./TableRow";
 import { Policy } from "../types";
 import TableHead from "./TableHead";
 
-const Table = () => {
-  const [policies, setPolicies] = useState<Policy[]>([]);
+type TTable = React.HTMLAttributes<HTMLDivElement>;
 
-  useEffect(() => {
-    const response = getPolicies();
-    setPolicies(response as Policy[]);
-  }, []);
+interface IProps {
+  policies: Policy[];
+}
 
-
-  return (
-    <div className="flex flex-col">
-      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-lg shadow-sm">
-            <table className="min-w-full">
-              <TableHead />
-              <tbody>
-                {policies.map(policy =>
-                  <TableRow key={policy.id} policy={policy} />
-                )}
-              </tbody>
-            </table>
-          </div>
+const Table: React.FC<TTable & IProps> = ({ policies }) => (
+  <div className="flex flex-col">
+    <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+        <div className="overflow-hidden rounded-lg shadow-sm">
+          <table className="min-w-full">
+            <TableHead />
+            <tbody>
+              {policies.map(policy =>
+                <TableRow key={policy.id} policy={policy} />
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  )
-}
+  </div>
+)
 
 export default Table;
