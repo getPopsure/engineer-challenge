@@ -45,6 +45,7 @@
   "devDependencies": {
     "autoprefixer": "^9",
     "postcss": "^7",
+    "react-animate-height": "^3.0.4",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }
