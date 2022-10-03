@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Accordion from "./Accordion";
 import { InsuranceType } from "../types";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import CheckboxList from "./CheckboxList";
+import { Context } from "../context";
 
 type TFilter = React.HTMLAttributes<HTMLDivElement>;
 
@@ -13,6 +14,7 @@ interface IProps {
 }
 
 const Filter: React.FC<TFilter & IProps> = ({ isFilterOpen, setIsFilterOpen, providers }) => {
+  const { filtersCount, clearAllFilters } = useContext(Context);
   const ref = React.useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => { setIsFilterOpen(false) });
 
@@ -21,7 +23,13 @@ const Filter: React.FC<TFilter & IProps> = ({ isFilterOpen, setIsFilterOpen, pro
       {
         isFilterOpen &&
         <div className="bg-white border py-2 rounded-md w-96" ref={ref}>
-          <h3 className="px-4 py-1">Filters</h3>
+          <div className="flex items-center justify-between px-4 -y-1">
+            <h3 className="font-bold py-3">Filters</h3>
+            {filtersCount > 0 &&
+              <button className="text-primary-500 font-bold hover:bg-primary-100 py-3 px-6 rounded-md" onClick={() => clearAllFilters()}>Clear all</button>
+            }
+
+          </div>
           <Accordion title="Provider">
             <CheckboxList filterKey="provider" values={Array.from(providers)} />
           </Accordion>

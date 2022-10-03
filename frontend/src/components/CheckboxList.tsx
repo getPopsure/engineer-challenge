@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const CheckboxList: React.FC<TCheckboxList & IProps> = ({ filterKey, values }) => {
-  const { addFilter, removeFilter } = useContext(Context);
+  const { filters, addFilter, removeFilter } = useContext(Context);
 
   const handleChange = (e: any) => {
     const isChecked = e.target.checked;
@@ -19,11 +19,17 @@ const CheckboxList: React.FC<TCheckboxList & IProps> = ({ filterKey, values }) =
     if (isChecked) addFilter(filterKey, value);
     else removeFilter(filterKey, value)
   }
+
   return (
     <fieldset className="flex flex-col">
       {
         values.map(value => (
-          <Checkbox key={slugify(value)} label={value} onChange={handleChange} />
+          <Checkbox
+            key={slugify(value)}
+            label={value}
+            onChange={handleChange}
+            checked={filters[filterKey].includes(value)}
+          />
         ))
       }
     </fieldset>
