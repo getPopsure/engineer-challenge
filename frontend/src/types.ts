@@ -1,4 +1,8 @@
-export type InsuranceType = 'LIABILITY' | 'HOUSEHOLD' | 'HEALTH';
+export enum InsuranceType {
+  LIABILITY = "Liability",
+  HOUSEHOLD = "Household",
+  HEALTH = "Health"
+};
 
 export type Status = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT';
 
