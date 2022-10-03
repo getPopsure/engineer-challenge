@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Table from "./components/Table";
 
 import "./styles/index.css";
-import Filter from "./components/Filter";
+import Filter from "./components/FilterSelection";
 import { useState, useMemo, useEffect } from "react";
 import { getPolicies } from "./api";
 import { Policy } from "./types";
