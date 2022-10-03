@@ -1,17 +1,17 @@
+import { useState, useMemo, useEffect } from "react";
+
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import Table from "./components/Table";
+import FilterSelection from "./components/Filter/FilterSelection";
+import FilterList from "./components/Filter/FilterList";
 
-import "./styles/index.css";
-import Filter from "./components/FilterSelection";
-import { useState, useMemo, useEffect } from "react";
 import { getPolicies } from "./api";
 import { Policy } from "./types";
-import FilterButton from "./components/FilterButton";
-import FilterList from "./components/FilterList";
+
+import "./styles/index.css";
 
 const App = () => {
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [policies, setPolicies] = useState<Policy[]>([]);
   const providers = useMemo(() => {
     return new Set(policies.map(policy => policy.provider))
@@ -26,11 +26,10 @@ const App = () => {
     <div>
       <Navbar />
       <div className="w-full p-8">
-        <div className="border flex items-center justify-between relative">
+        <div className="relative">
           <Header />
-          <FilterButton callback={() => setIsFilterOpen(isOpen => !isOpen)} />
           <div className="absolute right-0 top-full">
-            <Filter isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} providers={providers} />
+            <FilterSelection providers={providers} />
           </div>
         </div>
         <FilterList />

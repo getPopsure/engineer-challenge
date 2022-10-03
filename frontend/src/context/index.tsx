@@ -13,6 +13,7 @@ interface Props {
 }
 
 const ContextProvider: React.FC<Props> = ({ children }) => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filtersCount, setFiltersCount] = useState(0);
   const [filters, setFilters] = useState<Filters>({
     provider: [],
@@ -43,7 +44,16 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <Context.Provider
-      value={{ filters, addFilter, removeFilter, clearAllFilters, filtersCount }}
+      value={{
+        filters,
+        filtersCount,
+        addFilter,
+        removeFilter,
+        clearAllFilters,
+        isFilterOpen,
+        toggleFilter: () => setIsFilterOpen(isOpen => !isOpen),
+        closeFilter: () => setIsFilterOpen(false)
+      }}
     >
       {children}
     </Context.Provider>
