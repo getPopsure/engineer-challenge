@@ -29,7 +29,7 @@ const App = () => {
           <Header />
           <FilterButton callback={() => setIsFilterOpen(isOpen => !isOpen)} />
           <div className="absolute right-0 top-full">
-            <Filter isFilterOpen={isFilterOpen} providers={providers} />
+            <Filter isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} providers={providers} />
           </div>
         </div>
         <Table policies={policies} />
