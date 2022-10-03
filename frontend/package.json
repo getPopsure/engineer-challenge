@@ -18,6 +18,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "runDocker": "cd .. && cd backend && docker-compose build && docker-compose up",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
