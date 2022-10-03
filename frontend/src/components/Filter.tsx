@@ -23,10 +23,10 @@ const Filter: React.FC<TFilter & IProps> = ({ isFilterOpen, setIsFilterOpen, pro
         <div className="bg-white border py-2 rounded-md w-96" ref={ref}>
           <h3 className="px-4 py-1">Filters</h3>
           <Accordion title="Provider">
-            <CheckboxList values={Array.from(providers)} />
+            <CheckboxList filterKey="provider" values={Array.from(providers)} />
           </Accordion>
           <Accordion title="Type">
-            <CheckboxList values={Array.from(Object.values(InsuranceType))} />
+            <CheckboxList filterKey="type" values={Array.from(Object.values(InsuranceType))} />
           </Accordion>
         </div>
       }
