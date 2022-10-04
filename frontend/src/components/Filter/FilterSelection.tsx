@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 
 import Accordion from "../Accordion";
 import CheckboxList from "../CheckboxList";
@@ -7,18 +7,18 @@ import FilterClearButton from "./FilterClearButton";
 import { Context } from "../../context";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
-import { InsuranceType, Status } from "../../types";
+import { InsuranceType, Policy, Status } from "../../types";
 
 type TFilter = React.HTMLAttributes<HTMLDivElement>;
 
-interface IProps {
-  providers: Set<string>;
-}
-
-const Filter: React.FC<TFilter & IProps> = ({ providers }) => {
-  const { isFilterOpen, filtersCount, closeFilter } = useContext(Context);
+const Filter: React.FC<TFilter> = () => {
+  const { isFilterOpen, filtersCount, closeFilter, policies } = useContext(Context);
   const ref = React.useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => closeFilter());
+
+  const providers: string[] = useMemo(() => {
+    return Array.from(new Set(policies.map((policy: Policy) => policy.provider)))
+  }, [policies]);
 
   return (
     <>
@@ -30,10 +30,10 @@ const Filter: React.FC<TFilter & IProps> = ({ providers }) => {
             {filtersCount > 0 && <FilterClearButton />}
           </div>
           <Accordion title="Provider">
-            <CheckboxList filterKey="provider" values={Array.from(providers)} />
+            <CheckboxList filterKey="provider" values={providers} />
           </Accordion>
           <Accordion title="Type">
-            <CheckboxList filterKey="type" values={Array.from(Object.values(InsuranceType))} />
+            <CheckboxList filterKey="insuranceType" values={Array.from(Object.values(InsuranceType))} />
           </Accordion>
           <Accordion title="Status">
             <CheckboxList filterKey="status" values={Array.from(Object.values(Status))} />

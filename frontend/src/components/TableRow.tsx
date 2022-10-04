@@ -28,7 +28,7 @@ const TableRow: React.FC<IProps> = ({ policy }) => {
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap capitalize">
         <button
           className="capitalize hover:underline hover:underline-offset-4"
-          onClick={() => addFilter("type", policy.insuranceType)}>
+          onClick={() => addFilter("insuranceType", policy.insuranceType)}>
           {policy.insuranceType.toLowerCase()}
         </button>
       </td>
