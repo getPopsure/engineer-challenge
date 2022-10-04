@@ -6,7 +6,7 @@ import FilterClearButton from "./FilterClearButton";
 
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { Context } from "../../context";
-import { InsuranceType } from "../../types";
+import { InsuranceType, Status } from "../../types";
 
 type TFilter = React.HTMLAttributes<HTMLDivElement>;
 
@@ -33,6 +33,9 @@ const Filter: React.FC<TFilter & IProps> = ({ providers }) => {
           </Accordion>
           <Accordion title="Type">
             <CheckboxList filterKey="type" values={Array.from(Object.values(InsuranceType))} />
+          </Accordion>
+          <Accordion title="Status">
+            <CheckboxList filterKey="status" values={Array.from(Object.values(Status))} />
           </Accordion>
         </div>
       }

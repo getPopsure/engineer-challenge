@@ -1,6 +1,5 @@
 import React from "react"
-
-type Status = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT'
+import { Status } from "../types"
 
 interface BadgeProps {
   status: Status
@@ -11,10 +10,10 @@ const getBadgeColors = (status: Status) => {
     textColor: string,
     backgroundColor: string
   } } = {
-    ACTIVE: { textColor: 'tc-green-100', backgroundColor: 'bg-green-100' },
-    PENDING: { textColor: 'tc-yellow-600', backgroundColor: 'bg-yellow-100' },
-    CANCELLED: { textColor: 'tc-red-100', backgroundColor: 'bg-red-100' },
-    DROPPED_OUT: { textColor: 'tc-red-100', backgroundColor: 'bg-red-100' },
+    [Status.ACTIVE]: { textColor: 'tc-green-100', backgroundColor: 'bg-green-100' },
+    [Status.PENDING]: { textColor: 'tc-yellow-600', backgroundColor: 'bg-yellow-100' },
+    [Status.CANCELLED]: { textColor: 'tc-red-100', backgroundColor: 'bg-red-100' },
+    [Status.DROPPED_OUT]: { textColor: 'tc-red-100', backgroundColor: 'bg-red-100' },
   }
 
   return badgeColors[status]

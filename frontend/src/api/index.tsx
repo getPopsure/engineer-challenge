@@ -1,5 +1,13 @@
 import data from "../data"
-import { Customer } from "../types"
+import { Customer, Status } from "../types"
+
+const status: Record<string, Status> = {
+  "ACTIVE": Status.ACTIVE,
+  "PENDING": Status.PENDING,
+  "CANCELLED": Status.CANCELLED,
+  "DROPPED_OUT": Status.DROPPED_OUT,
+}
+
 
 export const getPolicies = () => {
   return data.map(item => {
@@ -14,7 +22,7 @@ export const getPolicies = () => {
       id: item.id,
       provider: item.provider,
       insuranceType: item.insuranceType,
-      status: item.status,
+      status: status[item.status] as Status,
       startDate: new Date(item.startDate),
       customer,
     }
