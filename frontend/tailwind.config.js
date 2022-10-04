@@ -4,12 +4,6 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      minHeight: (theme) => ({
-        ...theme('spacing'),
-      }),
-      minWidth: (theme) => ({
-        ...theme('spacing'),
-      }),
       // colors taken from Dirty Swan Design System
       // https://dirtyswan.design/?path=/story/css-variables-colors--page
       colors: {
@@ -31,7 +25,19 @@ module.exports = {
           700: '#6160a2',
           900: '#2e2e4c',
         },
-      }
+      },
+      fontSize: {
+        '2sm': '0.625rem',
+        sm: '0.875rem',
+        base: '1rem',
+        xl: '1.25rem',
+      },
+      minHeight: (theme) => ({
+        ...theme('spacing'),
+      }),
+      minWidth: (theme) => ({
+        ...theme('spacing'),
+      }),
     },
   },
   variants: {
