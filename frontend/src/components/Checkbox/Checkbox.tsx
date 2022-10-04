@@ -1,6 +1,8 @@
 import React from "react";
 
-import slugify from "../utils/slugify";
+import styles from "./Checkbox.module.scss";
+
+import slugify from "../../utils/slugify";
 
 type TCheckbox = React.HTMLAttributes<HTMLDivElement>;
 
@@ -13,19 +15,14 @@ interface IProps {
 const Checkbox: React.FC<TCheckbox & IProps> = ({ label, checked, onChange }) => (
   <div>
     <input
-      className=""
+      className={styles.checkbox}
       checked={checked}
       id={slugify(label)}
       type="checkbox"
       value={label}
       onChange={onChange}
     />
-    <label
-      className=""
-      htmlFor={slugify(label)}
-    >
-      {label}
-    </label>
+    <label htmlFor={slugify(label)}>{label}</label>
   </div>
 );
 

@@ -4,6 +4,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      minHeight: (theme) => ({
+        ...theme('spacing'),
+      }),
+      minWidth: (theme) => ({
+        ...theme('spacing'),
+      }),
       // colors taken from Dirty Swan Design System
       // https://dirtyswan.design/?path=/story/css-variables-colors--page
       colors: {

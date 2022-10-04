@@ -1,0 +1,28 @@
+.checkbox {
+  @apply appearance-none cursor-pointer h-0 opacity-0 absolute w-0;
+
+  &+label {
+    &::before {
+      content: '';
+      @apply bg-white border border-grey-300 rounded cursor-pointer inline-flex h-4 min-h-4 min-w-4 mr-4 w-4;
+      transition-property: background-color;
+    }
+  }
+
+  &:focus {
+    &+label {
+      &::before {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($color: #8e8cee, $alpha: 0.5);
+      }
+    }
+  }
+  
+  &:checked {
+    &+label::before {
+      background-image: url('../../assets/checkmark.svg');
+      @apply bg-center bg-no-repeat bg-primary-500 border-primary-500;
+    }
+  }
+}
+
