@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AnimateHeight from 'react-animate-height';
+
 import slugify from '../utils/slugify';
 
 import { ReactComponent as ChevronDown } from "../assets/chevron-down.svg";

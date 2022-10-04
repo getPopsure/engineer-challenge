@@ -1,8 +1,9 @@
 import React from "react";
 
 import TableRow from "./TableRow";
-import { Policy } from "../types";
 import TableHead from "./TableHead";
+
+import { Policy } from "../types";
 
 type TTable = React.HTMLAttributes<HTMLDivElement>;
 

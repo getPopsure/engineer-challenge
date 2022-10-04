@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
-import { Context } from "../context";
-import slugify from "../utils/slugify";
+
 import Checkbox from "./Checkbox";
+
+import { Context } from "../context";
+
+import slugify from "../utils/slugify";
 
 type TCheckboxList = React.HTMLAttributes<HTMLDivElement>;
 

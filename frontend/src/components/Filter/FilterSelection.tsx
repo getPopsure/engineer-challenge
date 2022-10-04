@@ -4,8 +4,9 @@ import Accordion from "../Accordion";
 import CheckboxList from "../CheckboxList";
 import FilterClearButton from "./FilterClearButton";
 
-import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { Context } from "../../context";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+
 import { InsuranceType, Status } from "../../types";
 
 type TFilter = React.HTMLAttributes<HTMLDivElement>;

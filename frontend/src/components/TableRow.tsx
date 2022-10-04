@@ -1,14 +1,14 @@
-import { FC } from "react";
+import React from "react";
+
 import Badge from "./Badge";
 
 import { Policy } from "../types";
-import React from "react";
 
 interface IProps {
   policy: Policy;
 }
 
-const TableRow: FC<IProps> = ({ policy }) => {
+const TableRow: React.FC<IProps> = ({ policy }) => {
   return (
     <tr className="border-b">
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{policy.id}</td>

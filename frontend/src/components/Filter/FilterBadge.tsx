@@ -1,5 +1,7 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+
 import { Context } from "../../context";
+
 import { ReactComponent as CloseIcon } from "../../assets/close.svg"
 
 type TFilterBadge = React.HTMLAttributes<HTMLDivElement>;
@@ -23,4 +25,4 @@ const FilterBadge: React.FC<IProps & TFilterBadge> = ({ filterKey, value }) => {
 };
 
 
-export default FilterBadge;
+export default React.memo(FilterBadge);

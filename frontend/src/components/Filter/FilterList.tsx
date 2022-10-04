@@ -1,8 +1,11 @@
-import { useContext } from "react";
-import { Context } from "../../context";
-import slugify from "../../utils/slugify";
+import React, { useContext } from "react";
+
 import FilterBadge from "./FilterBadge";
 import FilterClearButton from "./FilterClearButton";
+
+import { Context } from "../../context";
+
+import slugify from "../../utils/slugify";
 
 const FilterList = () => {
   const { filters, filtersCount } = useContext(Context);
@@ -32,4 +35,4 @@ const FilterList = () => {
 };
 
 
-export default FilterList;
+export default React.memo(FilterList);

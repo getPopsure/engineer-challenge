@@ -1,4 +1,5 @@
 import React from "react";
+
 import slugify from "../utils/slugify";
 
 type TCheckbox = React.HTMLAttributes<HTMLDivElement>;
