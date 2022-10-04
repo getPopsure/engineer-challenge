@@ -19,6 +19,12 @@ const Filter: React.FC<TFilter> = () => {
   const providers: string[] = useMemo(() => {
     return Array.from(new Set(policies.map((policy: Policy) => policy.provider)))
   }, [policies]);
+  const insuranceTypes: string[] = useMemo(() => {
+    return Array.from(new Set(policies.map((policy: Policy) => policy.insuranceType)))
+  }, [policies]);
+  const status: string[] = useMemo(() => {
+    return Array.from(new Set(policies.map((policy: Policy) => policy.status)))
+  }, [policies]);
 
   return (
     <>
@@ -33,10 +39,10 @@ const Filter: React.FC<TFilter> = () => {
             <CheckboxList filterKey="provider" values={providers} />
           </Accordion>
           <Accordion title="Type">
-            <CheckboxList filterKey="insuranceType" values={Array.from(Object.values(InsuranceType))} />
+            <CheckboxList filterKey="insuranceType" values={Array.from(insuranceTypes)} />
           </Accordion>
           <Accordion title="Status">
-            <CheckboxList filterKey="status" values={Array.from(Object.values(Status))} />
+            <CheckboxList filterKey="status" values={Array.from(status)} />
           </Accordion>
         </div>
       }

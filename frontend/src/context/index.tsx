@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useMemo, useState } from "react"
 import { getPolicies } from "../api";
-import { Policy } from "../types";
+import { Policy, Status } from "../types";
 
 export type Filters = Record<string, string[]>
 
@@ -75,7 +75,8 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const response = getPolicies();
-    setPolicies(response as Policy[]);
+    const filteredPolicies = response.filter(policy => [Status.ACTIVE, Status.PENDING].includes(policy.status))
+    setPolicies(filteredPolicies as Policy[]);
   }, []);
 
   return (
