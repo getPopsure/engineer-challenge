@@ -27,3 +27,5 @@ export interface Policy {
   // endDate: Date;
   // createdAt: Date;
 }
+
+export type FilterKeys = keyof Pick<Policy, "provider" | "insuranceType" | "status">

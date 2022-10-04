@@ -1,0 +1,8 @@
+.input {
+  @apply border border-grey-300 h-12 pl-4 rounded-md w-full;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #8e8cee;
+  }
+}

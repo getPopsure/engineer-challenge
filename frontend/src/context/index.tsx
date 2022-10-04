@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useMemo, useState } from "react"
 import { getPolicies } from "../api";
-import { Policy, Status } from "../types";
+import { Policy, Status, Customer } from "../types";
+import getCustomerName from "../utils/getCustomerName";
 
 export type Filters = Record<string, string[]>
 
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const ContextProvider: React.FC<Props> = ({ children }) => {
+  const [nameQuery, setNameQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [filtersCount, setFiltersCount] = useState(0);
   const [filters, setFilters] = useState<Filters>({
@@ -22,35 +24,14 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
     insuranceType: [],
     status: []
   });
-
-  const [policies, setPolicies] = useState<Policy[]>([]);
-  const filteresPolicies = useMemo(() => {
-    if (filtersCount === 0) return policies;
-
-    const activeFilters = Object.keys(filters).reduce((acc: string[], filterKey: string) => {
+  // stores the filters that are currently active
+  const activeFilters = useMemo(() => {
+    return Object.keys(filters).reduce((acc: string[], filterKey: string) => {
       if (filters[filterKey].length > 0) acc.push(filterKey);
       return acc;
     }, []);
+  }, [filters])
 
-    const filtered = policies.filter(policy => {
-      let i = 0;
-      let shouldStay = true;
-      while (i < activeFilters.length) {
-        const filterKey = activeFilters[i] as keyof Pick<Policy, "provider" | "insuranceType" | "status">;
-        const policyValue = policy[filterKey].toLowerCase();
-        console.log(filterKey, policyValue, filters[filterKey].includes(policyValue));
-
-        if (!filters[filterKey].includes(policyValue)) {
-          shouldStay = false;
-          break;
-        }
-        i++;
-      }
-      return shouldStay;
-    })
-    return filtered;
-
-  }, [policies, filters])
 
   const addFilter = (filterKey: string, value: string) => {
     const updatedFilters = Object.assign({}, filters);
@@ -73,6 +54,35 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
     setFiltersCount(0);
   }
 
+  const [policies, setPolicies] = useState<Policy[]>([]);
+
+  const filteredPolicies = useMemo(() => {
+    if (filtersCount === 0) return policies;
+
+    let filtered = policies;
+
+    // filter by name
+    if (nameQuery) {
+      filtered = filtered.filter(({ customer }) => getCustomerName(customer).toLowerCase().includes(nameQuery))
+    }
+
+    // filter by params
+    filtered = filtered.filter(policy => {
+      let i = 0;
+      while (i < activeFilters.length) {
+        const filterKey = activeFilters[i] as keyof Pick<Policy, "provider" | "insuranceType" | "status">;
+        const policyValue = policy[filterKey].toLowerCase();
+        if (!filters[filterKey].includes(policyValue))
+          return false;
+        i++;
+      }
+      return true;
+    })
+    return filtered;
+
+  }, [policies, filters, nameQuery])
+
+  // initial data setup
   useEffect(() => {
     const response = getPolicies();
     const filteredPolicies = response.filter(policy => [Status.ACTIVE, Status.PENDING].includes(policy.status))
@@ -82,13 +92,14 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        filteresPolicies,
+        filteredPolicies,
         filters,
         filtersCount,
         policies,
         addFilter,
         removeFilter,
         clearAllFilters,
+        setNameQuery,
         isFilterOpen,
         toggleFilter: () => setIsFilterOpen(isOpen => !isOpen),
         closeFilter: () => setIsFilterOpen(false)
