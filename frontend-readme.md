@@ -20,4 +20,3 @@ You need to implement the frontend part for the following user story. Please, ma
 missing
 - pagination
 - filter by name
-- show only active and pending policies

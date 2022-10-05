@@ -39,15 +39,12 @@ export const reducer = (state: State, action: Action) => {
     case ActionsTypes.FilterByType:
       newState.currentPolicies =filter(state.allPolicies, (policy:Policy) => policy.insuranceType === action.payload)
       return newState;
-   
-   
       case ActionsTypes.FilterByProvider:
       newState.currentPolicies = filter(state.allPolicies, (policy:Policy) => policy.provider === action.payload)
       return newState;
-    // case ActionsTypes.FilterByName:
-    //     debugger
-    //     newState =filter(state, (policy:Policy) => policy.Customer === action.payload.value)
-    //     return newState;
+    case ActionsTypes.FilterByName:
+        newState.currentPolicies = filter(state.allPolicies, (policy:Policy) => `${policy.customer.firstName.toLowerCase()} ${policy.customer.lastName.toLowerCase()}`.includes(action.payload.toLowerCase()))
+        return newState;
     case ActionsTypes.ClearFilter:
       newState.currentPolicies =  newState.allPolicies.concat([]);
       return newState;

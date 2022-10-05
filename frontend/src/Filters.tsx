@@ -36,11 +36,19 @@ export default function Filters({policies, dispatchPolicies}: FilterProps) {
       }
   });
 
+  const rudimendaryDebounce  =  function (func: Function, delay: number) {
+    let timerId: any;
+    clearTimeout(timerId)
+    timerId = setTimeout(func, delay)
+  }
+
   return (
     <section>
      <h2 className="p-h2 mt24 mb24">Filters</h2>
      <div className="fd-row ai-center jc-center">
-      <Input placeholder="name" name="name" className="mr24 mt24 mb24 w25 d-inline-block"></Input>
+      <Input placeholder="name" name="name" className="mr24 mt24 mb24 w25 d-inline-block" onChange={(e: React.ChangeEvent<HTMLInputElement>) =>{
+        rudimendaryDebounce(dispatchPolicies({ type: PoliciesActionTypes.FilterByName, payload: e.target.value}), 1000)
+      }}></Input>
       <Select className="mt24 mb24 w25 mr24" name="provider" label="Provider" id="provier" options={providerOptions} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
         const action = e.target.value !== '' ? PoliciesActionTypes.FilterByProvider : PoliciesActionTypes.ClearFilter;
         dispatchPolicies({ type: action, payload: e.target.value})
