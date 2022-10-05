@@ -1,5 +1,19 @@
-export type InsuranceType = `LIABILITY` | `HOUSEHOLD` | `HEALTH`;
-export type PolicyStatus = `ACTIVE` |  `PENDING` |  `CANCELLED` | `DROPPED_OUT`
+export type InsuranceType = 'LIABILITY' | 'HOUSEHOLD' | 'HEALTH';
+export type PolicyStatus = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT'
+
+export enum PolicyStatusEnum {
+  Active = 'ACTIVE',
+  Pending = 'PENDING',
+  Cancelled = 'CANCELLED',
+  DroppedOut = 'DROPPED_OUT'
+}
+
+export enum InsuranceTypeEnums {
+  Liability = 'LIABILITY',
+  Household = 'HOUSEHOLD',
+  Health=  'HEALTH'
+};
+
 
 export interface Customer {
   id: string,

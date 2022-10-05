@@ -4,54 +4,38 @@ import Table from "./Table";
 import Filters from "./Filters"
 import '@popsure/dirty-swan/dist/index.css';
 import "./index.css";
-import useSWR from 'swr';
+import { PolicyStatusEnum } from './types'
+import usePoliciesQuery from './stores/policies/query'
+import { useReducer } from 'react';
+import {reducer as policiesReducer, ActionsTypes } from './stores/policies/reducer'
 
-import { useState  } from "react";
-const queryFetcher = async () => {
-  //try {
-    const response = await fetch(`http://localhost:4000/policies`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
 
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
 
-    return await response.json();
-  // } catch (error) {
-    
-  //   console.log(error);
-  // }
-};
+const App = () => {   
+   const [policiesState, dispatchPolicies] = useReducer(policiesReducer, { allPolicies: [], currentPolicies: []});
+   const query = `search=${PolicyStatusEnum.Active},${PolicyStatusEnum.Pending}`;
+   const { policies, isLoading, isError } = usePoliciesQuery(query);
 
-export function usePoliciesQuery(endpoint: string) {
-  const {data, error} = useSWR(endpoint ? [endpoint] : null, queryFetcher);
+   if (!isLoading && policies && policies.length !== 0 && policiesState.allPolicies.length === 0) {
+    dispatchPolicies({type: ActionsTypes.LoadPolicies, payload: policies})
+   }
 
-  return {
-    policies: data,
-    isLoading: !error && !data,
-    isError: error
-  }
-}
-
-const App =  () => { 
- // const [policies, setPolicies ] = useState()
-
-   const { policies, isLoading, isError} = usePoliciesQuery('policies');
-   if (isError) return <div>failed to load</div>
-   if (isLoading) return <div>loading...</div>
-  
+   
   return (
   <div>
     <Navbar />
     <div className="w-full p-8">
       <Header />
-      <Filters policies={policies}/>
-      <Table policies={policies}/>
+
+      {isLoading && !policies && <div>loading...</div>}
+      {isError && <div>failed to load</div>}
+
+      {!isLoading && !isError &&
+        <div>
+          <Filters policies={policies} dispatchPolicies={dispatchPolicies}/>
+          <Table policies={policiesState.currentPolicies}/>
+        </div>
+      }
     </div>
   </div>
 )};

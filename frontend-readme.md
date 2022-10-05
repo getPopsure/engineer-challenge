@@ -17,17 +17,7 @@ You need to implement the frontend part for the following user story. Please, ma
 - Names should be filtered using a text input, other data should be filtered using dropdowns
 - Clearing the search should return the table to its original state
 
-Assumptions:
-- Add a row to show the filters:
-  - name: input
-  - provider, policy and status: dropdown
-  - clear filters: is an x, that clears the current filter
-
-Solution:
-- Add UI of filters
-- Fetch data and add it to table
-- Add logic of filter and fetch data in the Table component direclty, manage all with local state.
-
-Question:
-- Should I filter by name and by status only, or by all fields? From the user story is not clear to me
-- Pagination results: should it have also UI of it?
+missing
+- pagination
+- filter by name
+- show only active and pending policies

@@ -1,5 +1,5 @@
 import express from 'express';
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma, PolicyStatus } from '@prisma/client';
 import cors from "cors";
 const app = express();
 const port = 4000;
@@ -12,11 +12,13 @@ app.use(express.json())
 
 
 app.get('/policies', async (req, res) => {
-  const { search } = req.query;
+  const { search } = req.query;  
+  const status = search?.toString().split(',') as Prisma.Enumerable<PolicyStatus>;
 
   const or: Prisma.PolicyWhereInput = search
     ? {
       OR: [
+        { status: { in: status as Prisma.Enumerable<PolicyStatus> }} ,
         { provider: { contains: search as string, mode: 'insensitive' } },
         { customer: { firstName: { contains: search as string, mode: 'insensitive' } } },
         { customer: { lastName: { contains: search as string, mode: 'insensitive' } } }
@@ -45,7 +47,6 @@ app.get('/policies', async (req, res) => {
       }
     }
   })
-
   res.json(policies);
 })
 
