@@ -7,7 +7,7 @@ export enum ActionsTypes {
   FilterByStatus = 'filterByStatus',
   FilterByType = 'filterByType',
   FilterByProvider = 'filterByProvider',
-  FilterByName = 'filterByName',
+  FilterByName = 'filterByName'
 }
 interface Action {
   type: ActionsTypes;

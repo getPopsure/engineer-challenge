@@ -5,14 +5,11 @@ const app = express();
 const port = 4000;
 const prisma = new PrismaClient();
 
-
 app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
-
 app.use(express.json())
 
-
 app.get('/policies', async (req, res) => {
-  const { search } = req.query;  
+  const { search, paginationOptionsTake, paginationOptionsSkip } = req.query;  
   const status = search?.toString().split(',') as Prisma.Enumerable<PolicyStatus>;
 
   const or: Prisma.PolicyWhereInput = search

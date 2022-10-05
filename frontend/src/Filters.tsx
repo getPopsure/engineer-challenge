@@ -6,9 +6,9 @@ import { ActionsTypes as PoliciesActionTypes } from './stores/policies/reducer';
 
 interface FilterProps {
   policies: Array<Policy>,
-  dispatchPolicies: Function
+  filterPolicies: Function
 }
-export default function Filters({policies, dispatchPolicies}: FilterProps) {
+export default function Filters({policies, filterPolicies}: FilterProps) {
   const statusOptions: Array<{label:string, value:string}> = []
 
   Object.values(PolicyStatusEnum).forEach(value => statusOptions.push({
@@ -47,19 +47,19 @@ export default function Filters({policies, dispatchPolicies}: FilterProps) {
      <h2 className="p-h2 mt24 mb24">Filters</h2>
      <div className="fd-row ai-center jc-center">
       <Input placeholder="name" name="name" className="mr24 mt24 mb24 w25 d-inline-block" onChange={(e: React.ChangeEvent<HTMLInputElement>) =>{
-        rudimendaryDebounce(dispatchPolicies({ type: PoliciesActionTypes.FilterByName, payload: e.target.value}), 1000)
+        rudimendaryDebounce(filterPolicies({ type: PoliciesActionTypes.FilterByName, payload: e.target.value}), 1000)
       }}></Input>
       <Select className="mt24 mb24 w25 mr24" name="provider" label="Provider" id="provier" options={providerOptions} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
         const action = e.target.value !== '' ? PoliciesActionTypes.FilterByProvider : PoliciesActionTypes.ClearFilter;
-        dispatchPolicies({ type: action, payload: e.target.value})
+        filterPolicies({ type: action, payload: e.target.value})
       }}/>
       <Select className="mt24 mb24 w25 mr24" name="type" label="Type" id="type" options={typeOptions} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
         const action = e.target.value !== '' ? PoliciesActionTypes.FilterByType : PoliciesActionTypes.ClearFilter;
-        dispatchPolicies({ type: action, payload: e.target.value})
+        filterPolicies({ type: action, payload: e.target.value})
       }}/>
       <Select className="mt24 mb24 w25 mr24"  name="status" label="Status" id="status" options={statusOptions} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
         const action = e.target.value !== '' ? PoliciesActionTypes.FilterByStatus : PoliciesActionTypes.ClearFilter;
-        dispatchPolicies({ type: action, payload: e.target.value})
+        filterPolicies({ type: action, payload: e.target.value})
       }}/>
    
      </div>

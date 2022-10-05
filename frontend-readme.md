@@ -16,7 +16,3 @@ You need to implement the frontend part for the following user story. Please, ma
 - Do not display any results if there are no matches
 - Names should be filtered using a text input, other data should be filtered using dropdowns
 - Clearing the search should return the table to its original state
-
-missing
-- pagination
-- filter by name
