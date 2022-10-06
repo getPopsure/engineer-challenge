@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import FilterBadge from "./FilterBadge";
+import FilterChip from "./FilterBadge";
 import FilterClearButton from "./FilterClearButton";
 
 import { Context } from "../../context";
@@ -21,7 +21,7 @@ const FilterList = () => {
               Object.entries(filters).map(([filterKey, values]) => {
                 return (values as string[]).map((value: string) => (
                   <li key={slugify(`${filterKey} ${value}`)}>
-                    <FilterBadge filterKey={filterKey} value={value} />
+                    <FilterChip filterKey={filterKey} value={value} />
                   </li>
                 ))
               })
