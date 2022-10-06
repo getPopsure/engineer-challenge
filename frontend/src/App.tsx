@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import Table from "./components/Table/Table";
-import FilterList from "./components/Filter/FilterList";
+import FilterChipsList from "./components/Filter/FilterChipsList";
 
 import "./styles/index.css";
 
@@ -10,7 +10,7 @@ const App = () => (
     <Navbar />
     <div className="w-full p-8">
       <Header />
-      <FilterList />
+      <FilterChipsList />
       <Table />
     </div>
   </div>

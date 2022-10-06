@@ -7,7 +7,7 @@ import { Context } from "../../context";
 
 import slugify from "../../utils/slugify";
 
-const FilterList = () => {
+const FilterChipsList = () => {
   const { filters, filtersCount } = useContext(Context);
 
   if (filtersCount === 0) return <></>;
@@ -35,4 +35,4 @@ const FilterList = () => {
 };
 
 
-export default React.memo(FilterList);
+export default React.memo(FilterChipsList);
