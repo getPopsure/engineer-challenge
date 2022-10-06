@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./Checkbox.module.scss";
 
-import slugify from "../../utils/slugify";
+import slugify from "../../../utils/slugify";
 
 type TCheckbox = React.HTMLAttributes<HTMLDivElement>;
 

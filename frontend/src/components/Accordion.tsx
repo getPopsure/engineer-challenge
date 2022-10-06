@@ -19,7 +19,7 @@ const Accordion: React.FC<IProps & TAccordion> = ({ children, title }) => {
       <button
         aria-expanded={expanded}
         aria-controls={slugify(title)}
-        className="flex items-center font-bold px-4"
+        className="flex items-center font-bold"
         onClick={() => setExpanded(exp => !exp)}
       >
         <span className={`mr-2 transform ${expanded ? '' : '-rotate-90'}`}>

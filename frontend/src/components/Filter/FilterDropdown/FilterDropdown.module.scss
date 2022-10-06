@@ -1,0 +1,23 @@
+.filterDropdown {
+  @apply flex items-center px-6 relative
+}
+
+.button {
+  @apply capitalize flex items-center font-bold;
+
+  span {
+    @apply mr-2 transform;
+  }
+  svg {
+    @apply w-2;
+  }
+}
+
+.dropdown {
+  @apply absolute top-full w-full;
+  box-shadow: 0px 2px 28px rgba(97, 96, 162, 0.1);
+}
+
+.dropdownContent {
+  @apply bg-grey-200 px-6 py-4 rounded-md;
+}

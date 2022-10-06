@@ -10,12 +10,7 @@ const App = () => (
   <div>
     <Navbar />
     <div className="w-full p-8">
-      <div className="relative">
-        <Header />
-        <div className="absolute right-0 top-full">
-          <FilterSelection />
-        </div>
-      </div>
+      <Header />
       <FilterList />
       <Table />
     </div>

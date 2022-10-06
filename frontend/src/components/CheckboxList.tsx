@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import Checkbox from "./Checkbox/Checkbox";
+import Checkbox from "./Form/Checkbox/Checkbox";
 
 import { Context } from "../context";
 
