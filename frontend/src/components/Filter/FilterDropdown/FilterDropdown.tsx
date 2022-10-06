@@ -49,7 +49,7 @@ const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label }
         duration={300}
         height={expanded ? 'auto' : 0}
       >
-        <CheckboxList filterKey="provider" values={options} />
+        <CheckboxList filterKey={filterKey} values={options} />
       </AnimateHeight>
     </div>
   )
