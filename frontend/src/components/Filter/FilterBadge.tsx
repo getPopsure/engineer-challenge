@@ -15,7 +15,6 @@ const FilterBadge: React.FC<IProps & TFilterBadge> = ({ filterKey, value }) => {
 
   return (
     <div className="bg-primary-100 cursor-pointer py-1 px-2 rounded-md hover:bg-primary-300">
-      {/* <span className="uppercase text-2sm">{filterKey} / </span> */}
       <span>{value}</span>
       <button className="ml-2" onClick={() => removeFilter(filterKey, value)}>
         <CloseIcon className="w-2" />

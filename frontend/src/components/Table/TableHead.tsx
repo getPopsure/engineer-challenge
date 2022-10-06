@@ -1,10 +1,8 @@
 import React from "react";
 
-import styles from "./Table.module.scss";
-
 const TableHead = () => (
   <thead className="border-b bg-gray-100">
-    <tr className={styles.grid}>
+    <tr className="grid">
       <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left w-1/4">
         #
       </th>

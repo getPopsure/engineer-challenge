@@ -14,7 +14,7 @@
   &:focus {
     &+label {
       &::before {
-        outline: none;
+        @apply outline-none;
         box-shadow: 0 0 0 2px rgba($color: #8e8cee, $alpha: 0.5);
       }
     }
