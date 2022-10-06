@@ -27,7 +27,7 @@ const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label }
 
   const options: string[] = useMemo(() => {
     return Array.from(new Set(policies.map((policy: Policy) => policy[filterKey].toLowerCase())))
-  }, [policies]);
+  }, [filterKey, policies]);
 
   return (
     <div className={styles.filterDropdown} ref={ref}>

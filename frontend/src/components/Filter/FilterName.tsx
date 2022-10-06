@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Context } from "../../context";
-import FilterDropdown from "../Filter/FilterDropdown/FilterDropdown";
 import Input from "../Form/Input/Input";
 
 type TTableFilter = React.HTMLAttributes<HTMLDivElement>;

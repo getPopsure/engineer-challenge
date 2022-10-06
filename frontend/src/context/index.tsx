@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useMemo, useState } from "react"
+import React, { createContext, useEffect, useState } from "react"
 import { getPolicies } from "../api";
-import { Policy, Status, Customer } from "../types";
+import { Policy, Status } from "../types";
 import getCustomerName from "../utils/getCustomerName";
 
 type FilterKeys = "provider" | "insuranceType" | "status";
@@ -47,35 +47,42 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
     setFiltersCount(0);
   }
 
+  const filterByKey = (key: FilterKeys) => {
+    if (filters[key].length === 0)
+      return policies;
+
+    return policies.filter(policy =>
+      filters[key].includes(policy[key].toLowerCase()))
+  }
+
   const [policies, setPolicies] = useState<Policy[]>([]);
   const [filteredPolicies, setFilteredPolicies] = useState<Policy[]>([]);
 
   useEffect(() => {
-    let filtered: Record<FilterKeys, Policy[]> = {
+    let filteredByParam: Record<FilterKeys, Policy[]> = {
       provider: [],
       insuranceType: [],
       status: []
     };
 
     // OR filter: filter policies by each key (provider, type, status) and save in the `filtered` variabel
-    (Object.entries(filters) as Array<[FilterKeys, string[]]>)
-      .forEach(([filterKey, filterValues]) => {
-        if (filterValues.length === 0) {
-          filtered[filterKey] = policies;
-          return;
-        }
-        filtered[filterKey] = policies.filter(policy =>
-          filterValues.includes(policy[filterKey].toLowerCase()))
+    (Object.keys(filters) as Array<FilterKeys>)
+      .forEach((filterKey) => {
+        filteredByParam[filterKey] = filterByKey(filterKey)
       })
 
-    // AND filter: filter in only values that show up on all the params, the intersection of the 3 filters
-    let result = Object.values(filtered)
+    // OR filter: store filter by customer full name
+    const filteredByName: Policy[] = nameQuery === ""
+      ? policies
+      : policies.filter(({ customer }) => getCustomerName(customer).toLowerCase().includes(nameQuery))
+
+    // AND filter: get only the values that show up on all the params, the intersection of the 3 filters and the name search
+    let result = Object.values({ ...filteredByParam, filteredByName })
       .reduce((a, b) => b.filter(Set.prototype.has, new Set(a)));
 
     setFilteredPolicies(result)
 
-  }, [policies, filters, nameQuery])
-
+  }, [policies, filters, nameQuery]);
 
   // initial data setup
   useEffect(() => {
