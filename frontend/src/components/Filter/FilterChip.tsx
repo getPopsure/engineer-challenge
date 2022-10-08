@@ -16,7 +16,9 @@ const FilterChip: React.FC<IProps & TFilterBadge> = ({ filterKey, value }) => {
   return (
     <div className="bg-primary-100 border-2 border-primary-100 flex gap-2 items-center py-1 px-2 rounded-lg text-sm w-fit hover:border-primary-500">
       <span>{value}</span>
-      <button className="flex h-4 justify-center items-center text-primary-300 w-4" onClick={() => removeFilter(filterKey, value)}>
+      <button
+        className="flex h-4 justify-center items-center text-primary-300 w-4"
+        onClick={() => removeFilter(filterKey, value)}>
         <CloseIcon className="h-3 w-3" />
       </button>
     </div>

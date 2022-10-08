@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import FilterChip from "./FilterBadge";
+import FilterChip from "./FilterChip";
 import FilterClearButton from "./FilterClearButton";
 
 import { Context } from "../../context";
