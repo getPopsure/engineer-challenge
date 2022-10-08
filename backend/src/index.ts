@@ -1,6 +1,7 @@
 import express from 'express';
 import { PrismaClient, Prisma } from '@prisma/client';
 import cors from "cors";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = 4000;
@@ -8,8 +9,12 @@ const prisma = new PrismaClient();
 
 app.use(express.json())
 app.use(cors())
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 
-app.get('/policies', async (req, res) => {
+app.post('/policies', async (req, res) => {
   const { search } = req.query;
   const { providers, insuranceType, status } = req.body;
 
