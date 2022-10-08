@@ -1,7 +1,7 @@
-import FilterChipsList from "./components/Filter/FilterChipsList";
+import FilterChipsList from "./components/Filter/FilterChip/FilterChipsList";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
-import Table from "./components/Table/Table";
+import Table from "./components/Table/Table/Table";
 import Pagination from "./components/Pagination/Pagination";
 
 import "./styles/index.css";

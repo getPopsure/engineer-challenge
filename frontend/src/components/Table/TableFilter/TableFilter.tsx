@@ -1,7 +1,7 @@
 import React from "react";
 
-import FilterDropdown from "../Filter/FilterDropdown/FilterDropdown";
-import FilterByName from "../Filter/FilterByName";
+import FilterDropdown from "../../Filter/FilterDropdown/FilterDropdown";
+import FilterByName from "../../Filter/FilterByName";
 
 type TTableFilter = React.HTMLAttributes<HTMLDivElement>;
 

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 
 import FilterChip from "./FilterChip";
-import FilterClearButton from "./FilterClearButton";
+import FilterClearButton from "../FilterClearButton/FilterClearButton";
 
-import { Context } from "../../context";
+import { Context } from "../../../context";
 
-import slugify from "../../utils/slugify";
+import slugify from "../../../utils/slugify";
 
 const FilterChipsList = () => {
   const { filters } = useContext(Context);

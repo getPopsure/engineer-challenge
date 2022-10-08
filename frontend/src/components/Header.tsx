@@ -1,5 +1,5 @@
 import React from "react";
-import TableFilter from "./Table/TableFilter";
+import TableFilter from "./Table/TableFilter/TableFilter";
 
 const Header = () => (
   <div className="grid">

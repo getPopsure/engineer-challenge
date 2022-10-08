@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 
-import TableRow from "./TableRow";
-import TableHead from "./TableHead";
+import TableRow from "../TableRow";
+import TableHead from "../TableHead";
 
-import { Policy } from "../../types";
-import { Context } from "../../context";
+import { Policy } from "../../../types";
+import { Context } from "../../../context";
 
 type TTable = React.HTMLAttributes<HTMLDivElement>;
 

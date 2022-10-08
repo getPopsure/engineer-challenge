@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { Context } from "../../context";
+import { Context } from "../../../context";
 
 type TFilterClearButton = React.HTMLAttributes<HTMLButtonElement>;
 

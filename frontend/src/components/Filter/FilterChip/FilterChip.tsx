@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
-import { Context } from "../../context";
+import { Context } from "../../../context";
 
-import { ReactComponent as CloseIcon } from "../../assets/close.svg"
+import { ReactComponent as CloseIcon } from "../../../assets/close.svg"
 
 type TFilterBadge = React.HTMLAttributes<HTMLDivElement>;
 
