@@ -1,6 +1,6 @@
-import { Customer, Policy, Status } from "../types";
+import { Customer, Policy, PolicyResponse, Status } from "../types";
 
-const parsePolicyData = (policy: any): Policy => {
+const parsePolicyData = (policy: PolicyResponse): Policy => {
   const customer: Customer = {
     id: policy.customer.id,
     firstName: policy.customer.firstName,
@@ -16,7 +16,6 @@ const parsePolicyData = (policy: any): Policy => {
     status: policy.status as Status,
     startDate: new Date(policy.startDate),
     endDate: policy.endDate ? new Date(policy.endDate) : null,
-    createdAt: new Date(policy.createdAt),
   }
 }
 

@@ -9,7 +9,7 @@ import { Context } from "../../context";
 type TTable = React.HTMLAttributes<HTMLDivElement>;
 
 const Table: React.FC<TTable> = () => {
-  const { filteredPolicies } = useContext(Context);
+  const { policies } = useContext(Context);
 
   return (
     <div className="flex flex-col">
@@ -19,7 +19,7 @@ const Table: React.FC<TTable> = () => {
             <table className="min-w-full">
               <TableHead />
               <tbody>
-                {filteredPolicies.map((policy: Policy) =>
+                {policies.map((policy: Policy) =>
                   <TableRow key={policy.id} policy={policy} />
                 )}
               </tbody>

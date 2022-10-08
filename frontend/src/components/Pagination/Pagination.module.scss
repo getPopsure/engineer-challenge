@@ -1,0 +1,30 @@
+.button {
+  @apply h-8 rounded-full text-primary-500 w-8;
+
+  &:hover {
+    @apply bg-primary-300 text-white;
+  }
+
+  &:disabled {
+    @apply pointer-events-none text-grey-500;
+  }
+}
+
+.textButton {
+  @apply text-primary-500;
+
+  &:first-child {
+    @apply mr-8
+  }
+  &:last-child {
+    @apply ml-8
+  }
+
+  &:hover {
+    @apply text-primary-700;
+  }
+
+  &:disabled {
+    @apply invisible;
+  }
+}

@@ -27,7 +27,21 @@ export interface Policy {
   status: Status;
   startDate: Date;
   endDate: Date | null;
-  createdAt: Date;
+}
+
+export type PolicyResponse = {
+  id: string,
+  provider: string,
+  insuranceType: InsuranceType,
+  status: Status,
+  startDate: string,
+  endDate: string | null,
+  customer: {
+    id: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: string
+  }
 }
 
 export type FilterKeys = "provider" | "insuranceType" | "status";
@@ -37,4 +51,9 @@ export type Filters = {
   provider?: string[],
   insuranceType?: InsuranceType[],
   status?: Status[]
+}
+
+export type PaginationPayload = {
+  page: number,
+  resultsPerPage: number
 }

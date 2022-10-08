@@ -1,7 +1,8 @@
-import Navbar from "./components/Navbar";
-import Header from "./components/Header";
-import Table from "./components/Table/Table";
 import FilterChipsList from "./components/Filter/FilterChipsList";
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import Table from "./components/Table/Table";
+import Pagination from "./components/Pagination/Pagination";
 
 import "./styles/index.css";
 
@@ -12,6 +13,7 @@ const App = () => (
       <Header />
       <FilterChipsList />
       <Table />
+      <Pagination />
     </div>
   </div>
 );

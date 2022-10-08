@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { getPolicies } from "../api";
 import { Policy, Filters } from "../types";
-import getCustomerName from "../utils/getCustomerName";
 
 export const Context = createContext<any>({});
 
@@ -14,6 +13,16 @@ const initialFilters: Filters = {
 }
 
 const ContextProvider: React.FC<Props> = ({ children }) => {
+  // store policies, limited by `resultsPerPage`
+  const [policies, setPolicies] = useState<Policy[]>([]);
+  // total amount of policies saved in the db
+  const [totalPolicies, setTotalPolicies] = useState(0);
+
+  // variables used in pagination
+  const resultsPerPage = 10;
+  const [page, setPage] = useState(0);
+
+  // variables used in filter and search
   const [nameQuery, setNameQuery] = useState("");
   const [filters, setFilters] = useState<Filters>(initialFilters);
 
@@ -56,16 +65,29 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
     setFilters(Object.assign({}));
   }
 
-  const [policies, setPolicies] = useState<Policy[]>([]);
-  const [filteredPolicies, setFilteredPolicies] = useState<Policy[]>([]);
-
+  useEffect(() => {
+    const getData = async () => {
+      const pagination = {
+        page,
+        resultsPerPage
+      }
+      const response = await getPolicies(filters, pagination);
+      setPolicies(response.policies);
+      setTotalPolicies(response.count);
+    }
+    getData();
+  }, [page])
 
   // initial data setup
   useEffect(() => {
     const getData = async () => {
-      const response = await getPolicies(filters);
-      setPolicies(response);
-
+      const pagination = {
+        page: 0,
+        resultsPerPage
+      }
+      const response = await getPolicies(filters, pagination);
+      setTotalPolicies(response.count);
+      setPolicies(response.policies);
     }
     getData();
   }, []);
@@ -73,17 +95,16 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        filteredPolicies,
+        page,
+        totalPolicies,
+        resultsPerPage,
         filters,
-        // filtersCount,
         policies,
         addFilter,
         removeFilter,
         clearAllFilters,
         setNameQuery,
-        // isFilterOpen,
-        // toggleFilter: () => setIsFilterOpen(isOpen => !isOpen),
-        // closeFilter: () => setIsFilterOpen(false)
+        setPage
       }}
     >
       {children}
