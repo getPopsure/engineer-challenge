@@ -11,20 +11,33 @@ app.use(cors())
 
 app.get('/policies', async (req, res) => {
   const { search } = req.query;
+  const { providers, insuranceType, status } = req.body;
+
+  const and: Prisma.PolicyWhereInput = {
+    AND: [
+      providers ? { provider: { in: providers as string[], mode: 'insensitive' } } : {},
+      insuranceType ? { insuranceType: { in: insuranceType } } : {},
+      status ? { status: { in: status } } : {},
+    ]
+  }
 
   const or: Prisma.PolicyWhereInput = search
     ? {
       OR: [
-        { provider: { contains: search as string, mode: 'insensitive' } },
         { customer: { firstName: { contains: search as string, mode: 'insensitive' } } },
         { customer: { lastName: { contains: search as string, mode: 'insensitive' } } }
-      ],
+      ]
     }
     : {};
 
   const policies = await prisma.policy.findMany({
     where: {
+      ...and,
       ...or,
+    },
+    // order by newest first
+    orderBy: {
+      startDate: "desc",
     },
     select: {
       id: true,
