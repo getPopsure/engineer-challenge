@@ -15,14 +15,17 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/policies', async (req, res) => {
-  const { search } = req.query;
-  const { filters: { provider, insuranceType, status }, pagination: { page, resultsPerPage } } = req.body;
+  const {
+    filters,
+    pagination: { page, resultsPerPage },
+    search
+  } = req.body;
 
   const and: Prisma.PolicyWhereInput = {
     AND: [
-      provider ? { provider: { in: provider as string[], mode: 'insensitive' } } : {},
-      insuranceType ? { insuranceType: { in: insuranceType } } : {},
-      status ? { status: { in: status } } : {},
+      filters.provider ? { provider: { in: filters.provider as string[], mode: 'insensitive' } } : {},
+      filters.insuranceType ? { insuranceType: { in: filters.insuranceType } } : {},
+      filters.status ? { status: { in: filters.status } } : {},
     ]
   }
 
@@ -35,14 +38,13 @@ app.post('/policies', async (req, res) => {
     }
     : {};
 
-  const policiesCount = await prisma.policy.count();
+  const where = { ...and, ...or };
+
+  const count = await prisma.policy.count({ where: { ...and, ...or } });
   const policies = await prisma.policy.findMany({
     skip: page * resultsPerPage,
     take: resultsPerPage,
-    where: {
-      ...and,
-      ...or,
-    },
+    where,
     // order by newest first
     orderBy: {
       startDate: "desc",
@@ -66,8 +68,8 @@ app.post('/policies', async (req, res) => {
   })
 
   res.json({
-    policiesCount,
-    policies
+    count,
+    policies,
   });
 })
 
