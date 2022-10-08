@@ -23,8 +23,8 @@ const Pagination: React.FC<IProps & TPagination> = () => {
   const pageCount = useMemo(() => {
     let count = 0;
 
-    if (totalPolicies / resultsPerPage > 0)
-      count = totalPolicies / resultsPerPage;
+    if (Math.floor(totalPolicies / resultsPerPage) > 0)
+      count = Math.floor(totalPolicies / resultsPerPage);
     if (totalPolicies % resultsPerPage > 0)
       count = count + 1;
 
@@ -36,8 +36,8 @@ const Pagination: React.FC<IProps & TPagination> = () => {
       {
         pageCount > 1 &&
         <button
-          aria-hidden={page === 0}
           className={styles.textButton}
+          aria-hidden={page === 0}
           disabled={page === 0}
           onClick={goToPreviousPage}
         >
@@ -56,8 +56,8 @@ const Pagination: React.FC<IProps & TPagination> = () => {
       {
         pageCount > 1 &&
         <button
-          aria-hidden={page === pageCount - 1}
           className={styles.textButton}
+          aria-hidden={page === pageCount - 1}
           disabled={page === pageCount - 1}
           onClick={goToNextPage}
         >

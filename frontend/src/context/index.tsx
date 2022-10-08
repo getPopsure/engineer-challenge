@@ -71,20 +71,17 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
         page,
         resultsPerPage
       }
-      const response = await getPolicies(filters, pagination);
-      setPolicies(response.policies);
+      const response = await getPolicies(filters, pagination, nameQuery);
       setTotalPolicies(response.count);
+      setPolicies(response.policies);
     }
     getData();
-  }, [page])
+  }, [filters, nameQuery, page])
 
   // initial data setup
   useEffect(() => {
     const getData = async () => {
-      const pagination = {
-        page: 0,
-        resultsPerPage
-      }
+      const pagination = { page: 0, resultsPerPage }
       const response = await getPolicies(filters, pagination);
       setTotalPolicies(response.count);
       setPolicies(response.policies);
