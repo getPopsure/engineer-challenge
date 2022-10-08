@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
-import { Context } from "../../context";
+
 import Input from "../Form/Input/Input";
 
-type TTableFilter = React.HTMLAttributes<HTMLDivElement>;
+import { Context } from "../../context";
 
-const TableFilter: React.FC<TTableFilter> = () => {
+type TFilterByName = React.HTMLAttributes<HTMLDivElement>;
+
+const FilterByName: React.FC<TFilterByName> = () => {
   const { setNameQuery } = useContext(Context);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,4 +18,4 @@ const TableFilter: React.FC<TTableFilter> = () => {
   )
 }
 
-export default React.memo(TableFilter);
+export default React.memo(FilterByName);
