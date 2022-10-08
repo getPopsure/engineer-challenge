@@ -9,17 +9,18 @@ type TCheckbox = React.HTMLAttributes<HTMLDivElement>;
 interface IProps {
   checked: boolean;
   label: string;
+  value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const Checkbox: React.FC<TCheckbox & IProps> = ({ label, checked, onChange }) => (
+const Checkbox: React.FC<TCheckbox & IProps> = ({ label, checked, value, onChange }) => (
   <div>
     <input
       className={styles.checkbox}
       checked={checked}
       id={slugify(label)}
       type="checkbox"
-      value={label}
+      value={value}
       onChange={onChange}
     />
     <label htmlFor={slugify(label)}>{label}</label>

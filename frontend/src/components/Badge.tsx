@@ -13,8 +13,6 @@ const getBadgeColors = (status: Status) => {
   } } = {
     "ACTIVE": { textColor: 'tc-green-100', backgroundColor: 'bg-green-100' },
     "PENDING": { textColor: 'tc-yellow-600', backgroundColor: 'bg-yellow-100' },
-    "CANCELLED": { textColor: 'tc-red-100', backgroundColor: 'bg-red-100' },
-    "DROPPED_OUT": { textColor: 'tc-red-100', backgroundColor: 'bg-red-100' },
   }
 
   return badgeColors[status]

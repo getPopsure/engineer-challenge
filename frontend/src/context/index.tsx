@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react"
-import { getPolicies } from "../api";
+import { getPolicies, getProviders } from "../api";
 import { Policy, Filters } from "../types";
 
 export const Context = createContext<any>({});
@@ -8,15 +8,15 @@ interface Props {
   children?: React.ReactNode
 }
 
-const initialFilters: Filters = {
-  status: ["ACTIVE", "PENDING"]
-}
+const initialFilters: Filters = {}
 
 const ContextProvider: React.FC<Props> = ({ children }) => {
   // store policies, limited by `resultsPerPage`
   const [policies, setPolicies] = useState<Policy[]>([]);
   // total amount of policies saved in the db
   const [totalPolicies, setTotalPolicies] = useState(0);
+
+  const [providers, setProviders] = useState([])
 
   // variables used in pagination
   const resultsPerPage = 10;
@@ -71,9 +71,12 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
         page,
         resultsPerPage
       }
-      const response = await getPolicies(filters, pagination, nameQuery);
-      setTotalPolicies(response.count);
-      setPolicies(response.policies);
+      const resProviders = await getProviders();
+      setProviders(resProviders);
+
+      const resPolicies = await getPolicies(filters, pagination, nameQuery);
+      setTotalPolicies(resPolicies.count);
+      setPolicies(resPolicies.policies);
     }
     getData();
   }, [filters, nameQuery, page])
@@ -97,6 +100,7 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
         resultsPerPage,
         filters,
         policies,
+        providers,
         addFilter,
         removeFilter,
         clearAllFilters,

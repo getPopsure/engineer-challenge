@@ -17,17 +17,13 @@ type TFilterDropdown = React.HTMLAttributes<HTMLDivElement>;
 interface IProps {
   filterKey: "provider" | "insuranceType" | "status";
   label: string;
+  options: { label: string; value: string; }[];
 }
 
-const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label }) => {
-  const { policies } = useContext(Context);
+const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label, options }) => {
   const [expanded, setExpanded] = useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => setExpanded(false));
-
-  const options: string[] = useMemo(() => {
-    return Array.from(new Set(policies.map((policy: Policy) => policy[filterKey])))
-  }, [filterKey, policies]);
 
   return (
     <div className={styles.filterDropdown} ref={ref}>
@@ -49,7 +45,7 @@ const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label }
         duration={300}
         height={expanded ? 'auto' : 0}
       >
-        <CheckboxList filterKey={filterKey} values={options} />
+        <CheckboxList filterKey={filterKey} options={options} />
       </AnimateHeight>
     </div>
   )

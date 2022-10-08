@@ -4,12 +4,10 @@ export enum InsuranceTypeLabels {
   HOUSEHOLD = "Household",
   HEALTH = "Health"
 };
-export type Status = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT"
+export type Status = "ACTIVE" | "PENDING";
 export enum StatusLabels {
   ACTIVE = "Active",
   PENDING = "Pending",
-  CANCELLED = "Cancelled",
-  DROPPED_OUT = "Dropped out",
 };
 
 export interface Customer {

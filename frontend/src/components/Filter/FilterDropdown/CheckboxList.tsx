@@ -10,10 +10,10 @@ type TCheckboxList = React.HTMLAttributes<HTMLDivElement>;
 
 interface IProps {
   filterKey: string;
-  values: string[];
+  options: { label: string; value: string; }[];
 }
 
-const CheckboxList: React.FC<TCheckboxList & IProps> = ({ filterKey, values }) => {
+const CheckboxList: React.FC<TCheckboxList & IProps> = ({ filterKey, options }) => {
   const { filters, addFilter, removeFilter } = useContext(Context);
 
   const handleChange = (e: any) => {
@@ -26,12 +26,13 @@ const CheckboxList: React.FC<TCheckboxList & IProps> = ({ filterKey, values }) =
   return (
     <fieldset className="flex flex-col">
       {
-        values.map(value => (
+        options?.map(({ label, value }) => (
           <Checkbox
             key={slugify(value)}
-            label={value}
+            label={label}
             onChange={handleChange}
             checked={filters[filterKey]?.includes(value)}
+            value={value}
           />
         ))
       }
