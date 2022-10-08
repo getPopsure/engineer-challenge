@@ -14,6 +14,23 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.get('/providers', async (req, res) => {
+  let providers = await prisma.policy.findMany({
+    distinct: ['provider'],
+    select: {
+      provider: true,
+    }
+  }) as { provider: string }[];
+
+  // @ts-ignore
+  let uniqueProviders = providers.reduce((acc, curr) => {
+    acc.push(curr.provider)
+    return acc;
+  }, [] as Array<string>);
+
+  res.json(uniqueProviders);
+})
+
 app.post('/policies', async (req, res) => {
   const {
     filters,
