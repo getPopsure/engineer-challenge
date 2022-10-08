@@ -16,11 +16,11 @@ app.use(bodyParser.json());
 
 app.post('/policies', async (req, res) => {
   const { search } = req.query;
-  const { providers, insuranceType, status } = req.body;
+  const { provider, insuranceType, status } = req.body;
 
   const and: Prisma.PolicyWhereInput = {
     AND: [
-      providers ? { provider: { in: providers as string[], mode: 'insensitive' } } : {},
+      provider ? { provider: { in: provider as string[], mode: 'insensitive' } } : {},
       insuranceType ? { insuranceType: { in: insuranceType } } : {},
       status ? { status: { in: status } } : {},
     ]

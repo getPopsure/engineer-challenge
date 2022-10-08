@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
 import { getPolicies } from "../api";
-import { Policy, Status } from "../types";
+import { Policy, RequestFilters, Status } from "../types";
 import getCustomerName from "../utils/getCustomerName";
 
 type FilterKeys = "provider" | "insuranceType" | "status";
@@ -86,9 +86,14 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
 
   // initial data setup
   useEffect(() => {
-    const response = getPolicies();
-    const filteredPolicies = response.filter(policy => [Status.ACTIVE, Status.PENDING].includes(policy.status))
-    setPolicies(filteredPolicies as Policy[]);
+    const getData = async () => {
+      const filters: RequestFilters = {
+        status: ["ACTIVE", "PENDING"] as Status[]
+      }
+      const response = await getPolicies(filters);
+      setPolicies(response);
+    }
+    getData();
   }, []);
 
   return (
