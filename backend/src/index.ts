@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.post('/policies', async (req, res) => {
   const { search } = req.query;
-  const { provider, insuranceType, status } = req.body;
+  const { filters: { provider, insuranceType, status }, pagination: { page, resultsPerPage } } = req.body;
 
   const and: Prisma.PolicyWhereInput = {
     AND: [
@@ -35,7 +35,10 @@ app.post('/policies', async (req, res) => {
     }
     : {};
 
+  const policiesCount = await prisma.policy.count();
   const policies = await prisma.policy.findMany({
+    skip: page * resultsPerPage,
+    take: resultsPerPage,
     where: {
       ...and,
       ...or,
@@ -62,7 +65,10 @@ app.post('/policies', async (req, res) => {
     }
   })
 
-  res.json(policies);
+  res.json({
+    policiesCount,
+    policies
+  });
 })
 
 app.get('/', (req, res) => {
