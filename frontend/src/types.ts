@@ -1,9 +1,11 @@
-export enum InsuranceType {
+export type InsuranceType = "LIABILITY" | "HOUSEHOLD" | "HEALTH";
+export enum InsuranceTypeLabels {
   LIABILITY = "Liability",
   HOUSEHOLD = "Household",
   HEALTH = "Health"
 };
-export enum Status {
+export type Status = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT"
+export enum StatusLabels {
   ACTIVE = "Active",
   PENDING = "Pending",
   CANCELLED = "Cancelled",
@@ -24,8 +26,15 @@ export interface Policy {
   insuranceType: InsuranceType;
   status: Status;
   startDate: Date;
-  // endDate: Date;
-  // createdAt: Date;
+  endDate: Date | null;
+  createdAt: Date;
 }
 
 export type FilterKeys = keyof Pick<Policy, "provider" | "insuranceType" | "status">
+
+
+export type RequestFilters = {
+  providers?: string[],
+  insuranceType?: InsuranceType[],
+  status?: Status[]
+}
