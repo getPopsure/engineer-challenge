@@ -29,9 +29,9 @@ const CheckboxList: React.FC<TCheckboxList & IProps> = ({ filterKey, values }) =
         values.map(value => (
           <Checkbox
             key={slugify(value)}
-            label={value.toLowerCase()}
+            label={value}
             onChange={handleChange}
-            checked={filters[filterKey]?.includes(value.toLowerCase())}
+            checked={filters[filterKey]?.includes(value)}
           />
         ))
       }

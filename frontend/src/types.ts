@@ -30,11 +30,11 @@ export interface Policy {
   createdAt: Date;
 }
 
-export type FilterKeys = keyof Pick<Policy, "provider" | "insuranceType" | "status">
+export type FilterKeys = "provider" | "insuranceType" | "status";
+export type FilterValues = string[] | InsuranceType[] | Status[];
 
-
-export type RequestFilters = {
-  providers?: string[],
+export type Filters = {
+  provider?: string[],
   insuranceType?: InsuranceType[],
   status?: Status[]
 }

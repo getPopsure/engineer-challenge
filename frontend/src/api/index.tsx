@@ -1,9 +1,8 @@
-import { InsuranceType, RequestFilters, Status } from "../types";
+import { Filters } from "../types";
+
 import parsePolicies from "../utils/parsePolicies";
 
-
-
-export const getPolicies = async (filters: RequestFilters) => {
+export const getPolicies = async (filters: Filters) => {
   let headers = new Headers()
   headers.append('Accept', '*/*');
   headers.append('Access-Control-Allow-Origin', '*');

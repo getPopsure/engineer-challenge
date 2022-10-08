@@ -2,7 +2,7 @@ import React from "react";
 
 import Badge from "../Badge";
 
-import { Policy } from "../../types";
+import { InsuranceTypeLabels, Policy } from "../../types";
 
 interface IProps {
   policy: Policy;
@@ -18,7 +18,7 @@ const TableRow: React.FC<IProps> = ({ policy }) => (
       {policy.provider}
     </td>
     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap capitalize">
-      {policy.insuranceType.toLowerCase()}
+      {InsuranceTypeLabels[policy.insuranceType]}
     </td>
     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
       <Badge status={policy.status} />

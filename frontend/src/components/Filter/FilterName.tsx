@@ -8,7 +8,7 @@ const TableFilter: React.FC<TTableFilter> = () => {
   const { setNameQuery } = useContext(Context);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameQuery(e.target.value.toLowerCase())
+    setNameQuery(e.target.value)
   }
 
   return (

@@ -1,97 +1,71 @@
 import React, { createContext, useEffect, useState } from "react"
 import { getPolicies } from "../api";
-import { Policy, RequestFilters, Status } from "../types";
+import { Policy, Filters } from "../types";
 import getCustomerName from "../utils/getCustomerName";
 
-type FilterKeys = "provider" | "insuranceType" | "status";
-export type Filters = Record<FilterKeys, string[]>
-
-export const Context = createContext<any>({
-  provider: [],
-  insuranceType: [],
-  status: []
-});
+export const Context = createContext<any>({});
 
 interface Props {
   children?: React.ReactNode
 }
 
+const initialFilters: Filters = {
+  status: ["ACTIVE", "PENDING"]
+}
+
 const ContextProvider: React.FC<Props> = ({ children }) => {
   const [nameQuery, setNameQuery] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
-  const [filtersCount, setFiltersCount] = useState(0);
-  const [filters, setFilters] = useState<Filters>({
-    provider: [],
-    insuranceType: [],
-    status: []
-  });
+  const [filters, setFilters] = useState<Filters>(initialFilters);
 
-  const addFilter = (filterKey: FilterKeys, value: string) => {
-    const updatedFilters = Object.assign({}, filters);
-    updatedFilters[filterKey].push(value.toLowerCase());
+  const addFilter = (filterKey: keyof Filters, value: Filters[keyof Filters]) => {
+    const updatedFilters = Object.assign({}, filters) as Filters;
+
+    // if there are no values, remove such filter param from the filters
+    if (!value) {
+      removeFilter(filterKey);
+      return;
+    }
+
+    if (updatedFilters.hasOwnProperty(filterKey)) {
+      // @ts-ignore
+      updatedFilters[filterKey]!.push(value);
+    } else {
+      // @ts-ignore
+      updatedFilters[filterKey] = [value]
+    }
+
     setFilters(updatedFilters);
-    setFiltersCount(count => count + 1);
   }
-  const removeFilter = (filterKey: FilterKeys, value: string) => {
+  const removeFilter = (filterKey: keyof Filters, value?: Filters[keyof Filters]) => {
     const updatedFilters = Object.assign({}, filters);
-    updatedFilters[filterKey] = filters[filterKey].filter((val: string) => val !== value.toLowerCase());
+
+    if (updatedFilters[filterKey]) {
+      // @ts-ignore
+      updatedFilters[filterKey] = updatedFilters[filterKey].filter((val: string) => val !== value);
+    }
+
+    // if no value is sent or no value is left in the array,
+    // remove all filters for that param
+    if (!value || updatedFilters[filterKey]?.length === 0) {
+      delete updatedFilters[filterKey];
+    }
+
     setFilters(updatedFilters);
-    setFiltersCount(count => count - 1);
   }
   const clearAllFilters = () => {
-    setFilters({
-      provider: [],
-      insuranceType: [],
-      status: []
-    });
-    setFiltersCount(0);
-  }
-
-  const filterByKey = (key: FilterKeys) => {
-    if (filters[key].length === 0)
-      return policies;
-
-    return policies.filter(policy =>
-      filters[key].includes(policy[key].toLowerCase()))
+    setFilters(Object.assign({}));
   }
 
   const [policies, setPolicies] = useState<Policy[]>([]);
   const [filteredPolicies, setFilteredPolicies] = useState<Policy[]>([]);
 
-  useEffect(() => {
-    let filteredByParam: Record<FilterKeys, Policy[]> = {
-      provider: [],
-      insuranceType: [],
-      status: []
-    };
-
-    // OR filter: filter policies by each key (provider, type, status) and save in the `filtered` variabel
-    (Object.keys(filters) as Array<FilterKeys>)
-      .forEach((filterKey) => {
-        filteredByParam[filterKey] = filterByKey(filterKey)
-      })
-
-    // OR filter: store filter by customer full name
-    const filteredByName: Policy[] = nameQuery === ""
-      ? policies
-      : policies.filter(({ customer }) => getCustomerName(customer).toLowerCase().includes(nameQuery))
-
-    // AND filter: get only the values that show up on all the params, the intersection of the 3 filters and the name search
-    let result = Object.values({ ...filteredByParam, filteredByName })
-      .reduce((a, b) => b.filter(Set.prototype.has, new Set(a)));
-
-    setFilteredPolicies(result)
-
-  }, [policies, filters, nameQuery]);
 
   // initial data setup
   useEffect(() => {
     const getData = async () => {
-      const filters: RequestFilters = {
-        status: ["ACTIVE", "PENDING"] as Status[]
-      }
       const response = await getPolicies(filters);
       setPolicies(response);
+
     }
     getData();
   }, []);
@@ -101,15 +75,15 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
       value={{
         filteredPolicies,
         filters,
-        filtersCount,
+        // filtersCount,
         policies,
         addFilter,
         removeFilter,
         clearAllFilters,
         setNameQuery,
-        isFilterOpen,
-        toggleFilter: () => setIsFilterOpen(isOpen => !isOpen),
-        closeFilter: () => setIsFilterOpen(false)
+        // isFilterOpen,
+        // toggleFilter: () => setIsFilterOpen(isOpen => !isOpen),
+        // closeFilter: () => setIsFilterOpen(false)
       }}
     >
       {children}

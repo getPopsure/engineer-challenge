@@ -15,7 +15,7 @@ import { ReactComponent as ChevronDown } from "../../../assets/chevron-down.svg"
 type TFilterDropdown = React.HTMLAttributes<HTMLDivElement>;
 
 interface IProps {
-  filterKey: FilterKeys;
+  filterKey: "provider" | "insuranceType" | "status";
   label: string;
 }
 
@@ -26,7 +26,7 @@ const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label }
   useOnClickOutside(ref, () => setExpanded(false));
 
   const options: string[] = useMemo(() => {
-    return Array.from(new Set(policies.map((policy: Policy) => policy[filterKey].toLowerCase())))
+    return Array.from(new Set(policies.map((policy: Policy) => policy[filterKey])))
   }, [filterKey, policies]);
 
   return (
