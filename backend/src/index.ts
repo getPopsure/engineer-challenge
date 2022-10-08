@@ -55,9 +55,16 @@ app.post('/policies', async (req, res) => {
     }
     : {};
 
-  const where = { ...and, ...or };
+  const no: Prisma.PolicyWhereInput = {
+    NOT: [
+      { status: { equals: 'CANCELLED' } },
+      { status: { equals: 'DROPPED_OUT' } }
+    ]
+  }
 
-  const count = await prisma.policy.count({ where: { ...and, ...or } });
+  const where = { ...and, ...or, ...no };
+
+  const count = await prisma.policy.count({ where });
   const policies = await prisma.policy.findMany({
     skip: page * resultsPerPage,
     take: resultsPerPage,
