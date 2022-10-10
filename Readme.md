@@ -113,11 +113,14 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
-- What’s the part of the solution you are most proud of?
+In total, I would caculate about 8-10 hours.
 
-  _You can share a code snippet here if you feel like it_
+- What’s the part of the solution you are most proud of?
+Having added the component library of feather, and used tawilwind to quickly put together the UI.
 
 - If you had more time, what other things you would like to do?
-- Do you have any feedback regarding this coding challenge?  
+* I would iterate over the solution in App.tsx, to avoud unecessary rerenders, move the fetching of the policies to somewhere else, and create perhaps a better solution for the pagination.
 
-  _Is the initial setup working?, is something missing?, or any other comment_
+- Do you have any feedback regarding this coding challenge?
+* Good: In general I liked that it mimics the work that one could to in a user story, as well as the setup with docker works pretty well, and it gives a hint on how the setup in feather might look like
+* Delta: Interviewing is usually time consuming, when we do it, we usually do it in our free time. Considering this, the challenge was to my opinion pretty lengthy, yet it might give you more insights on how the candidates build full solutions, doesn't consider the fact that our time is also valuable, and investing such long time only for the code challenge, is not necessarily something that consider us. Adding on top that after the challenge there is another technical interview, and all the further interviews (behavioural, etc), alltogether the total time we have to invest only in the interview process is very long, and is definitely something that defintely can be improved.

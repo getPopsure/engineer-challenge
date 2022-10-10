@@ -1,6 +1,10 @@
 import Badge from "./Badge";
+import { Policy } from './types'
 
-const Table = () => (
+interface FilterProps {
+  policies: Array<Policy>
+}
+const Table = ({policies}: FilterProps) => (
   <div className="flex flex-col">
     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -26,53 +30,27 @@ const Table = () => (
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Cyrillus Biddlecombe
+              {policies
+                .flat()
+                .map((policy, index) => (
+                <tr className="border-b" key={policy.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {index}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  BARMER
+                  {`${policy.customer.firstName} ${policy.customer.lastName}`}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Health
+                  {policy.provider}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Badge status="ACTIVE" />
-                </td>
-              </tr>
-
-              <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Brandy Harbour
+                {policy.insuranceType}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  BARMER
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Liability
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Badge status="PENDING" />
+                  <Badge status={policy.status} />
                 </td>
               </tr>
-
-              <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Ailina Harber
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  BARMER
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  Liability
-                </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Badge status="CANCELLED" />
-                </td>
-              </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -82,3 +60,5 @@ const Table = () => (
 )
 
 export default Table;
+
+
