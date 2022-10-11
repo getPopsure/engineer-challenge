@@ -1,11 +1,9 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useState } from "react";
 import AnimateHeight from 'react-animate-height';
 
 import CheckboxList from "./CheckboxList";
 
-import { Context } from "../../../context";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
-import { Policy } from "../../../types";
 import slugify from "../../../utils/slugify";
 
 import styles from "./FilterDropdown.module.scss";
