@@ -24,7 +24,10 @@ const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label, 
   useOnClickOutside(ref, () => setExpanded(false));
 
   return (
-    <div className={styles.filterDropdown} ref={ref}>
+    <div
+      className={styles.filterDropdown}
+      data-testid={`filter-dropdown-${filterKey}`}
+      ref={ref}>
       <button
         aria-expanded={expanded}
         aria-controls={slugify(label)}
@@ -39,6 +42,7 @@ const FilterDropdown: React.FC<TFilterDropdown & IProps> = ({ filterKey, label, 
       <AnimateHeight
         className={styles.dropdown}
         contentClassName={styles.dropdownContent}
+        data-testid="filter-dropdown-options"
         id={slugify(label)}
         duration={300}
         height={expanded ? 'auto' : 0}
