@@ -95,12 +95,12 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        page,
-        totalPolicies,
-        resultsPerPage,
         filters,
+        page,
         policies,
         providers,
+        resultsPerPage,
+        totalPolicies,
         addFilter,
         removeFilter,
         clearAllFilters,
