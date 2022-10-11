@@ -1,12 +1,23 @@
 import { Policy } from "../types";
 
+const addFilter = jest.fn();
+const removeFilter = jest.fn();
+const clearAllFilters = jest.fn();
+const setNameQuery = jest.fn();
+const setPage = jest.fn();
+
 export const contextValue = {
   filters: {},
   page: 0,
   policies: [],
   providers: ["BARMER", "AOK", "TK", "DAK"],
   resultsPerPage: 10,
-  totalPolicies: 0
+  totalPolicies: 0,
+  addFilter,
+  removeFilter,
+  clearAllFilters,
+  setNameQuery,
+  setPage,
 }
 
 export const threePolicies: Policy[] = [
