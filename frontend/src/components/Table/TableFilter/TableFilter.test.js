@@ -1,9 +1,9 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Context } from "../../../context";
+import { render, screen, within } from '@testing-library/react';
 
 import TableFilter from './TableFilter';
 
+import { Context } from "../../../context";
 import { contextValue } from "../../../tests/mocks";
 
 describe("TableFilter", () => {

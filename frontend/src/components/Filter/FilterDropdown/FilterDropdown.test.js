@@ -1,9 +1,9 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Context } from "../../../context";
+import { fireEvent, render, screen, within } from '@testing-library/react';
 
 import FilterDropdown from "./FilterDropdown";
 
+import { Context } from "../../../context";
 import { contextValue } from "../../../tests/mocks";
 
 describe("Filter Dropdown", () => {
@@ -45,7 +45,7 @@ describe("Filter Dropdown", () => {
     const button = screen.getByRole("button");
     const options = screen.getByTestId("filter-dropdown-options");
 
-    fireEvent.click(button)
+    fireEvent.click(button);
 
     expect(within(options).getAllByRole("checkbox")).toHaveLength(4);
   })

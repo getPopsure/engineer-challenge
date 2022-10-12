@@ -1,8 +1,10 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+
+import FilterClearButton from "./FilterClearButton";
+
 import { Context } from "../../../context";
 import { contextValue } from "../../../tests/mocks";
-import FilterClearButton from "./FilterClearButton";
 
 describe("FilterClearButton", () => {
   test("click on button calls clear filter", () => {

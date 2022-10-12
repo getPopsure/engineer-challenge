@@ -1,9 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Context } from "../../../context";
+import { fireEvent, render, screen } from '@testing-library/react';
 
-import { contextValue } from "../../../tests/mocks";
 import FilterChip from './FilterChip';
+
+import { Context } from "../../../context";
+import { contextValue } from "../../../tests/mocks";
 
 describe("FilterChip", () => {
   beforeEach(() => {
