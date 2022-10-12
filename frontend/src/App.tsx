@@ -1,18 +1,22 @@
+import { RecoilRoot } from "recoil";
+// import Header from "./Header";
 import Navbar from "./Navbar";
-import Header from "./Header";
-import Table from "./Table";
+// import Table from "./Table";
 
 import "./index.css";
+import { PoliciesContainer } from "./containers/policies-container";
 
 const App = () => (
-  <div>
-    <Navbar />
-    <div className="w-full p-8">
-      <Header />
-      <Table />
+  <RecoilRoot>
+    <div>
+      <Navbar />
+      <div className="w-full p-8">
+        {/* <Header /> */}
+        {/* <Table /> */}
+        <PoliciesContainer />
+      </div>
     </div>
-  </div>
+  </RecoilRoot>
 );
-
 
 export default App;

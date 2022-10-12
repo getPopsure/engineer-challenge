@@ -1,4 +1,4 @@
-type Status = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT'
+export type Status = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT'
 
 interface BadgeProps {
   status: Status
