@@ -113,11 +113,13 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
-- What’s the part of the solution you are most proud of?
+  > 4 Hours
 
-  _You can share a code snippet here if you feel like it_
+- What’s the part of the solution you are most proud of?
+  > I am extremely pleased with how the filters were implemented, as they are totally reusable across multiple contexts. I tried to make the UI as reusable as possible by breaking it down into separate components.
 
 - If you had more time, what other things you would like to do?
+  > If I had more time, I would have implemented additional tests and improved the UI's look and feed.
+  
 - Do you have any feedback regarding this coding challenge?  
-
-  _Is the initial setup working?, is something missing?, or any other comment_
+  > None, The instructions were clear and concise.
