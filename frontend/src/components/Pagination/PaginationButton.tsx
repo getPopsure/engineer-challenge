@@ -19,7 +19,11 @@ const PaginationButton: React.FC<IProps & TPaginationButton> = ({ index, disable
   }
 
   return (
-    <button className={styles.button} disabled={disabled} onClick={goToPage}>
+    <button
+      className={styles.button}
+      data-testid="paginationButton"
+      disabled={disabled}
+      onClick={goToPage}>
       {index + 1}
     </button>
   )

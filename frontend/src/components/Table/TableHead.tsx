@@ -1,7 +1,7 @@
 import React from "react";
 
 const TableHead = () => (
-  <thead className="border-b bg-gray-100">
+  <thead className="border-b bg-gray-100" data-testid="thead">
     <tr className="grid">
       <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left w-1/4">
         #
