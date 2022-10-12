@@ -22,6 +22,13 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
   const resultsPerPage = 10;
   const [page, setPage] = useState(0);
 
+  const goToNextPage = () => {
+    setPage((page: number) => page + 1)
+  }
+  const goToPreviousPage = () => {
+    setPage((page: number) => page - 1)
+  }
+
   // variables used in filter and search
   const [nameQuery, setNameQuery] = useState("");
   const [filters, setFilters] = useState<Filters>(initialFilters);
@@ -104,6 +111,8 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
         addFilter,
         removeFilter,
         clearAllFilters,
+        goToNextPage,
+        goToPreviousPage,
         setNameQuery,
         setPage
       }}

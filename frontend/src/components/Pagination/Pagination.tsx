@@ -10,14 +10,7 @@ interface IProps {
 }
 
 const Pagination: React.FC<IProps & TPagination> = () => {
-  const { page, setPage, totalPolicies, resultsPerPage } = useContext(Context);
-
-  const goToNextPage = () => {
-    setPage((page: number) => page + 1)
-  }
-  const goToPreviousPage = () => {
-    setPage((page: number) => page - 1)
-  }
+  const { page, goToNextPage, goToPreviousPage, totalPolicies, resultsPerPage } = useContext(Context);
 
   // calculates how many pages should show
   const pageCount = useMemo(() => {
@@ -36,8 +29,8 @@ const Pagination: React.FC<IProps & TPagination> = () => {
       {
         pageCount > 1 &&
         <button
-          className={styles.textButton}
           aria-hidden={page === 0}
+          className={styles.textButton}
           disabled={page === 0}
           onClick={goToPreviousPage}
         >
@@ -56,8 +49,8 @@ const Pagination: React.FC<IProps & TPagination> = () => {
       {
         pageCount > 1 &&
         <button
-          className={styles.textButton}
           aria-hidden={page === pageCount - 1}
+          className={styles.textButton}
           disabled={page === pageCount - 1}
           onClick={goToNextPage}
         >
