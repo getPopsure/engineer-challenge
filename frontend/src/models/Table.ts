@@ -1,5 +1,3 @@
-import { FilterType } from "../atoms";
-
 export type TableCell = {
   name: string;
   value: string;
@@ -14,8 +12,7 @@ export type TableColumn = {
 
 export type FilterProps = {
   onFilterChange?: (name: string, value: string[] | string) => void;
-  // filterState?: Partial<FilterType>;
-  filterState?: {[key: string]: string[] | string | number};
+  filterState?: { [key: string]: string[] | string | number };
 };
 
 export type TableRecord = {

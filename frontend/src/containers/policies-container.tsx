@@ -4,7 +4,7 @@ import {
   filterAtom,
   FilterType,
   paginationAtom,
-  PaginationType
+  PaginationType,
 } from "../atoms";
 import { Pager } from "../components/pager";
 import { Table } from "../components/table";
@@ -17,6 +17,7 @@ const PoliciesContainer = () => {
   const [pagerState, setPagerState] =
     useRecoilState<PaginationType>(paginationAtom);
 
+  // setup the columns for the table
   const columns = useRef<TableColumn[]>([
     {
       name: "#",
@@ -43,8 +44,10 @@ const PoliciesContainer = () => {
     },
   ]);
 
+  // start fetching the policies on load
   useEffect(() => {
     const fetchPolicies = async () => {
+      // ideally move teh api path to a env file
       const response = await fetch("http://localhost:4000/policies");
       const data = await response.json();
       setPolicies(data);
@@ -53,6 +56,7 @@ const PoliciesContainer = () => {
     fetchPolicies();
   }, []);
 
+  // filter the policies based on the filter state
   const filteredPolicies = useMemo(() => {
     return policies.filter((policy) => {
       let insuranceTypeMatches = true;
@@ -92,8 +96,10 @@ const PoliciesContainer = () => {
         insuranceTypeMatches && policyMatches && nameMatches && providerMatches
       );
     });
-  }, [policies, filterState]);
+  }, [policies.length, filterState]);
 
+  // setup the table records, this is the data that will be displayed in the table
+  // the function prepares the data for the table and additionally determines the records that needs to be shown on the current page
   const tableData = useMemo<TableRecord[]>(() => {
     const { recordsPerPage, activePage } = pagerState;
 
@@ -117,13 +123,16 @@ const PoliciesContainer = () => {
       .slice(startIndex, endIndex);
   }, [filteredPolicies.length, pagerState.activePage]);
 
+  // update the filter state when the filter changes
   const handleFilterChange = (name: string, values: string[] | string) => {
     setPagerState((prev) => ({ ...prev, activePage: 1 }));
     setFilterState((prev) => ({ ...prev, [name]: values }));
   };
 
+  // setup the initial pager state
   useEffect(() => {
     const policies = filteredPolicies;
+
     if (policies.length) {
       const { recordsPerPage } = pagerState;
       const totalPages = Math.ceil(policies.length / recordsPerPage);
@@ -136,6 +145,7 @@ const PoliciesContainer = () => {
     }
   }, [filteredPolicies.length, pagerState.recordsPerPage]);
 
+  // update the pager state when the page changes
   const handlePageChange = (page: number) => {
     setPagerState((prev) => ({
       ...prev,
@@ -145,12 +155,14 @@ const PoliciesContainer = () => {
 
   return (
     <>
+      {/* Main Table */}
       <Table
         records={tableData}
         columns={columns.current}
         onFilterChange={handleFilterChange}
         filterState={filterState}
       />
+      {/* Pager */}
       <div className={"pager-wrapper"}>
         <Pager
           totalPages={pagerState.totalPages}
@@ -163,4 +175,3 @@ const PoliciesContainer = () => {
 };
 
 export { PoliciesContainer };
-
