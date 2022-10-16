@@ -23,7 +23,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "yarn eslint"
   },
   "eslintConfig": {
     "extends": [
@@ -44,7 +45,6 @@
     ]
   },
   "devDependencies": {
-    "@popsure/dirty-swan": "^0.27.14",
     "autoprefixer": "^9",
     "postcss": "^7",
     "react-animate-height": "^3.0.4",
