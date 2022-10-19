@@ -3,6 +3,7 @@ import { PrismaModule } from 'nestjs-prisma';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { loggingMiddlewarePrisma } from './common/middleware/logging.middleware';
+import { CustomerModule } from './customer/customer.module';
 import { PoliciesModule } from './policies/policies.module';
 
 @Module({
@@ -14,6 +15,7 @@ import { PoliciesModule } from './policies/policies.module';
       },
     }),
     PoliciesModule,
+    CustomerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
