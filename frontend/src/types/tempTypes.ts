@@ -7,6 +7,25 @@ export class PaginatedResponse<T> {
   };
 }
 
+export type PolicyFilters = {
+  insuranceType: string[];
+  insuranceStatus: string[];
+};
+
+export type PolicySearch = {
+  customerName?: string;
+  provider?: string;
+};
+
+export type PaginatedRequest<F, S> = {
+  pagination: {
+    skip: number;
+    take: number;
+  };
+  filters: F;
+  search: S;
+};
+
 export type Customer = {
   id: string;
   firstName: string;

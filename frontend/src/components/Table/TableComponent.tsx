@@ -21,12 +21,13 @@ interface ITableComponent<T> {
 }
 
 const TableComponent = <T extends unknown>(options: ITableComponent<T>) => {
-  console.log("TableComponent", options);
   const table = useReactTable({
     data: options.data,
     columns: options.columns,
     pageCount: options.pageCount,
     manualPagination: true,
+    manualFiltering: true,
+    enableColumnFilters: true,
     state: {
       pagination: options.paginationOverride,
     },
@@ -95,22 +96,6 @@ const TableComponent = <T extends unknown>(options: ITableComponent<T>) => {
                     </tr>
                   ))}
                 </tbody>
-                {/* <tfoot>
-              {table.getFooterGroups().map((footerGroup) => (
-                <tr key={footerGroup.id}>
-                  {footerGroup.headers.map((header) => (
-                    <th key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.footer,
-                            header.getContext()
-                          )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </tfoot> */}
               </table>
             </div>
           </div>

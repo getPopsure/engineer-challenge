@@ -70,6 +70,12 @@ export const TablePagination = <T extends unknown>({
                       />
                     </svg>
                   </button>
+                  <span className="flex items-center gap-1">
+                    <strong>
+                      {table.getState().pagination.pageIndex + 1} of{" "}
+                      {table.getPageCount()}
+                    </strong>
+                  </span>
                   <button
                     className={`w-10 h-10 p-1 border rounded ${
                       table.getCanNextPage()
@@ -118,12 +124,7 @@ export const TablePagination = <T extends unknown>({
                       />
                     </svg>
                   </button>
-                  <span className="flex items-center gap-1">
-                    <strong>
-                      {table.getState().pagination.pageIndex + 1} of{" "}
-                      {table.getPageCount()}
-                    </strong>
-                  </span>
+
                   <select
                     value={table.getState().pagination.pageSize}
                     onChange={(e) => {

@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PolicyEntity } from "../types/generated";
-import { PaginatedResponse } from "../types/tempTypes";
+import {
+  PaginatedRequest,
+  PaginatedResponse,
+  PolicyFilters,
+  PolicySearch,
+} from "../types/tempTypes";
 
 export const policiesAPI = createApi({
   reducerPath: "policies",
@@ -9,18 +14,17 @@ export const policiesAPI = createApi({
   endpoints: (build) => ({
     getPolicies: build.query<
       PaginatedResponse<PolicyEntity>,
-      {
-        pagination: {
-          skip: number;
-          take: number;
-        };
-      }
+      PaginatedRequest<PolicyFilters, PolicySearch>
     >({
       query: (params) => ({
         url: "/policies",
         params: {
           skip: params.pagination.skip,
           take: params.pagination.take,
+          filterStatus: params.filters.insuranceStatus,
+          filterType: params.filters.insuranceType,
+          searchCustomerName: params.search?.customerName,
+          searchProvider: params.search?.provider,
         },
       }),
     }),

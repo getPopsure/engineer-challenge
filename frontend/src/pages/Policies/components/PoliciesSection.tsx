@@ -29,7 +29,7 @@ const PoliciesSection = ({ dataPolicies }: PoliciesSectionProps) => {
     [dataPolicies]
   );
 
-  // Update redux store with pagination data (TODO: heve only one source of truth)
+  // Update redux store with pagination data (TODO: rely only on one source of truth)
   useEffect(() => {
     dispatch(setTablePagination({ pageIndex, pageSize }));
   }, [pageIndex, pageSize]);

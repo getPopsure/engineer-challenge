@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PolicyEntityInsuranceTypeEnum } from "~/src/types/generated";
+import {
+  PolicyEntityInsuranceTypeEnum,
+  PolicyEntityStatusEnum,
+} from "~/src/types/generated";
 
 export interface PoliciesState {
   pagination: {
@@ -8,17 +11,24 @@ export interface PoliciesState {
   };
   filters: {
     insuranceType: PolicyEntityInsuranceTypeEnum[];
+    insuranceStatus: PolicyEntityStatusEnum[];
+  };
+  search: {
+    provider?: string;
+    customerName?: string;
   };
 }
 
 const initialState: PoliciesState = {
   pagination: {
     pageIndex: 0,
-    pageSize: 8,
+    pageSize: 10,
   },
   filters: {
     insuranceType: [],
+    insuranceStatus: [],
   },
+  search: {},
 };
 
 export const policiesSlice = createSlice({
@@ -36,16 +46,33 @@ export const policiesSlice = createSlice({
     ) => {
       state.pagination = action.payload;
     },
+    // Can be also a single action with an additional parameter
+    setSearchProvider: (state, action) => {
+      state.search.provider = action.payload;
+    },
+    setSearchCustomerName: (state, action) => {
+      state.search.customerName = action.payload;
+    },
     setInsuranceType: (state, action) => {
       state.filters.insuranceType = action.payload;
     },
+    setInsuranceStatus: (state, action) => {
+      state.filters.insuranceStatus = action.payload;
+    },
     clearFilters: (state) => {
       state.filters = initialState.filters;
+      state.search = initialState.search;
     },
   },
 });
 
-export const { setTablePagination, setInsuranceType, clearFilters } =
-  policiesSlice.actions;
+export const {
+  setTablePagination,
+  setInsuranceType,
+  setInsuranceStatus,
+  setSearchProvider,
+  setSearchCustomerName,
+  clearFilters,
+} = policiesSlice.actions;
 
 export default policiesSlice.reducer;

@@ -12,7 +12,7 @@ import {
 import { PoliciesService } from './policies.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PaginatedResponse } from 'src/common/types/PaginatedResponse.dto';
-import { Policy } from '@prisma/client';
+import { InsuranceType, PolicyStatus } from '@prisma/client';
 import { CreatePolicyDto } from './dto/create-policy.dto';
 import { UpdatePolicyDto } from './dto/update-policy.dto';
 import { PolicyEntity } from './entities/policy.entity';
@@ -31,17 +31,53 @@ export class PoliciesController {
   find(
     @Query('skip', new ParseIntPipe()) skip?: number,
     @Query('take', new ParseIntPipe()) take?: number,
-    @Query('filters') filters?: { name: string },
-  ): Promise<PaginatedResponse<Policy>> {
-    const pagination = {
-      skip: skip || 0,
-      take: take || 10,
-    };
+    @Query('filterStatus') filterStatus?: string,
+    @Query('filterType') filterType?: string,
+    @Query('searchCustomerName') searchCustomerName?: string,
+    @Query('searchProvider') searchProvider?: string,
+  ): Promise<
+    PaginatedResponse<{
+      id: string;
+      provider: string;
+      insuranceType: InsuranceType;
+      status: PolicyStatus;
+      startDate: Date;
+      customer: {
+        id: string;
+        firstName: string;
+        lastName: string;
+        dateOfBirth: Date;
+      };
+    }>
+  > {
+    // Format & clean filters
+    const status =
+      filterStatus &&
+      filterStatus !== '' &&
+      (filterStatus
+        ?.split(',')
+        .map((value) => value.toUpperCase()) as PolicyStatus[]);
+
+    const type =
+      filterType &&
+      filterType !== '' &&
+      (filterType
+        ?.split(',')
+        .map((value) => value.toUpperCase()) as InsuranceType[]);
 
     return this.policiesService.find({
-      pagination,
+      pagination: {
+        skip: skip || 0,
+        take: take || 10,
+      },
       filters: {
-        name: '',
+        status: status,
+        type: type,
+      },
+      search: {
+        customerName:
+          searchCustomerName && searchCustomerName !== '' && searchCustomerName,
+        provider: searchProvider && searchProvider !== '' && searchProvider,
       },
     });
   }
