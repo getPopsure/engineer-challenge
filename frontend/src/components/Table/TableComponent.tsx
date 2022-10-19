@@ -4,6 +4,8 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  OnChangeFn,
+  PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
 // Table components
@@ -13,12 +15,22 @@ import { TablePagination } from "./TablePagination";
 interface ITableComponent<T> {
   data: T[];
   columns: ColumnDef<T, any>[];
+  paginationOverride: PaginationState;
+  pageCount: number;
+  onPaginationChange: OnChangeFn<PaginationState>;
 }
 
 const TableComponent = <T extends unknown>(options: ITableComponent<T>) => {
+  console.log("TableComponent", options);
   const table = useReactTable({
     data: options.data,
     columns: options.columns,
+    pageCount: options.pageCount,
+    manualPagination: true,
+    state: {
+      pagination: options.paginationOverride,
+    },
+    onPaginationChange: options.onPaginationChange,
     // Pipeline of plugins
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

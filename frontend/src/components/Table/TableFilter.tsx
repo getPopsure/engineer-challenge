@@ -1,6 +1,9 @@
 import { Input } from "@popsure/dirty-swan";
 import { Column, Table as ReactTable } from "@tanstack/react-table";
-import { useMemo } from "react";
+
+type TableMetadata = {
+  filterComponent?: () => JSX.Element;
+};
 
 export const TableFilter = ({
   column,
@@ -15,23 +18,25 @@ export const TableFilter = ({
 
   const columnFilterValue = column.getFilterValue();
 
-  const sortedUniqueValues = useMemo(
-    () =>
-      typeof firstValue === "number"
-        ? []
-        : Array.from(column.getFacetedUniqueValues().keys()).sort(),
-    [column.getFacetedUniqueValues()]
-  );
+  const metaData = column.columnDef.meta as TableMetadata;
 
-  return typeof firstValue === "number" ? (
-    <></>
-  ) : (
-    <Input
-      value={(columnFilterValue ?? "") as string}
-      onChange={(e) => {
-        column.setFilterValue(e.target.value);
-      }}
-      placeholder={`Cerca...`}
-    />
-  );
+  if (metaData?.filterComponent) {
+    return metaData.filterComponent();
+  }
+
+  switch (typeof firstValue) {
+    case "string":
+      return (
+        <Input
+          value={(columnFilterValue ?? "") as string}
+          onChange={(e) => {
+            column.setFilterValue(e.target.value);
+          }}
+          placeholder={`Search...`}
+        />
+      );
+
+    default:
+      return <></>;
+  }
 };

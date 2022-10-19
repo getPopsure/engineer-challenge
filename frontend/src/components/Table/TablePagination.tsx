@@ -11,15 +11,19 @@ export const TablePagination = <T extends unknown>({
     <>
       <div className="bg-gray-100">
         <div className="px-4 py-12">
-          <div className="py-4 px-4 w-full mx-auto">
+          <div className="w-full px-4 py-4 mx-auto">
             <div className="flex items-center w-full">
               <div
                 aria-label="pagination"
-                className="flex justify-center w-full items-center"
+                className="flex items-center justify-center w-full"
               >
                 <div className="flex items-center lg:gap-4 md:gap-3">
                   <button
-                    className="w-10 h-10 p-1 border rounded cursor-pointer"
+                    className={`w-10 h-10 p-1 border rounded ${
+                      table.getCanPreviousPage()
+                        ? "cursor-pointer"
+                        : "cursor-not-allowed"
+                    }`}
                     onClick={() => table.setPageIndex(0)}
                     disabled={!table.getCanPreviousPage()}
                   >
@@ -28,7 +32,9 @@ export const TablePagination = <T extends unknown>({
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
-                      stroke="currentColor"
+                      stroke={
+                        table.getCanPreviousPage() ? "currentColor" : "#ccc"
+                      }
                       className="w-6 h-6"
                     >
                       <path
@@ -39,7 +45,11 @@ export const TablePagination = <T extends unknown>({
                     </svg>
                   </button>
                   <button
-                    className="w-10 h-10 p-1 border rounded cursor-pointer"
+                    className={`w-10 h-10 p-1 border rounded ${
+                      table.getCanPreviousPage()
+                        ? "cursor-pointer"
+                        : "cursor-not-allowed"
+                    }`}
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                   >
@@ -48,7 +58,9 @@ export const TablePagination = <T extends unknown>({
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
-                      stroke="currentColor"
+                      stroke={
+                        table.getCanPreviousPage() ? "currentColor" : "#ccc"
+                      }
                       className="w-6 h-6"
                     >
                       <path
@@ -59,7 +71,11 @@ export const TablePagination = <T extends unknown>({
                     </svg>
                   </button>
                   <button
-                    className="w-10 h-10 p-1 border rounded cursor-pointer"
+                    className={`w-10 h-10 p-1 border rounded ${
+                      table.getCanNextPage()
+                        ? "cursor-pointer"
+                        : "cursor-not-allowed"
+                    }`}
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                   >
@@ -68,7 +84,7 @@ export const TablePagination = <T extends unknown>({
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
-                      stroke="currentColor"
+                      stroke={table.getCanNextPage() ? "currentColor" : "#ccc"}
                       className="w-6 h-6"
                     >
                       <path
@@ -79,7 +95,11 @@ export const TablePagination = <T extends unknown>({
                     </svg>
                   </button>
                   <button
-                    className="w-10 h-10 p-1 border rounded cursor-pointer"
+                    className={`w-10 h-10 p-1 border rounded ${
+                      table.getCanNextPage()
+                        ? "cursor-pointer"
+                        : "cursor-not-allowed"
+                    }`}
                     onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                     disabled={!table.getCanNextPage()}
                   >
@@ -88,7 +108,7 @@ export const TablePagination = <T extends unknown>({
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
-                      stroke="currentColor"
+                      stroke={table.getCanNextPage() ? "currentColor" : "#ccc"}
                       className="w-6 h-6"
                     >
                       <path

@@ -12,19 +12,23 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.1.2",
     "@types/node": "^18.8.5",
+    "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.37.0",
     "react-redux": "^8.0.4",
+    "react-select": "^5.5.2",
     "vite-plugin-svgr": "^2.2.2",
     "vite-tsconfig-paths": "^3.5.0"
   },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-rest-types": "npx @openapitools/openapi-generator-cli generate -i http://localhost:4000/api-json -g typescript-fetch -o ./src/types/generated --skip-validate-spec"
   },
   "devDependencies": {
+    "@types/qs": "^6.9.7",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
