@@ -3,5 +3,6 @@ apis/index.ts
 index.ts
 models/CustomerEntity.ts
 models/PolicyEntity.ts
+models/PolicyRelativeEntity.ts
 models/index.ts
 runtime.ts

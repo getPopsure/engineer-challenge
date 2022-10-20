@@ -17,6 +17,7 @@ export type RequestWithPaginationAndFilters = {
   };
   search: {
     customerName?: string;
+    customerRelatives?: string;
     provider?: string;
   };
 };
@@ -59,6 +60,20 @@ export class PoliciesService {
               firstName: true,
               lastName: true,
               dateOfBirth: true,
+            },
+          },
+          relatives: {
+            select: {
+              id: true,
+              role: true,
+              relative: {
+                select: {
+                  id: true,
+                  firstName: true,
+                  lastName: true,
+                  dateOfBirth: true,
+                },
+              },
             },
           },
         },
@@ -121,6 +136,34 @@ export class PoliciesService {
           lastName: {
             contains: search.customerName,
             mode: 'insensitive',
+          },
+        },
+      });
+    }
+
+    // Handle search condition | customerRelatives
+    if (search.customerRelatives) {
+      ORCondition.push({
+        relatives: {
+          some: {
+            relative: {
+              firstName: {
+                contains: search.customerRelatives,
+                mode: 'insensitive',
+              },
+            },
+          },
+        },
+      });
+      ORCondition.push({
+        relatives: {
+          some: {
+            relative: {
+              lastName: {
+                contains: search.customerRelatives,
+                mode: 'insensitive',
+              },
+            },
           },
         },
       });

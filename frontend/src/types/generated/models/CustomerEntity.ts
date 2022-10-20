@@ -13,6 +13,19 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { PolicyEntity } from './PolicyEntity';
+import {
+    PolicyEntityFromJSON,
+    PolicyEntityFromJSONTyped,
+    PolicyEntityToJSON,
+} from './PolicyEntity';
+import type { PolicyRelativeEntity } from './PolicyRelativeEntity';
+import {
+    PolicyRelativeEntityFromJSON,
+    PolicyRelativeEntityFromJSONTyped,
+    PolicyRelativeEntityToJSON,
+} from './PolicyRelativeEntity';
+
 /**
  * 
  * @export
@@ -43,6 +56,18 @@ export interface CustomerEntity {
      * @memberof CustomerEntity
      */
     dateOfBirth: Date;
+    /**
+     * 
+     * @type {Array<PolicyEntity>}
+     * @memberof CustomerEntity
+     */
+    policies?: Array<PolicyEntity>;
+    /**
+     * 
+     * @type {Array<PolicyRelativeEntity>}
+     * @memberof CustomerEntity
+     */
+    relativePolicies?: Array<PolicyRelativeEntity>;
 }
 
 /**
@@ -72,6 +97,8 @@ export function CustomerEntityFromJSONTyped(json: any, ignoreDiscriminator: bool
         'firstName': json['firstName'],
         'lastName': json['lastName'],
         'dateOfBirth': (new Date(json['dateOfBirth'])),
+        'policies': !exists(json, 'policies') ? undefined : ((json['policies'] as Array<any>).map(PolicyEntityFromJSON)),
+        'relativePolicies': !exists(json, 'relativePolicies') ? undefined : ((json['relativePolicies'] as Array<any>).map(PolicyRelativeEntityFromJSON)),
     };
 }
 
@@ -88,6 +115,8 @@ export function CustomerEntityToJSON(value?: CustomerEntity | null): any {
         'firstName': value.firstName,
         'lastName': value.lastName,
         'dateOfBirth': (value.dateOfBirth.toISOString()),
+        'policies': value.policies === undefined ? undefined : ((value.policies as Array<any>).map(PolicyEntityToJSON)),
+        'relativePolicies': value.relativePolicies === undefined ? undefined : ((value.relativePolicies as Array<any>).map(PolicyRelativeEntityToJSON)),
     };
 }
 

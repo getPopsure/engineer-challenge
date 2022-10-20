@@ -16,6 +16,7 @@ export interface PoliciesState {
   search: {
     provider?: string;
     customerName?: string;
+    customerRelatives?: string;
   };
 }
 
@@ -53,6 +54,9 @@ export const policiesSlice = createSlice({
     setSearchCustomerName: (state, action) => {
       state.search.customerName = action.payload;
     },
+    setSearchCustomerRelatives: (state, action) => {
+      state.search.customerRelatives = action.payload;
+    },
     setInsuranceType: (state, action) => {
       state.filters.insuranceType = action.payload;
     },
@@ -72,6 +76,7 @@ export const {
   setInsuranceStatus,
   setSearchProvider,
   setSearchCustomerName,
+  setSearchCustomerRelatives,
   clearFilters,
 } = policiesSlice.actions;
 

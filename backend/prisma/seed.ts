@@ -31,8 +31,8 @@ const policyData: Prisma.PolicyCreateInput[] = [
           role: 'Father',
           relative: {
             create: {
-              firstName: 'Brandyn',
-              lastName: 'Argyle',
+              firstName: 'Brandyn_Father',
+              lastName: 'Argyle_Father',
               dateOfBirth: '2006-03-17T03:35:43Z',
             },
           },

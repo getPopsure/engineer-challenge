@@ -24,12 +24,18 @@ export class PoliciesController {
   constructor(private readonly policiesService: PoliciesService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'Policy find method',
+    type: Array<PolicyEntity>,
+  })
   find(
     @Query('skip', new ParseIntPipe()) skip?: number,
     @Query('take', new ParseIntPipe()) take?: number,
     @Query('filterStatus') filterStatus?: string,
     @Query('filterType') filterType?: string,
     @Query('searchCustomerName') searchCustomerName?: string,
+    @Query('searchCustomerRelatives') searchCustomerRelatives?: string,
     @Query('searchProvider') searchProvider?: string,
   ): Promise<PaginatedResponse<ResponsePolicyDto>> {
     // Format & clean filters (should have used a custom Pipe)
@@ -60,6 +66,10 @@ export class PoliciesController {
         customerName:
           searchCustomerName && searchCustomerName !== '' && searchCustomerName,
         provider: searchProvider && searchProvider !== '' && searchProvider,
+        customerRelatives:
+          searchCustomerRelatives &&
+          searchCustomerRelatives !== '' &&
+          searchCustomerRelatives,
       },
     });
   }
@@ -77,7 +87,7 @@ export class PoliciesController {
     type: PolicyEntity,
   })
   findOne(@Param('id') id: string): Promise<PolicyEntity> {
-    return this.policiesService.findOne(id);
+    return this.policiesService.findOne(id) as any;
   }
 
   @Patch(':id')

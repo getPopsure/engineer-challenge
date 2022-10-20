@@ -2,7 +2,6 @@ import { createColumnHelper } from "@tanstack/table-core";
 import { Badge } from "~/src/components/Badge";
 import { capitalizeString } from "~/src/utils/string-utils";
 import Select from "react-select";
-import { Input } from "@popsure/dirty-swan";
 import {
   PolicyEntity,
   PolicyEntityInsuranceTypeEnum,
@@ -13,10 +12,11 @@ import {
   setInsuranceStatus,
   setInsuranceType,
   setSearchCustomerName,
+  setSearchCustomerRelatives,
   setSearchProvider,
 } from "./policiesSlice";
 import { useMemo } from "react";
-import Highlighter from "react-highlight-words";
+import { TableTextCell } from "~/src/components/Table/TableTextCell";
 
 // Derivate dropdown values from the enum
 const insuranceTypeOptions = Object.values(PolicyEntityInsuranceTypeEnum).map(
@@ -35,22 +35,6 @@ const insuranceStatusOptions = Object.values(PolicyEntityStatusEnum).map(
 
 const columnHelper = createColumnHelper<PolicyEntity>();
 
-const TextCell = ({
-  value,
-  searchValue,
-}: {
-  value: string;
-  searchValue?: string;
-}) => {
-  return (
-    <Highlighter
-      searchWords={[searchValue]}
-      autoEscape={true}
-      textToHighlight={value}
-    />
-  );
-};
-
 export const tableColumnsPolicies = [
   columnHelper.accessor("id", {
     cell: (info) => info.getValue(),
@@ -65,7 +49,7 @@ export const tableColumnsPolicies = [
     {
       id: "customerName",
       cell: (info) => (
-        <TextCell
+        <TableTextCell
           value={info.getValue()}
           searchValue={info.column.getFilterValue() as string}
         />
@@ -78,10 +62,35 @@ export const tableColumnsPolicies = [
       },
     }
   ),
+  columnHelper.accessor(
+    (row) => {
+      // Merge all relatives names
+      const relatives = row.relatives
+        .map(({ relative }) => `${relative.firstName} ${relative.lastName}`)
+        .join(",");
+
+      return relatives;
+    },
+    {
+      id: "customerRelatives",
+      cell: (info) => (
+        <TableTextCell
+          value={info.getValue()}
+          searchValue={info.column.getFilterValue() as string}
+        />
+      ),
+      header: () => <span>Relatives</span>,
+      meta: {
+        customFilterAction: ({ value, dispatch }) => {
+          dispatch(setSearchCustomerRelatives(value));
+        },
+      },
+    }
+  ),
   columnHelper.accessor("provider", {
     header: () => <span>Provider</span>,
     cell: (info) => (
-      <TextCell
+      <TableTextCell
         value={info.getValue()}
         searchValue={info.column.getFilterValue() as string}
       />

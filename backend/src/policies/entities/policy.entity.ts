@@ -1,14 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { InsuranceType, Policy, PolicyStatus } from '@prisma/client';
 import { CustomerEntity } from 'src/customer/entities/customer.entity';
+import { PolicyRelativeEntity } from 'src/policy-relative/entities/policy-relative.entity';
 
 export class PolicyEntity implements Policy {
   id: string;
-
-  customer?: CustomerEntity;
-
-  customerId: string;
-
   provider: string;
 
   @ApiProperty({
@@ -20,6 +16,11 @@ export class PolicyEntity implements Policy {
     enum: Object.values(PolicyStatus),
   })
   status: PolicyStatus;
+
+  customer?: CustomerEntity;
+  customerId: string;
+  relatives: Array<PolicyRelativeEntity>;
+
   startDate: Date;
   endDate: Date;
   createdAt: Date;

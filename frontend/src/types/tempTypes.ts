@@ -14,6 +14,7 @@ export type PolicyFilters = {
 
 export type PolicySearch = {
   customerName?: string;
+  customerRelatives?: string;
   provider?: string;
 };
 

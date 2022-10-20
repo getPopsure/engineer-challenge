@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { loggingMiddlewarePrisma } from './common/middleware/logging.middleware';
 import { CustomerModule } from './customer/customer.module';
 import { PoliciesModule } from './policies/policies.module';
+import { PolicyRelativeModule } from './policy-relative/policy-relative.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PoliciesModule } from './policies/policies.module';
     }),
     PoliciesModule,
     CustomerModule,
+    PolicyRelativeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

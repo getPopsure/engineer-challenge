@@ -12,4 +12,14 @@ export class ResponsePolicyDto {
     lastName: string;
     dateOfBirth: Date;
   };
+  relatives: Array<{
+    id: string;
+    role: string;
+    relative: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      dateOfBirth: Date;
+    };
+  }>;
 }

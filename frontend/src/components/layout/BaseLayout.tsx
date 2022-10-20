@@ -9,7 +9,7 @@ const BaseLayout = ({ children }: BaseLayoutProps) => (
   <div>
     <Navbar />
     <div className="flex flex-col items-center w-full p-8">
-      <div className="flex flex-col justify-start w-full max-w-6xl">
+      <div className="flex flex-col justify-start w-full max-w-screen-2xl">
         <Header />
         <div className="flex flex-col w-full ">{children}</div>
       </div>

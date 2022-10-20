@@ -19,6 +19,12 @@ import {
     CustomerEntityFromJSONTyped,
     CustomerEntityToJSON,
 } from './CustomerEntity';
+import type { PolicyRelativeEntity } from './PolicyRelativeEntity';
+import {
+    PolicyRelativeEntityFromJSON,
+    PolicyRelativeEntityFromJSONTyped,
+    PolicyRelativeEntityToJSON,
+} from './PolicyRelativeEntity';
 
 /**
  * 
@@ -46,6 +52,12 @@ export interface PolicyEntity {
     id: string;
     /**
      * 
+     * @type {string}
+     * @memberof PolicyEntity
+     */
+    provider: string;
+    /**
+     * 
      * @type {CustomerEntity}
      * @memberof PolicyEntity
      */
@@ -58,10 +70,10 @@ export interface PolicyEntity {
     customerId: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<PolicyRelativeEntity>}
      * @memberof PolicyEntity
      */
-    provider: string;
+    relatives: Array<PolicyRelativeEntity>;
     /**
      * 
      * @type {Date}
@@ -113,8 +125,9 @@ export function instanceOfPolicyEntity(value: object): boolean {
     isInstance = isInstance && "insuranceType" in value;
     isInstance = isInstance && "status" in value;
     isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "customerId" in value;
     isInstance = isInstance && "provider" in value;
+    isInstance = isInstance && "customerId" in value;
+    isInstance = isInstance && "relatives" in value;
     isInstance = isInstance && "startDate" in value;
     isInstance = isInstance && "endDate" in value;
     isInstance = isInstance && "createdAt" in value;
@@ -135,9 +148,10 @@ export function PolicyEntityFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'insuranceType': json['insuranceType'],
         'status': json['status'],
         'id': json['id'],
+        'provider': json['provider'],
         'customer': !exists(json, 'customer') ? undefined : CustomerEntityFromJSON(json['customer']),
         'customerId': json['customerId'],
-        'provider': json['provider'],
+        'relatives': ((json['relatives'] as Array<any>).map(PolicyRelativeEntityFromJSON)),
         'startDate': (new Date(json['startDate'])),
         'endDate': (new Date(json['endDate'])),
         'createdAt': (new Date(json['createdAt'])),
@@ -156,9 +170,10 @@ export function PolicyEntityToJSON(value?: PolicyEntity | null): any {
         'insuranceType': value.insuranceType,
         'status': value.status,
         'id': value.id,
+        'provider': value.provider,
         'customer': CustomerEntityToJSON(value.customer),
         'customerId': value.customerId,
-        'provider': value.provider,
+        'relatives': ((value.relatives as Array<any>).map(PolicyRelativeEntityToJSON)),
         'startDate': (value.startDate.toISOString()),
         'endDate': (value.endDate.toISOString()),
         'createdAt': (value.createdAt.toISOString()),

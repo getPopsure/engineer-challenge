@@ -24,6 +24,7 @@ export const policiesAPI = createApi({
           filterStatus: params.filters.insuranceStatus,
           filterType: params.filters.insuranceType,
           searchCustomerName: params.search?.customerName,
+          searchCustomerRelatives: params.search?.customerRelatives,
           searchProvider: params.search?.provider,
         },
       }),
