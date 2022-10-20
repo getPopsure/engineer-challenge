@@ -13,7 +13,6 @@ services:
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
       - POSTGRES_DB=${DATABASE_NAME}
 
-
   backend:
     container_name: backend
     env_file:

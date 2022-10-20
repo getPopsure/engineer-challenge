@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { InsuranceType, Policy, PolicyStatus } from '@prisma/client';
-import { CustomerEntity } from 'src/customer/entities/customer.entity';
-import { PolicyRelativeEntity } from 'src/policy-relative/entities/policy-relative.entity';
+import { CustomerEntity } from '../../customer/entities/customer.entity';
+import { PolicyRelativeEntity } from '../../policy-relative/entities/policy-relative.entity';
 
 export class PolicyEntity implements Policy {
   id: string;

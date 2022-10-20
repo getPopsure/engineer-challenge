@@ -1,6 +1,6 @@
 import { PolicyRelative } from '@prisma/client';
-import { CustomerEntity } from 'src/customer/entities/customer.entity';
-import { PolicyEntity } from 'src/policies/entities/policy.entity';
+import { CustomerEntity } from '../../customer/entities/customer.entity';
+import { PolicyEntity } from '../../policies/entities/policy.entity';
 
 export class PolicyRelativeEntity implements PolicyRelative {
   id: string;

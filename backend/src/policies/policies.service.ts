@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InsuranceType, PolicyStatus } from '@prisma/client';
 import { PrismaService } from 'nestjs-prisma';
-import { PaginatedResponse } from 'src/common/types/PaginatedResponse.dto';
+import { PaginatedResponse } from '../common/types/PaginatedResponse.dto';
 import { CreatePolicyDto } from './dto/create-policy.dto';
 import { ResponsePolicyDto } from './dto/policy-response.dto';
 import { UpdatePolicyDto } from './dto/update-policy.dto';

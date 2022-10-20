@@ -1,13 +1,26 @@
-FROM node:16.9.1
+FROM node:18 AS builder
 
+# Create app directory
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+COPY prisma ./prisma/
 
-RUN yarn
+# Install app dependencies
+RUN npm install
 
 COPY . .
 
-EXPOSE 4000
+RUN npm run build
 
-CMD [ "yarn", "start" ]
+FROM node:18
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/tsconfig.json ./
+COPY --from=builder /app/dist ./dist
+
+EXPOSE 4000
+CMD [ "node", "dist/main" ]

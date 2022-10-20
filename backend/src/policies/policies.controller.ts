@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { PoliciesService } from './policies.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PaginatedResponse } from 'src/common/types/PaginatedResponse.dto';
+import { PaginatedResponse } from '../common/types/PaginatedResponse.dto';
 import { InsuranceType, PolicyStatus } from '@prisma/client';
 import { ResponsePolicyDto } from './dto/policy-response.dto';
 import { PolicyEntity } from './entities/policy.entity';
