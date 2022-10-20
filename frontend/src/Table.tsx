@@ -1,4 +1,4 @@
-import Badge from "./Badge";
+import Badge from './Badge';
 
 const Table = () => (
   <div className="flex flex-col">
@@ -8,26 +8,43 @@ const Table = () => (
           <table className="min-w-full">
             <thead className="border-b bg-gray-100">
               <tr>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <th
+                  scope="col"
+                  className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                >
                   #
                 </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <th
+                  scope="col"
+                  className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                >
                   Name
                 </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <th
+                  scope="col"
+                  className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                >
                   Provider
                 </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <th
+                  scope="col"
+                  className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                >
                   Type
                 </th>
-                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <th
+                  scope="col"
+                  className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                >
                   Status
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  1
+                </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   Cyrillus Biddlecombe
                 </td>
@@ -43,7 +60,9 @@ const Table = () => (
               </tr>
 
               <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  1
+                </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   Brandy Harbour
                 </td>
@@ -59,7 +78,9 @@ const Table = () => (
               </tr>
 
               <tr className="border-b">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  1
+                </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   Ailina Harber
                 </td>
@@ -79,6 +100,6 @@ const Table = () => (
       </div>
     </div>
   </div>
-)
+);
 
 export default Table;

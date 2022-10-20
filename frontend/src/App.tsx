@@ -1,8 +1,8 @@
-import Navbar from "./Navbar";
-import Header from "./Header";
-import Table from "./Table";
+import Navbar from './Navbar';
+import Header from './Header';
+import Table from './Table';
 
-import "./index.css";
+import './index.css';
 
 const App = () => (
   <div>
@@ -13,6 +13,5 @@ const App = () => (
     </div>
   </div>
 );
-
 
 export default App;
