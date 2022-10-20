@@ -40,7 +40,12 @@ export class PoliciesService {
 
     // Get the total count of policies also, using a transaction
     const [countRows, queryResult] = await this.prisma.$transaction([
-      this.prisma.policy.count(),
+      this.prisma.policy.count({
+        where: {
+          ...(ANDCondition.length > 0 && { AND: ANDCondition }),
+          ...(ORCondition.length > 0 && { OR: ORCondition }),
+        },
+      }),
       this.prisma.policy.findMany({
         skip,
         take,

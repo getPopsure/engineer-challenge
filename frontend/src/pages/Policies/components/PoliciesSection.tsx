@@ -49,7 +49,7 @@ const PoliciesSection = ({ dataPolicies }: PoliciesSectionProps) => {
 
   const pageCount = useMemo(
     () => Math.ceil(dataPolicies.pagination.total / pageSize),
-    [pageIndex, pageSize, dataPolicies.pagination.total]
+    [pageIndex, pageSize, dataPolicies]
   );
 
   const isFiltered = useMemo(() => {
@@ -118,7 +118,10 @@ const PoliciesSection = ({ dataPolicies }: PoliciesSectionProps) => {
                 <div className="flex">
                   {filters.insuranceType.map((type) => {
                     return (
-                      <div className="inline-block rounded-full py-1 px-4 font-semibold text-xs bg-gray-200">
+                      <div
+                        className="inline-block rounded-full py-1 px-4 font-semibold text-xs bg-gray-200"
+                        key={type}
+                      >
                         {type}
                       </div>
                     );

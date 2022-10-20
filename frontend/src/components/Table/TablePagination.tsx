@@ -1,11 +1,15 @@
-import { Table } from "@tanstack/table-core";
+import { PaginationState, Table } from "@tanstack/table-core";
 
 interface ITablePagination<T> {
   table: Table<T>;
+  paginationOverride: PaginationState;
+  pageCount: number;
 }
 
 export const TablePagination = <T extends unknown>({
   table,
+  paginationOverride,
+  pageCount,
 }: ITablePagination<T>) => {
   return (
     <>
@@ -72,8 +76,7 @@ export const TablePagination = <T extends unknown>({
                   </button>
                   <span className="flex items-center gap-1">
                     <strong>
-                      {table.getState().pagination.pageIndex + 1} of{" "}
-                      {table.getPageCount()}
+                      {paginationOverride.pageIndex + 1} of {pageCount}
                     </strong>
                   </span>
                   <button

@@ -101,7 +101,11 @@ const TableComponent = <T extends unknown>(options: ITableComponent<T>) => {
           </div>
         </div>
       </div>
-      <TablePagination table={table} />
+      <TablePagination
+        table={table}
+        pageCount={options.pageCount}
+        paginationOverride={options.paginationOverride}
+      />
     </>
   );
 };
