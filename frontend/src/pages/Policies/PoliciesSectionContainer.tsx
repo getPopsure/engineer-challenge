@@ -26,7 +26,6 @@ const PoliciesSectionContainer = () => {
     search: {
       provider: search?.provider,
       customerName: search?.customerName,
-      customerRelatives: search?.customerRelatives,
     },
   });
 

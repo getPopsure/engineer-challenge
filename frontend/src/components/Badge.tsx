@@ -1,14 +1,13 @@
 import React from "react";
-
-type Status = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT";
+import { PolicyEntityStatusEnum } from "../types/generated";
 
 interface BadgeProps {
-  status: Status;
+  status: PolicyEntityStatusEnum;
 }
 
-const getBadgeColors = (status: Status) => {
+const getBadgeColors = (status: PolicyEntityStatusEnum) => {
   const badgeColors: {
-    [k in Status]: {
+    [k in PolicyEntityStatusEnum]: {
       textColor: string;
       backgroundColor: string;
     };
@@ -24,7 +23,7 @@ const getBadgeColors = (status: Status) => {
 
 const Badge = React.memo(({ status }: BadgeProps) => {
   const { textColor, backgroundColor } = getBadgeColors(status);
-  const className = `inline-block rounded-full	py-1 px-4 font-semibold text-xs ${textColor} ${backgroundColor}`;
+  const className = `inline-block rounded-full py-1 px-4 font-semibold text-xs ${textColor} ${backgroundColor}`;
 
   return <p className={className}>{status}</p>;
 });

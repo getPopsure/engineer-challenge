@@ -139,10 +139,7 @@ export class PoliciesService {
           },
         },
       });
-    }
 
-    // Handle search condition | customerRelatives
-    if (search.customerRelatives) {
       ORCondition.push({
         relatives: {
           some: {

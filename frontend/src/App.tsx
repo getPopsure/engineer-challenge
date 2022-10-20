@@ -1,5 +1,6 @@
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import "./i18next";
 
 // Components
 import { BaseLayout } from "./components/layout/BaseLayout";

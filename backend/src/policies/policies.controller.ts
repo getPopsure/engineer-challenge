@@ -35,7 +35,6 @@ export class PoliciesController {
     @Query('filterStatus') filterStatus?: string,
     @Query('filterType') filterType?: string,
     @Query('searchCustomerName') searchCustomerName?: string,
-    @Query('searchCustomerRelatives') searchCustomerRelatives?: string,
     @Query('searchProvider') searchProvider?: string,
   ): Promise<PaginatedResponse<ResponsePolicyDto>> {
     // Format & clean filters (should have used a custom Pipe)
@@ -66,10 +65,6 @@ export class PoliciesController {
         customerName:
           searchCustomerName && searchCustomerName !== '' && searchCustomerName,
         provider: searchProvider && searchProvider !== '' && searchProvider,
-        customerRelatives:
-          searchCustomerRelatives &&
-          searchCustomerRelatives !== '' &&
-          searchCustomerRelatives,
       },
     });
   }
