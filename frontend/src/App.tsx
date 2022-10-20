@@ -1,12 +1,11 @@
 import "./index.css";
-import TableWrapper from "./TableWrapper";
-import { APIContextProvider } from "./context/apiContext";
-
+import { TableWrapper } from "./components/Table/TableWrapper";
+import { AppContextProvider } from "./context/apiContext";
 
 const App = () => (
-  <APIContextProvider>
+  <AppContextProvider>
     <TableWrapper />
-  </APIContextProvider>
+  </AppContextProvider>
 );
 
 
