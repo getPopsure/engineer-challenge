@@ -13,19 +13,15 @@ import { PoliciesService } from './policies.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PaginatedResponse } from 'src/common/types/PaginatedResponse.dto';
 import { InsuranceType, PolicyStatus } from '@prisma/client';
-import { CreatePolicyDto } from './dto/create-policy.dto';
-import { UpdatePolicyDto } from './dto/update-policy.dto';
+import { ResponsePolicyDto } from './dto/policy-response.dto';
 import { PolicyEntity } from './entities/policy.entity';
+import { UpdatePolicyDto } from './dto/update-policy.dto';
+import { CreatePolicyDto } from './dto/create-policy.dto';
 
 @Controller('policies')
 @ApiTags('Policies')
 export class PoliciesController {
   constructor(private readonly policiesService: PoliciesService) {}
-
-  @Post()
-  create(@Body() createPolicyDto: CreatePolicyDto) {
-    return this.policiesService.create(createPolicyDto);
-  }
 
   @Get()
   find(
@@ -35,22 +31,8 @@ export class PoliciesController {
     @Query('filterType') filterType?: string,
     @Query('searchCustomerName') searchCustomerName?: string,
     @Query('searchProvider') searchProvider?: string,
-  ): Promise<
-    PaginatedResponse<{
-      id: string;
-      provider: string;
-      insuranceType: InsuranceType;
-      status: PolicyStatus;
-      startDate: Date;
-      customer: {
-        id: string;
-        firstName: string;
-        lastName: string;
-        dateOfBirth: Date;
-      };
-    }>
-  > {
-    // Format & clean filters
+  ): Promise<PaginatedResponse<ResponsePolicyDto>> {
+    // Format & clean filters (should have used a custom Pipe)
     const status =
       filterStatus &&
       filterStatus !== '' &&
@@ -80,6 +62,12 @@ export class PoliciesController {
         provider: searchProvider && searchProvider !== '' && searchProvider,
       },
     });
+  }
+
+  // Not used, kept them only for Swagger documentation
+  @Post()
+  create(@Body() createPolicyDto: CreatePolicyDto) {
+    return this.policiesService.create(createPolicyDto);
   }
 
   @Get(':id')

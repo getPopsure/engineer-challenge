@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -29,17 +28,36 @@ model Customer {
   firstName   String   @db.VarChar(255)
   lastName    String   @db.VarChar(255)
   dateOfBirth DateTime
-  policies    Policy[]
+
+  policies         Policy[]         @relation("policies")
+  relativePolicies PolicyRelative[] @relation("relativePolicies")
+
+  @@index([firstName, lastName])
 }
 
 model Policy {
-  id            String        @id @default(uuid()) @db.Uuid
-  customer      Customer      @relation(fields: [customerId], references: [id])
-  customerId    String        @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
+
   provider      String
   insuranceType InsuranceType
   status        PolicyStatus
   startDate     DateTime
   endDate       DateTime?
   createdAt     DateTime      @default(now())
+
+  customer   Customer         @relation("policies", fields: [customerId], references: [id])
+  customerId String           @db.Uuid
+  relatives  PolicyRelative[] @relation("relatives")
+
+  @@index([insuranceType, provider, status])
+}
+
+model PolicyRelative {
+  id   String @id @default(uuid()) @db.Uuid
+  role String @db.VarChar(255)
+
+  policy     Policy   @relation("relatives", fields: [policyId], references: [id])
+  policyId   String   @db.Uuid
+  relative   Customer @relation("relativePolicies", fields: [relativeId], references: [id])
+  relativeId String   @db.Uuid
 }
