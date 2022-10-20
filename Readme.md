@@ -82,16 +82,16 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 
 ### Policy
 
-| fields         | type                            | comment                                       |
-| -------------- | ------------------------------- | --------------------------------------------- |
-| id             | string                          | Used to identify the policy                   |
-| customer       | [Customer](#Customer)           | Object holding the customer's informations    |
-| provider       | string                          | Name of the provider (Allianz, AXA…)          |
-| insuranceType  | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
-| status         | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
-| startDate      | date                            | Date when the policy should start             |
-| endDate        | date                            | Date when the policy ends                     |
-| createdAt      | date                            | Date when the record was created              |
+| fields        | type                            | comment                                       |
+| ------------- | ------------------------------- | --------------------------------------------- |
+| id            | string                          | Used to identify the policy                   |
+| customer      | [Customer](#Customer)           | Object holding the customer's informations    |
+| provider      | string                          | Name of the provider (Allianz, AXA…)          |
+| insuranceType | [InsuranceType](#InsuranceType) | Type of the insurance (Liability, Household…) |
+| status        | [PolicyStatus](#PolicyStatus)   | Status of the insurance (Active, Cancelled)   |
+| startDate     | date                            | Date when the policy should start             |
+| endDate       | date                            | Date when the policy ends                     |
+| createdAt     | date                            | Date when the record was created              |
 
 ### Customer
 
@@ -113,11 +113,19 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
-- What’s the part of the solution you are most proud of?
+  > 12-13 hours
 
-  _You can share a code snippet here if you feel like it_
+- What’s the part of the solution you are most proud of?
+  > - General architecture
+  > - Types generation on client (partial, because of time limits) 
+  > - Use of NestJS for BE
+  > - Refactor to Vite for FE
 
 - If you had more time, what other things you would like to do?
-- Do you have any feedback regarding this coding challenge?  
+  > - Add more tests
+  > - Improved UI/UX (right now I focused more on functionality, a bit ugly)
+  > - Debounce calls to server
+  > - Use custom pipes for BE, add auth system with Guards
 
-  _Is the initial setup working?, is something missing?, or any other comment_
+- Do you have any feedback regarding this coding challenge?  
+  > No issues.

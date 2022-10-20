@@ -1,27 +1,46 @@
 {
-  "name": "client",
+  "name": "feather_challenge_fe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.2.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
+    "@popsure/dirty-swan": "^0.27.14",
+    "@reduxjs/toolkit": "^1.8.6",
+    "@tanstack/react-table": "^8.5.15",
+    "@tanstack/table-core": "^8.5.15",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/jest": "^29.1.2",
+    "@types/node": "^18.8.5",
+    "i18next": "^22.0.1",
+    "qs": "^6.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-highlight-words": "^0.18.0",
+    "react-hook-form": "^7.37.0",
+    "react-i18next": "^11.18.6",
+    "react-redux": "^8.0.4",
+    "react-select": "^5.5.2",
+    "vite-plugin-svgr": "^2.2.2",
+    "vite-tsconfig-paths": "^3.5.0"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "generate-rest-types": "npx @openapitools/openapi-generator-cli generate -i http://localhost:4000/api-json -g typescript-fetch -o ./src/types/generated --skip-validate-spec"
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.7",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-highlight-words": "^0.16.4",
+    "@vitejs/plugin-react": "^2.1.0",
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.18",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.0"
   },
   "eslintConfig": {
     "extends": [
@@ -40,10 +59,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "autoprefixer": "^9",
-    "postcss": "^7",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

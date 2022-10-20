@@ -1,13 +1,13 @@
-FROM node:16.9.1
+FROM node:18
 
 WORKDIR /app
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY ./package*.json /app
 
-COPY package.json yarn.lock ./
-
-RUN yarn
+# Install app dependencies
+RUN npm install -f
 
 COPY . .
 
 EXPOSE 3000
-
-CMD [ "yarn", "start" ]
+CMD ["npm", "run", "dev"]
