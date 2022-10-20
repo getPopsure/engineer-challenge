@@ -41,8 +41,7 @@ cp ./backend/.env.example ./backend/.env
 
 ```bash
 cd backend
-docker-compose build
-docker-compose up
+docker compose up --build
 ```
 
 4. On a new terminal, run the migration and the seed script to add initial data:
@@ -63,6 +62,7 @@ The API should be running on `http://localhost:4000`
 If you want to install new dependencies, you'll have to do it inside the docker container. To do that, you can use the following command:
 
 ```
+cd backend
 docker compose exec {backend OR frontend} yarn add {the_name_of_the_package}
 ```
 

@@ -2,7 +2,6 @@ version: '3.1'
 
 services:
   db:
-    container_name: db
     env_file:
       - ./backend/.env
     image: postgres:13.4
@@ -15,7 +14,6 @@ services:
 
 
   backend:
-    container_name: backend
     env_file:
       - ./backend/.env
     build:
@@ -30,7 +28,6 @@ services:
       - "4000:4000"
 
   frontend:
-    container_name: frontend
     env_file:
       - ./backend/.env
     build:
