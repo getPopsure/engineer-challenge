@@ -1,14 +1,12 @@
 export type TPolicy = {
-  customer: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    dateOfBirth: string;
-  }
+  firstName: string;
+  lastName: string;
   id: string;
-  insuranceType: string;
+  type: string;
   provider: string;
-  startDate: string;
-  endDate?: string
   status: string;
 }
+
+export type ProviderProps = "BARMER" | "AOK" | "TK" | "DAK"
+export type TypesProps = "HEALTH" | "LIABILITY" | "HOUSEHOLD"
+export type StatusProps = "PENDING" | "ACTIVE"

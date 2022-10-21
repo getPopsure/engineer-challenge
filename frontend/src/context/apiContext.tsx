@@ -1,23 +1,27 @@
-import React, { useContext, useState, useEffect, createContext, useCallback, ChangeEvent } from "react";
-import {TPolicy} from "../types";
+import React, {useContext, useState, useEffect, createContext, useMemo} from "react";
+import { TPolicy } from "../types";
+import {serializePolicies} from "../serializer";
 
+
+// Todo: Fix Types
 type TPolicies = {
   policies: TPolicy[];
   providers: any;
-  types: any;
+  type: any;
   status: any;
 }
 
 type ContextProps = {
   state: TPolicies;
-  handleNameFilter?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onFilter: (filter: string, value: string) => void;
+  // handleNameFilter?: (event: ChangeEvent<HTMLInputElement>) => void;
+  addFilter: (value: string, id: string) => void;
+  resetFilter: () => void;
 }
 
 const defaultState = {
   policies: [],
   providers: [],
-  types: [],
+  type: [],
   status: [],
 }
 
@@ -26,47 +30,58 @@ const AppContext = createContext<ContextProps>(defaultState);
 const POLICIES = 'policies'
 
 export const AppContextProvider = ({ children }: { children : React.ReactNode }) => {
+  const [initialData, setInitialData] = useState([])
   const [state, setState] = useState<TPolicies>(defaultState);
-  const [nameFilter, setNameFilter] = useState('')
+  const [query, setQuery] = useState({})
 
-  const handleNameFilter = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const filterValue = event.target.value
-    const filteredPoliciesByName = state.policies.filter(policy =>
-      policy.customer.firstName.toLowerCase().includes(filterValue)
-      || policy.customer.lastName.toLowerCase().includes(filterValue))
+  const addFilter = (value, filter) => {
+    setQuery((prev) => ({
+      ...prev,
+      [filter]: value
+    }))
+  }
 
-    // setNameFilter(event.target.value)
-    // @ts-ignore
-    // setState((prevState) => {
-    //   return {
-    //     ...prevState,
-    //     policies: prevState.policies.filter(policy =>
-    //       policy.customer.firstName.toLowerCase().includes(filterValue)
-    //       || policy.customer.lastName.toLowerCase().includes(filterValue))
-    //   }
-    // })
-  }, [])
+  const filteredPolicies = useMemo(() => {
+    return state.policies.filter(policy => {
+      return Object.keys(query).every(filter => {
+        console.log(query[filter], policy[filter])
+        return query[filter] === policy[filter]
+      })
+    });
+  }, [query])
 
-  const parsePolicies = (policies) => {
+  useEffect(() => {
+    setState((prev) => ({
+      ...prev,
+      policies: filteredPolicies
+    }))
+  }, [query])
+
+  const resetFilter = () => {
+    setState((prev) => ({
+      ...prev,
+      policies: initialData
+    }))
+  }
+
+  const getInitialPolicies = (policies) => {
     // @Todo: Refactor the filter !
     const filteredPoliciesByStatus = policies.filter(policy => policy.status === "ACTIVE" || policy.status === "PENDING")
 
     const appState = {
       policies: filteredPoliciesByStatus,
       providers: [...new Set(filteredPoliciesByStatus.map(policy => policy.provider))],
-      types: [...new Set(filteredPoliciesByStatus.map(policy => policy.insuranceType))],
+      type: [...new Set(filteredPoliciesByStatus.map(policy => policy.type))],
       status: [...new Set(filteredPoliciesByStatus.map(policy => policy.status))]
     }
+
+    console.log(appState)
 
     setState((prevState) => ({
       ...prevState,
       ...appState
     }))
-  }
-
-  const handleFilter = (filter, value) => {
-    console.log('filter', filter)
-    console.log('value', value)
+    setInitialData(appState.policies)
   }
 
   useEffect(() => {
@@ -76,7 +91,8 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
 
         if (response.ok) {
           let data = await response.json()
-          parsePolicies(data)
+          const serializedPolicies = serializePolicies(data)
+          getInitialPolicies(serializedPolicies)
         }
       } catch (e) {
         console.log(e)
@@ -88,8 +104,8 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
     <AppContext.Provider
       value={{
         state,
-        handleNameFilter,
-        onFilter: handleFilter,
+        addFilter,
+        resetFilter,
       }}
     >
       {children}

@@ -1,11 +1,11 @@
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
 import { useAppContext } from "../../context/apiContext";
+import { TPolicy } from "../../types";
 
 export const Table = () => {
   const { state: { policies } } = useAppContext()
 
-  const filterState = (p) => p
   return (
     <div>
       <div className="flex flex-col">
@@ -15,9 +15,11 @@ export const Table = () => {
               <table className="min-w-full">
                 <TableHead />
                 <tbody>
-                {policies.filter((p) => filterState(p)).map((policy: any) =>
-                  <TableRow key={policy.id} policy={policy} />
-                )}
+                {policies.length > 0 ? (
+                  policies.map((policy: TPolicy) =>
+                      <TableRow key={policy.id} policy={policy} />
+                    )
+                ) : <p>There are no policies matching the criteria !</p>}
                 </tbody>
               </table>
             </div>
