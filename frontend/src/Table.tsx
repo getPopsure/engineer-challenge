@@ -1,4 +1,4 @@
-import Badge from "./Badge";
+import Badge from "./components/Badge";
 
 const Table = () => (
   <div className="flex flex-col">

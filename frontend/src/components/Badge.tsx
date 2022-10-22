@@ -1,11 +1,10 @@
-type Status = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT'
 
 interface BadgeProps {
-  status: Status
+  status: PolicyStatus
 }
 
-const getBadgeColors = (status: Status) => {
-  const badgeColors: { [k in Status]: {
+const getBadgeColors = (status: PolicyStatus) => {
+  const badgeColors: { [k in PolicyStatus]: {
     textColor: string,
     backgroundColor: string
   } } = {
