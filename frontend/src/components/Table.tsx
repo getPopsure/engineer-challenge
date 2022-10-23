@@ -7,9 +7,14 @@ type TableProps = {
   isError: boolean;
 };
 const Table = (props: TableProps) => {
-  if (props.isLoading) return <div>Loading</div>;
-  if (props.isError) return <div>Ooops something went wrong</div>;
-  if (!props.rows.length) return <div>No data to be shown</div>;
+  if (props.isLoading)
+    return <div className="flex justify-center py-2">Loading</div>;
+  if (props.isError)
+    return (
+      <div className="flex justify-center py-2">Ooops something went wrong</div>
+    );
+  if (!props.rows.length)
+    return <div className="flex justify-center py-2">No data to be shown</div>;
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

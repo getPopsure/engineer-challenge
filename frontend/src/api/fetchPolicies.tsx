@@ -1,6 +1,7 @@
-const fetchPolicies = async (): Promise<Policy[]> => {
+const fetchPolicies = async (searchParam: string): Promise<Policy[]> => {
+  const queryParams = new URLSearchParams({ search: searchParam });
   const response = await fetch(
-    `${process.env.REACT_APP_SERVER_BASE_URL}/policies`
+    `${process.env.REACT_APP_SERVER_BASE_URL}/policies?${queryParams}`
   );
   const data = await response.json();
   // await new Promise((r) => setTimeout(r, 2000));
