@@ -8,7 +8,7 @@ import { Pagination } from "../Pagination";
 export const Table = () => {
   const { state: { policies } } = useAppContext()
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(5);
+  const [recordsPerPage] = useState(10);
 
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;

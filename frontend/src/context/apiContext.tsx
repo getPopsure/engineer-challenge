@@ -16,6 +16,8 @@ type ContextProps = {
   handleNameFilter?: (name: string) => void;
   addFilter: (value: string, id: string) => void;
   resetFilter: () => void;
+  query: Record<string, string>;
+  removeFilter: (filter: string) => void;
 }
 
 const defaultState = {
@@ -42,13 +44,13 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
   }
 
   const filteredPolicies = useMemo(() => {
-    return state.policies.filter(policy => {
+    return initialData.filter(policy => {
       return Object.keys(query).every(filter => {
-        console.log(query[filter], policy[filter])
         return query[filter] === policy[filter]
       })
     });
   }, [query])
+
 
   const handleNameFilter = (name) => {
     const filteredByName = state.policies.filter(policy => {
@@ -80,6 +82,16 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
       ...prev,
       policies: initialData
     }))
+    setQuery({})
+  }
+
+  const removeFilter = (name: string) => {
+    setQuery(prev => {
+      const cp = {...prev}
+      delete cp[name]
+
+      return cp
+    })
   }
 
   const getInitialPolicies = (policies) => {
@@ -92,8 +104,6 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
       type: [...new Set(filteredPoliciesByStatus.map(policy => policy.type))],
       status: [...new Set(filteredPoliciesByStatus.map(policy => policy.status))]
     }
-
-    console.log(appState)
 
     setState((prevState) => ({
       ...prevState,
@@ -125,6 +135,8 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
         addFilter,
         resetFilter,
         handleNameFilter,
+        query,
+        removeFilter,
       }}
     >
       {children}
