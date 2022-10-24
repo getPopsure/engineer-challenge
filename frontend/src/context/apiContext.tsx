@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, createContext, useMemo} from "react";
+import React, {useContext, useState, useEffect, createContext, useMemo, ChangeEvent} from "react";
 import { TPolicy } from "../types";
 import {serializePolicies} from "../serializer";
 
@@ -13,7 +13,7 @@ type TPolicies = {
 
 type ContextProps = {
   state: TPolicies;
-  // handleNameFilter?: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleNameFilter?: (name: string) => void;
   addFilter: (value: string, id: string) => void;
   resetFilter: () => void;
 }
@@ -49,6 +49,24 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
       })
     });
   }, [query])
+
+  const handleNameFilter = (name) => {
+    const filteredByName = state.policies.filter(policy => {
+      return policy.name.toLowerCase().includes(name.toLowerCase())
+    })
+
+    if (!name.trim().length) {
+      return setState(prev => ({
+        ...prev,
+        policies: initialData
+      }))
+    }
+
+    setState(prev => ({
+      ...prev,
+      policies: filteredByName
+    }))
+  }
 
   useEffect(() => {
     setState((prev) => ({
@@ -106,6 +124,7 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
         state,
         addFilter,
         resetFilter,
+        handleNameFilter,
       }}
     >
       {children}

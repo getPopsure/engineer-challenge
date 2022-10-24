@@ -8,7 +8,7 @@ const TableRow: React.FC<any> = ({ policy }) => {
     <tr className="border-b">
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{policy.id}</td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {customerFullName}
+        {policy.name}
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
         {policy.provider}

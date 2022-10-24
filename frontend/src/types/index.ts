@@ -1,6 +1,5 @@
 export type TPolicy = {
-  firstName: string;
-  lastName: string;
+  name: string;
   id: string;
   type: string;
   provider: string;
@@ -8,5 +7,5 @@ export type TPolicy = {
 }
 
 export type ProviderProps = "BARMER" | "AOK" | "TK" | "DAK"
-export type TypesProps = "HEALTH" | "LIABILITY" | "HOUSEHOLD"
-export type StatusProps = "PENDING" | "ACTIVE"
+export type TypesProps = "LIABILITY" | "HOUSEHOLD" | "HEALTH"
+export type StatusProps = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT"

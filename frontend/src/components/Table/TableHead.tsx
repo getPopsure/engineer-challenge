@@ -1,19 +1,23 @@
-import React, { useMemo } from "react";
+import React, { ChangeEvent, useMemo } from "react";
 import { useAppContext } from "../../context/apiContext";
 import InputField from "../Form/InputField";
 import SelectField from "../Form/SelectField";
 
 const TableHead = () => {
-  const { addFilter, state: { providers, status, type } } = useAppContext()
+  const { addFilter, handleNameFilter, state: { providers, status, type } } = useAppContext()
 
-  const handleChange = ({ target }, id) => {
+  const handleChange = ({ target }: ChangeEvent<HTMLSelectElement | HTMLInputElement>, id: string) => {
     addFilter(target.value, id)
+  }
+
+  const handleNameSearch = ({ target } : ChangeEvent<HTMLInputElement>) => {
+    handleNameFilter(target.value)
   }
 
   const getFilterComponent = (column) => {
     switch (column.filter) {
       case 'text':
-        return <InputField onChange={(e) => handleChange(e, column.id)} />
+        return <InputField onChange={handleNameSearch} />
       case 'dropdown':
         return <SelectField
           options={column.options.map(option => ({ label: option, value: option }))}
