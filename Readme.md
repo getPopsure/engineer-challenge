@@ -113,11 +113,17 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
+  - _~14 hours_
 - What’s the part of the solution you are most proud of?
 
-  _You can share a code snippet here if you feel like it_
+  - _context part with the filter, although re-rendering can be improved_
 
 - If you had more time, what other things you would like to do?
+  - _Improve re-rendering, state management_
+  - _Default value on dropdowns cannot be clicked_
+  - _UI_
 - Do you have any feedback regarding this coding challenge?  
+  - _Not ATM_ 
 
   _Is the initial setup working?, is something missing?, or any other comment_
+  - _Not ATM_
