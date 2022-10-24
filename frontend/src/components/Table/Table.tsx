@@ -10,8 +10,6 @@ export const Table = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
 
-  console.log(currentPage)
-
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const paginatedPolicies = policies.slice(firstIndex, lastIndex);

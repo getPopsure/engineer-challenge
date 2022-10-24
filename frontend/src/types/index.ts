@@ -1,11 +1,11 @@
 export type TPolicy = {
   name: string;
   id: string;
-  type: string;
-  provider: string;
-  status: string;
+  type: TTypes;
+  provider: TProviders;
+  status: TStatus;
 }
 
-export type ProviderProps = "BARMER" | "AOK" | "TK" | "DAK"
-export type TypesProps = "LIABILITY" | "HOUSEHOLD" | "HEALTH"
-export type StatusProps = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT"
+export type TProviders = "BARMER" | "AOK" | "TK" | "DAK"
+export type TTypes = "LIABILITY" | "HOUSEHOLD" | "HEALTH"
+export type TStatus = "ACTIVE" | "PENDING" | "CANCELLED" | "DROPPED_OUT"

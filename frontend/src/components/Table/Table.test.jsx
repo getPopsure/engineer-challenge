@@ -18,7 +18,7 @@ describe('Table', () => {
       <Table />
     </AppContext.Provider>)
   })
-  
+
   it('Renders the the data correctly', async () => {
     expect(screen.getAllByRole('row')).toHaveLength(4)
   })

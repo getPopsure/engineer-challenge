@@ -1,19 +1,19 @@
-import React, {useContext, useState, useEffect, createContext, useMemo, ChangeEvent} from "react";
-import { TPolicy } from "../types";
-import {serializePolicies} from "../serializer";
+import React, {useContext, useState, useEffect, createContext, useMemo } from "react";
+import { TPolicy, TProviders, TStatus, TTypes } from "../types";
+import { serializePolicies } from "../serializer";
 
+const POLICIES = 'policies'
 
-// Todo: Fix Types
 type TPolicies = {
   policies: TPolicy[];
-  providers: any;
-  type: any;
-  status: any;
+  providers: TProviders[];
+  type: TTypes[];
+  status: TStatus[];
 }
 
 type ContextProps = {
   state: TPolicies;
-  handleNameFilter?: (name: string) => void;
+  handleNameFilter: (name: string) => void;
   addFilter: (value: string, id: string) => void;
   resetFilter: () => void;
   query: Record<string, string>;
@@ -26,10 +26,7 @@ const defaultState = {
   type: [],
   status: [],
 }
-
-// @ts-ignore
-export const AppContext = createContext<ContextProps>(defaultState);
-const POLICIES = 'policies'
+export const AppContext = createContext<ContextProps | null>(null);
 
 export const AppContextProvider = ({ children }: { children : React.ReactNode }) => {
   const [initialData, setInitialData] = useState([])
@@ -95,29 +92,23 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
   }
 
   const getInitialPolicies = (policies) => {
-    // @Todo: Refactor the filter !
-    const filteredPoliciesByStatus = policies.filter(policy => policy.status === "ACTIVE" || policy.status === "PENDING")
+    const filteredPoliciesByStatus: TPolicy[] = policies.filter(policy => policy.status === "ACTIVE" || policy.status === "PENDING")
 
     const appState = {
       policies: filteredPoliciesByStatus,
-      providers: [...new Set(filteredPoliciesByStatus.map(policy => policy.provider))],
-      type: [...new Set(filteredPoliciesByStatus.map(policy => policy.type))],
-      status: [...new Set(filteredPoliciesByStatus.map(policy => policy.status))]
+      providers: [...new Set(filteredPoliciesByStatus.map(policy => policy.provider))] as TProviders[],
+      type: [...new Set(filteredPoliciesByStatus.map(policy => policy.type))] as TTypes[],
+      status: [...new Set(filteredPoliciesByStatus.map(policy => policy.status))] as TStatus[]
     }
 
-    setState((prevState) => ({
-      ...prevState,
-      ...appState
-    }))
-    setInitialData(appState.policies)
+    setState(appState)
+    setInitialData(filteredPoliciesByStatus)
   }
-
-  console.log(state)
 
   useEffect(() => {
     (async () => {
       try {
-        let response = await fetch(`${process.env.REACT_APP_BASE_URL}/${POLICIES}`)
+        let response = await fetch(`http://localhost:4000/${POLICIES}`)
 
         if (response.ok) {
           let data = await response.json()
