@@ -28,7 +28,7 @@ const defaultState = {
 }
 
 // @ts-ignore
-const AppContext = createContext<ContextProps>(defaultState);
+export const AppContext = createContext<ContextProps>(defaultState);
 const POLICIES = 'policies'
 
 export const AppContextProvider = ({ children }: { children : React.ReactNode }) => {
@@ -111,6 +111,8 @@ export const AppContextProvider = ({ children }: { children : React.ReactNode })
     }))
     setInitialData(appState.policies)
   }
+
+  console.log(state)
 
   useEffect(() => {
     (async () => {

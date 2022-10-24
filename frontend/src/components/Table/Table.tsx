@@ -10,6 +10,8 @@ export const Table = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
 
+  console.log(currentPage)
+
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const paginatedPolicies = policies.slice(firstIndex, lastIndex);
@@ -28,7 +30,7 @@ export const Table = () => {
                   paginatedPolicies.map((policy: TPolicy) =>
                       <TableRow key={policy.id} policy={policy} />
                     )
-                ) : <p>There are no policies matching the criteria !</p>}
+                ) : <tr><td>There are no policies matching the criteria !</td></tr>}
                 </tbody>
               </table>
             </div>

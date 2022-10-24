@@ -17,9 +17,10 @@ const TableHead = () => {
   const getFilterComponent = (column) => {
     switch (column.filter) {
       case 'text':
-        return <InputField onChange={handleNameSearch} />
+        return <InputField label={column.headerName} onChange={handleNameSearch} />
       case 'dropdown':
         return <SelectField
+          label={column.headerName}
           options={column.options.map(option => ({ label: option, value: option }))}
           onChange={(e) => handleChange(e, column.id)}
         />
@@ -65,7 +66,6 @@ const TableHead = () => {
       {columns.map(column => {
         return (
           <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left" key={column.id}>
-            {column.headerName}
             {getFilterComponent(column)}
           </th>
         )
