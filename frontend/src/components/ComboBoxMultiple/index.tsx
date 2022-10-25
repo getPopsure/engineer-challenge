@@ -61,7 +61,7 @@ const ComboBoxMultiple = (props: ComboBoxMultipleProps) => {
             onChange={handleComboBoxClick}
           />
           <label
-            className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-grey-200 rounded-md shadow-sm text-base font-medium"
+            className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-grey-200 rounded-md shadow-sm text-base cursor-pointer"
             htmlFor={id}
           >
             {props.placeholderText} ▿
@@ -79,12 +79,12 @@ const ComboBoxMultiple = (props: ComboBoxMultipleProps) => {
                   key={`${id}_option_${index}`}
                   className="mt-2 ml-3"
                 >
-                  <div className="w-full flex justify-between">
+                  <div className="w-full flex justify-between items-center">
                     <span className="mr-3">{option}</span>
                     <input
                       data-testid={`${option}-check`}
                       key={`${id}-option-${index}-check`}
-                      className="mr-3"
+                      className="mr-3 cursor-pointer text-lg w-4 h-4 rounded-md"
                       type="checkbox"
                       checked={value.has(option)}
                       onChange={() => handleItemClick(option)}

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import fetchPolicies from "../../api/fetchPolicies";
-import ComboBoxMultiple from "../../components/ComboBoxMultiple/ComboBoxMultiple";
+import ComboBoxMultiple from "../../components/ComboBoxMultiple";
 import SearchBox from "../../components/SearchBox";
 import Table from "../../components/Table";
 import { debounce } from "../../helpers/utils";
@@ -29,7 +29,7 @@ const PoliciesListPage = () => {
 
   const handleOnChangeSearchText = debounce((search: string) => {
     setSearchText(search);
-  }, 250);
+  }, 150);
 
   const clearFilters = () => {
     setSearchText("");

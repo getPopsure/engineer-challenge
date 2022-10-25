@@ -1,4 +1,7 @@
+import { useState } from "react";
+import useTable from "../hooks/useTable";
 import Badge from "./Badge";
+import TableFooter from "./TableFooter";
 
 type TableProps = {
   columns: string[];
@@ -7,6 +10,18 @@ type TableProps = {
   isError: boolean;
 };
 const Table = (props: TableProps) => {
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(30);
+
+  const { currentPageData, totalPages, initialPage, finalPage } = useTable(
+    props.rows,
+    currentPageNumber,
+    pageSize
+  );
+  const changePageSize = (newPageSize: number) => {
+    setPageSize(newPageSize);
+    setCurrentPageNumber(1);
+  };
   if (props.isLoading)
     return <div className="flex justify-center py-2">Loading</div>;
   if (props.isError)
@@ -36,12 +51,12 @@ const Table = (props: TableProps) => {
                   })}
                 </tr>
               </thead>
-              <tbody>
-                {props.rows.map((singleRow, rowIndex) => {
+              <tbody data-testid="table-body">
+                {currentPageData.map((singleRow, rowIndex) => {
                   return (
                     <tr key={`row-${rowIndex}`} className="border-b">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {rowIndex + 1}
+                        {rowIndex + initialPage}
                       </td>
                       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                         {`${singleRow.customer.firstName} ${singleRow.customer.lastName}`}
@@ -60,6 +75,15 @@ const Table = (props: TableProps) => {
                 })}
               </tbody>
             </table>
+            <TableFooter
+              currentPageNumber={currentPageNumber}
+              totalPages={totalPages}
+              totalRows={props.rows.length}
+              initialPage={initialPage}
+              finalPage={finalPage}
+              onSetPage={setCurrentPageNumber}
+              onSetPageSize={changePageSize}
+            />
           </div>
         </div>
       </div>
