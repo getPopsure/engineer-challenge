@@ -139,5 +139,4 @@ second day: 5 hours:
 
 third day: 5 hours:
 
-- Adding support for multiple selection in filters, create ComboBoxMultipe component, edit prisma query to combine text + policy status + insuranc type
 - Finished filtering tests, added closable behavior
