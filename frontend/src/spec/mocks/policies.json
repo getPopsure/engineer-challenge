@@ -31,7 +31,7 @@
     "id": "f70e5437-4814-40b2-ae01-0674a92d1783",
     "provider": "AOK",
     "insuranceType": "HEALTH",
-    "status": "DROPPED_OUT",
+    "status": "ACTIVE",
     "startDate": "2014-07-14T00:54:34.000Z",
     "endDate": null,
     "customer": {
@@ -45,7 +45,7 @@
     "id": "7458098e-31ee-4c62-90e3-5152a8728c22",
     "provider": "AOK",
     "insuranceType": "HEALTH",
-    "status": "PENDING",
+    "status": "ACTIVE",
     "startDate": "2020-07-21T19:40:35.000Z",
     "endDate": null,
     "customer": {
@@ -67,6 +67,20 @@
       "firstName": "Haydon",
       "lastName": "Ballay",
       "dateOfBirth": "2006-12-04T01:13:38.000Z"
+    }
+  },
+  {
+    "id": "be5b1bb6-63bc-4ef3-a5a5-ac0b37ec817a",
+    "provider": "TK",
+    "insuranceType": "LIABILITY",
+    "status": "DROPPED_OUT",
+    "startDate": "2017-05-28T11:56:27.000Z",
+    "endDate": null,
+    "customer": {
+      "id": "b0937ba7-3c74-4716-9774-e9bb6d3b9b4a",
+      "firstName": "Jeffie",
+      "lastName": "Pinyon",
+      "dateOfBirth": "2009-10-26T12:24:25.000Z"
     }
   }
 ]

@@ -34,3 +34,17 @@ afterAll(async () => {
   const server = await getServerInstance();
   server.close();
 });
+
+const debounceInmediate = (
+  callback: (...callBackargs: any[]) => void,
+  wait: number
+) => {
+  return (...args: []) => {
+    callback.apply(null, args);
+  };
+};
+
+jest.mock("./helpers/utils", () => ({
+  ...jest.requireActual("./helpers/utils"),
+  debounce: debounceInmediate,
+}));

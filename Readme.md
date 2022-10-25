@@ -132,3 +132,12 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 first day: 6 hours:
 
 - Setting up environment, create set of tests, create Table component and types, add ReactQuery, make endpoint call, add cors, add msw to mock endpoint responses, set frontend env variables
+
+second day: 5 hours:
+
+- Adding filters tests, adding new parameters to endpoint to filter by status and types
+
+third day: 5 hours:
+
+- Adding support for multiple selection in filters, create ComboBoxMultipe component, edit prisma query to combine text + policy status + insuranc type
+- Finished filtering tests, added closable behavior
