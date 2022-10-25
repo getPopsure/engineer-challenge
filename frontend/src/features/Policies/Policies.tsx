@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Header } from '../../components/Header';
-import { Table } from '../../components/Table';
+
 import { Policy } from './Policies.model';
+
+import { Header } from 'components/Header';
+import { Table } from 'components/Table';
 
 export const Policies = () => {
   const [error, setError] = useState<string | undefined>();
@@ -14,7 +16,14 @@ export const Policies = () => {
         .then((data) => setPolicies(data))
         .catch((e) => setError(e.message));
     };
+
     fetchPolicies();
+
+    // Component clean-up
+    return () => {
+      setPolicies([]);
+      setError('');
+    };
   }, []);
 
   if (!error && !policies) return <p>Loading...</p>;

@@ -1,6 +1,6 @@
-import { TableRow } from './TableRow';
+import { Policy } from 'features/Policies';
 
-import { Policy } from '../../features/Policies';
+import { TableRow } from './TableRow';
 
 interface TableProps {
   policies?: Policy[];

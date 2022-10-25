@@ -1,4 +1,4 @@
-import { PolicyStatus } from '../../features/Policies';
+import { PolicyStatus } from 'features/Policies';
 
 interface BadgeProps {
   status: PolicyStatus;

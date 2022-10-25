@@ -1,4 +1,4 @@
-import logo from '../../assets/logo.svg';
+import logo from 'assets/logo.svg';
 
 export const Navbar = () => (
   <div className="relative bg-white">

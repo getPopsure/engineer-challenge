@@ -1,6 +1,6 @@
-import { Badge } from '../Badge';
+import { Policy } from 'features/Policies';
 
-import { Policy } from '../../features/Policies';
+import { Badge } from '../Badge';
 
 interface TableRowProps {
   row: Policy;
