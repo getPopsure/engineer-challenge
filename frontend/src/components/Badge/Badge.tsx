@@ -20,11 +20,9 @@ const getBadgeColors = (status: Status) => {
   return badgeColors[status];
 };
 
-const Badge = ({ status }: BadgeProps) => {
+export const Badge = ({ status }: BadgeProps) => {
   const { textColor, backgroundColor } = getBadgeColors(status);
   const className = `inline-block rounded-full	py-1 px-4 font-semibold text-xs ${textColor} ${backgroundColor}`;
 
   return <p className={className}>{status}</p>;
 };
-
-export default Badge;
