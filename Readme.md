@@ -122,6 +122,7 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
   - _Improve re-rendering, state management_
   - _Default value on dropdowns cannot be clicked_
   - _UI_
+  - _Debounce for the name search_
 - Do you have any feedback regarding this coding challenge?  
   - _Not ATM_ 
 
