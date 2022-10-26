@@ -3,7 +3,7 @@ version: '3.1'
 services:
   db:
     env_file:
-      - ./backend/.env
+      - .env
     image: postgres:13.4
     ports:
       - "5432:${DATABASE_PORT}"
@@ -15,10 +15,10 @@ services:
 
   backend:
     env_file:
-      - ./backend/.env
+      - .env
     build:
         context: ./backend/
-    command: sh -c "yarn prisma generate && yarn start"
+    command: sh -c "yarn prisma generate && yarn prisma migrate dev && yarn prisma db seed && yarn start"
     volumes:
       - ./backend/:/app
       - /app/node_modules
@@ -29,7 +29,7 @@ services:
 
   frontend:
     env_file:
-      - ./backend/.env
+      - .env
     build:
       context: ./frontend/
     volumes:

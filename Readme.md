@@ -34,20 +34,18 @@ We've prepared several different user stories to work on. Depending on what posi
 2. Set up the environment variables
 
 ```bash
-cp ./backend/.env.example ./backend/.env
+cp .env.example .env
 ```
 
 3. Build and run the Docker image:
 
 ```bash
-cd backend
 docker compose up --build
 ```
 
 4. On a new terminal, run the migration and the seed script to add initial data:
 
 ```bash
-cd backend
 docker compose exec backend yarn prisma migrate dev
 docker compose exec backend yarn prisma db seed
 ```
@@ -62,7 +60,7 @@ The API should be running on `http://localhost:4000`
 If you want to install new dependencies, you'll have to do it inside the docker container. To do that, you can use the following command:
 
 ```
-cd backend
+# On the root directory of the project  
 docker compose exec {backend OR frontend} yarn add {the_name_of_the_package}
 ```
 
@@ -120,4 +118,4 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 - If you had more time, what other things you would like to do?
 - Do you have any feedback regarding this coding challenge?  
 
-  _Is the initial setup working?, is something missing?, or any other comment_
+  _Is the initial setup working?, is something missing?, any other comments?_  
