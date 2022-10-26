@@ -15,7 +15,7 @@ const fetchPolicies = async (
   const hasSearchParams =
     searchParam || policyStatuses.length || insuranceTypes.length;
   const response = await fetch(
-    `${process.env.REACT_APP_SERVER_BASE_URL}/policies${
+    `${process.env.REACT_APP_SERVER_BASE_URL || ""}/policies${
       hasSearchParams ? "?" + queryParams : ""
     }`
   );

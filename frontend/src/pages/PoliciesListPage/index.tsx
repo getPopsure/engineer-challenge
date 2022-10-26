@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import fetchPolicies from "../../api/fetchPolicies";
+import Badge from "../../components/Badge";
 import ComboBoxMultiple from "../../components/ComboBoxMultiple";
 import SearchBox from "../../components/SearchBox";
 import Table from "../../components/Table";
@@ -25,7 +26,26 @@ const PoliciesListPage = () => {
     ["fetchPolicies", searchText, searchPolicyStatuses, searchInsuranceTypes],
     () => fetchPolicies(searchText, searchPolicyStatuses, searchInsuranceTypes)
   );
-  const tableColumns = ["#", "Name", "Provider", "Type", "Status"];
+  const tableColumns: TableColumn[] = [
+    {
+      title: "Name",
+      customRow: (row: Policy) => (
+        <span>
+          {row.customer.firstName} {row.customer.lastName}
+        </span>
+      ),
+    },
+    { title: "Provider", accessor: "provider" },
+    { title: "Type", accessor: "insuranceType" },
+    {
+      title: "Status",
+      customRow: (row: Policy) => (
+        <span>
+          <Badge status={row.status} />
+        </span>
+      ),
+    },
+  ];
 
   const handleOnChangeSearchText = debounce((search: string) => {
     setSearchText(search);

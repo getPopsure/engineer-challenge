@@ -140,3 +140,7 @@ second day: 5 hours:
 third day: 5 hours:
 
 - Finished filtering tests, added closable behavior
+
+fourth day: 2 hours:
+
+- Finished pagination tests, refactor table to extract business logic

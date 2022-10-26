@@ -8,8 +8,7 @@ const renderPage = () => {
       queries: { staleTime: Infinity, retry: false },
     },
   });
-
-  return render(
+  render(
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
@@ -24,51 +23,71 @@ const waitForTableToBeLoaded = async () => {
 };
 const TABLE_HEADER = 1;
 describe("The table renders properly and filters work correctly", () => {
-  test("Displays a table with the expected number of rows filtering by PENDING and ACTIVE records", async () => {
+  test("It filters by PENDING and ACTIVE policy status records when loaded", async () => {
     await waitForTableToBeLoaded();
     expect(screen.getAllByRole("row").length).toBe(5 + TABLE_HEADER);
   });
-  test("When a filter 'by provider'='BARMER' is applied, I want to see the filtered information on the same table.", async () => {
+  test("It filters 'by provider' through the text field", async () => {
     await waitForTableToBeLoaded();
     const searchBox = await screen.findByRole("searchbox", {
       name: "search",
     });
-    fireEvent.change(searchBox, { target: { value: "BARMER" } });
+    fireEvent.change(searchBox, { target: { value: "MY_PROVIDER" } });
     await waitForTableToBeLoaded();
-    expect(await screen.findAllByRole("row")).toHaveLength(3 + TABLE_HEADER);
+    expect(
+      await screen.findAllByRole("row", {
+        name: /MY_PROVIDER/,
+      })
+    ).toHaveLength(1);
   });
-  test("When a filter 'by name'='Cyrillus' is applied, I want to see the filtered information on the same table.", async () => {
+  test("It filters 'by name' through the text field", async () => {
     await waitForTableToBeLoaded();
     const searchBox = await screen.findByRole("searchbox", {
       name: "search",
     });
-    fireEvent.change(searchBox, { target: { value: "Cyrillus" } });
+    fireEvent.change(searchBox, { target: { value: "MY_CLIENT" } });
     await waitForTableToBeLoaded();
-    expect(await screen.findAllByRole("row")).toHaveLength(1 + TABLE_HEADER);
+    expect(
+      await screen.findAllByRole("row", {
+        name: /MY_CLIENT/,
+      })
+    ).toHaveLength(1);
   });
-  test("When a filter 'by policy status'='ACTIVE' is applied, I want to see the filtered information on the same table.", async () => {
+  test("It filters 'by policy status' through the dropdown", async () => {
     await waitForTableToBeLoaded();
-    const multipleComboBox = await screen.findByRole("combobox", {
+    const policyStatusDropdown = await screen.findByRole("combobox", {
       name: "Search by policy",
     });
-    fireEvent.click(multipleComboBox);
-    const activeCheck = await screen.findByTestId("ACTIVE-check");
-    fireEvent.click(activeCheck);
+    fireEvent.click(policyStatusDropdown);
+    const droppedOutpolicyOption = await screen.findByTestId(
+      "DROPPED_OUT-check"
+    );
+    fireEvent.click(droppedOutpolicyOption);
     await waitForTableToBeLoaded();
-    expect(await screen.findAllByRole("row")).toHaveLength(2 + TABLE_HEADER);
+    await screen.findByTestId("table-body");
+    expect(
+      await screen.findAllByRole("row", {
+        name: /DROPPED_OUT/,
+      })
+    ).toHaveLength(1);
   });
-  test("When a filter 'by insurance type'='HOUSEHOLD' is applied, I want to see the filtered information on the same table.", async () => {
+  test("It filters by insurance type through the dropdown", async () => {
     await waitForTableToBeLoaded();
-    const multipleComboBox = await screen.findByRole("combobox", {
+    const insuranceType = await screen.findByRole("combobox", {
       name: "Search by insurance",
     });
-    fireEvent.click(multipleComboBox);
-    const activeCheck = await screen.findByTestId("HOUSEHOLD-check");
-    fireEvent.click(activeCheck);
+    fireEvent.click(insuranceType);
+    const insuranceOption = await screen.findByTestId("HOUSEHOLD-check");
+    fireEvent.click(insuranceOption);
     await waitForTableToBeLoaded();
-    expect(await screen.findAllByRole("row")).toHaveLength(1 + TABLE_HEADER);
+    expect(
+      await screen.findAllByRole("row", {
+        name: /HOUSEHOLD/,
+      })
+    ).toHaveLength(1);
   });
-  test("When a filter is applied, I want to be able to clear the current filter, this action will display the original information.", async () => {
+
+  test("It clears the filter through the 'Clear filters' button", async () => {
     await waitForTableToBeLoaded();
     const searchBox = await screen.findByTestId("HOUSEHOLD-check");
     fireEvent.click(searchBox);
@@ -79,5 +98,12 @@ describe("The table renders properly and filters work correctly", () => {
     await waitForTableToBeLoaded();
     expect(screen.getAllByRole("row").length).toBe(5 + TABLE_HEADER);
   });
-  test.todo("The results have to be paginated");
+  test("Do not display any results if there are no matches", async () => {
+    await waitForTableToBeLoaded();
+    const searchBox = await screen.findByRole("searchbox", {
+      name: "search",
+    });
+    fireEvent.change(searchBox, { target: { value: "XXXXX" } });
+    expect(await screen.findByText("No data to be shown")).toBeInTheDocument();
+  });
 });

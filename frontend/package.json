@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9",
-    "msw": "^0.47.4",
+    "msw": "^0.19.5",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }

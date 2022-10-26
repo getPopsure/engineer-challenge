@@ -1,21 +1,21 @@
 [
   {
     "id": "e85493e9-7a52-4209-a792-80539b77b00e",
-    "provider": "BARMER",
-    "insuranceType": "HEALTH",
-    "status": "PENDING",
+    "provider": "MY_PROVIDER",
+    "insuranceType": "HOUSEHOLD",
+    "status": "ACTIVE",
     "startDate": "2017-04-26T05:32:06.000Z",
     "endDate": null,
     "customer": {
       "id": "c2363b00-36eb-43f9-9008-35576671840b",
-      "firstName": "Cyrillus",
+      "firstName": "MY_CLIENT",
       "lastName": "Biddlecombe",
       "dateOfBirth": "1978-12-03T06:33:17.000Z"
     }
   },
   {
     "id": "f94284cf-e5e1-4a33-870f-b870a225b447",
-    "provider": "BARMER",
+    "provider": "AOK",
     "insuranceType": "LIABILITY",
     "status": "PENDING",
     "startDate": "2015-01-13T04:52:15.000Z",
@@ -31,7 +31,7 @@
     "id": "f70e5437-4814-40b2-ae01-0674a92d1783",
     "provider": "AOK",
     "insuranceType": "HEALTH",
-    "status": "ACTIVE",
+    "status": "PENDING",
     "startDate": "2014-07-14T00:54:34.000Z",
     "endDate": null,
     "customer": {
@@ -45,7 +45,7 @@
     "id": "7458098e-31ee-4c62-90e3-5152a8728c22",
     "provider": "AOK",
     "insuranceType": "HEALTH",
-    "status": "ACTIVE",
+    "status": "PENDING",
     "startDate": "2020-07-21T19:40:35.000Z",
     "endDate": null,
     "customer": {
@@ -57,9 +57,9 @@
   },
   {
     "id": "51e47e1b-d9cc-465c-b564-863a27d9cc4c",
-    "provider": "BARMER",
-    "insuranceType": "HOUSEHOLD",
-    "status": "ACTIVE",
+    "provider": "AOK",
+    "insuranceType": "LIABILITY",
+    "status": "PENDING",
     "startDate": "2013-03-30T19:27:54.000Z",
     "endDate": null,
     "customer": {

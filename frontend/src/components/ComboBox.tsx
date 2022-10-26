@@ -4,13 +4,13 @@ type ComboBoxProps = {
   options: string[];
   labelText?: string;
   placeholderText: string;
-  initialValue?: string;
+  initialValue?: string | number;
 };
 const ComboBox = (props: ComboBoxProps) => {
   const [value, setValue] = useState("");
   useEffect(() => {
     if (props.initialValue) {
-      setValue(props.initialValue);
+      setValue(`${props.initialValue}`);
     }
   }, [props.initialValue]);
   const handleOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
