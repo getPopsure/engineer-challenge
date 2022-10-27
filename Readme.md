@@ -113,34 +113,52 @@ Feel free to update or add more endpoints to accommodate or improve your solutio
 ## General questions
 
 - How much time did you spend working on the solution?
+
+  Total: About 25 hours
+
+  - First day: 6 hours: Setting up environment, create set of tests, create Table component and types, add ReactQuery, make endpoint call, add cors, add msw to mock endpoint responses, set frontend env variables
+
+  - Second day: 5 hours: Adding filters tests, adding new parameters to endpoint to filter by status and types, searchBox component
+
+  - Third day: 5 hours: Finished filtering tests, added closable behavior, combine parameters to filter
+
+  - Fourth day: 3 hours: Finished pagination tests, implement pagination
+
+  - Fifth day: 3 hours: Refactor table to extract business logic, refactor of some tests
+
+  - Sixth day: 2 hours: Small refactors, writing down decisions in README
+
 - What’s the part of the solution you are most proud of?
 
-  _You can share a code snippet here if you feel like it_
+  I was able to extract the logic from base components (dynamic cols and rows for the table component), to type the most important data structures, to create a couple of hooks and to add a couple of parameters to the backend endpoint (for types and statuses) that combine with the text search in order to give the results.
 
-- If you had more time, what other things you would like to do?
-- Do you have any feedback regarding this coding challenge?
+- If you had more time, what other things would you like to do?
 
-  _Is the initial setup working?, is something missing?, or any other comment_
+  - Add some badges to the multi selection dropdown with the selected items to give feedback to the user that is filtering (and unit test for that specific component)
+  - When searching for some text then highlight the found text occurences in the filtered table rows
+  - Add i18n to the project
+  - Review the version of all dependencies and upgrade
+  - Add some styles to the error and no data statuses
+  - Add sorting to the columns
+  - Add alias for paths (like @components etc...)
 
-## TODO
+Do you have any feedback regarding this coding challenge?
 
-- check styles in rows, #row has a different css class
-- error when executing `docker compose exec frontend yarn add @tanstack/react-query` had to install things in frontend or backend folders
+- The setup is really nice with everything dockerized in a single project, and I enjoyed and learned a lot while doing it!
 
-## Time spent
+Is the initial setup working?, is something missing?, or any other comment
 
-first day: 6 hours:
+- Just add in the instructions that the command to install new dependencies needs to be executed inside frontend or backend folder
 
-- Setting up environment, create set of tests, create Table component and types, add ReactQuery, make endpoint call, add cors, add msw to mock endpoint responses, set frontend env variables
+  ```
+  cd {backend OR frontend} && docker compose exec {backend OR frontend} yarn add {the_name_of_the_package}
+  ```
 
-second day: 5 hours:
-
-- Adding filters tests, adding new parameters to endpoint to filter by status and types
-
-third day: 5 hours:
-
-- Finished filtering tests, added closable behavior
-
-fourth day: 2 hours:
-
-- Finished pagination tests, refactor table to extract business logic
+- Decisions made and why
+  - I moved some dependencies to devDependencies in frontend package.json to not be in the final bundle.
+  - I added a debounce in text search in order to not overload backend with requests, and mocked that debounce function for the tests (setupTest file).
+  - I added react-query that caches the endpoint responses, so once frontend make a request to backend with specific parameters, that request is saved and not repeated again for that session.
+  - I added [msw](https://mswjs.io/) mock endpoints library that I think is really interesting (it uses service workers) for integration tests and a way of setup a backend mock layer very fast.
+  - Regarding tests and integration: I coded with TDD, so I first wrote the set of tests following the requirements and then the software. I tried to test all the table component behavior inside its [unit](frontend/src/components/Table/index.spec.tsx) tests (pagination and proper render) and then test components interaction (search + table) in the [integration test](frontend/src/spec/integration/PoliciesListPage.spec.tsx). I added a filtering behavior to the server mock, other way of doing it can be by explicit setting the mock response for each test.
+  - Backend: I added two new parameters to the GET endpoint, that will be filtering the data in combination with the existing text parameter. Those new parameters can be single values or multiple.
+  - I took the decision of pre-filtering by ACTIVE and PENDING policies in the frontend so the user can uncheck them and be able to see other statuses. If this is not desired, the prefilter can be done in the backend and those other values removed from the dropdown easily.

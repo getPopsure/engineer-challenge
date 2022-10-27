@@ -8,15 +8,16 @@ import reportWebVitals from "./reportWebVitals";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000,
+      // 10 minutes of valid cache for the endpoint calls
+      staleTime: 10 * 60 * 1000,
     },
   },
 });
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient} contextSharing={true}>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

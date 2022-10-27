@@ -34,11 +34,7 @@ describe("The table renders properly and filters work correctly", () => {
     });
     fireEvent.change(searchBox, { target: { value: "MY_PROVIDER" } });
     await waitForTableToBeLoaded();
-    expect(
-      await screen.findAllByRole("row", {
-        name: /MY_PROVIDER/,
-      })
-    ).toHaveLength(1);
+    expect(await screen.findAllByRole("row")).toHaveLength(1 + TABLE_HEADER);
   });
   test("It filters 'by name' through the text field", async () => {
     await waitForTableToBeLoaded();
@@ -47,13 +43,9 @@ describe("The table renders properly and filters work correctly", () => {
     });
     fireEvent.change(searchBox, { target: { value: "MY_CLIENT" } });
     await waitForTableToBeLoaded();
-    expect(
-      await screen.findAllByRole("row", {
-        name: /MY_CLIENT/,
-      })
-    ).toHaveLength(1);
+    expect(await screen.findAllByRole("row")).toHaveLength(1 + TABLE_HEADER);
   });
-  test("It filters 'by policy status' through the dropdown", async () => {
+  test("It filters 'by policy status' through the dropdown adding a row to the prefiltered ACTIVE and PENDING rows", async () => {
     await waitForTableToBeLoaded();
     const policyStatusDropdown = await screen.findByRole("combobox", {
       name: "Search by policy",
@@ -80,11 +72,7 @@ describe("The table renders properly and filters work correctly", () => {
     const insuranceOption = await screen.findByTestId("HOUSEHOLD-check");
     fireEvent.click(insuranceOption);
     await waitForTableToBeLoaded();
-    expect(
-      await screen.findAllByRole("row", {
-        name: /HOUSEHOLD/,
-      })
-    ).toHaveLength(1);
+    expect(await screen.findAllByRole("row")).toHaveLength(1 + TABLE_HEADER);
   });
 
   test("It clears the filter through the 'Clear filters' button", async () => {

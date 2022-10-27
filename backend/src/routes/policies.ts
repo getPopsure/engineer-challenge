@@ -16,6 +16,7 @@ policiesRoute.get("/policies", async (req, res) => {
   const whereOr: Array<Prisma.PolicyWhereInput> = [];
   const whereAnd: Array<Prisma.PolicyWhereInput> = [];
 
+  // Filter by searchText if queryParam present. Single value
   if (searchText) {
     whereOr.push(
       {

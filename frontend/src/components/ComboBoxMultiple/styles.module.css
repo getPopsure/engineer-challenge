@@ -7,4 +7,3 @@ ul {
 .hiddenInput[type='checkbox']:checked ~ ul {
   display: block;
 }
-
