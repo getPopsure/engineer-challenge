@@ -2,7 +2,7 @@ type InsuranceType = 'HEALTH' | 'LIABILITY' | 'HOUSEHOLD';
 
 export type PolicyStatus = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT';
 
-export type Provider = 'BARMER' | 'PENDING' | 'CANCELLED' | 'DROPPED_OUT';
+export type Provider = 'BARMER' | 'AOK' | 'DAK' | 'TK';
 
 interface Customer {
   dateOfBirth: Date;
@@ -16,7 +16,7 @@ export interface Policy {
   endDate: Date | null;
   id: string;
   insuranceType: InsuranceType;
-  provider: 'BARMER';
+  provider: Provider;
   startDate: Date;
   status: PolicyStatus;
 }
