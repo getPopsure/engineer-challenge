@@ -7,7 +7,7 @@ interface TableProps {
 }
 
 export const Table = ({ policies }: TableProps) => {
-  if (!policies) return <p>No results</p>;
+  if (!policies || policies.length === 0) return <p>No results</p>;
 
   return (
     <div className="flex flex-col">
